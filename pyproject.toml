@@ -1,0 +1,31 @@
+[build]
+requires = ["setuptools ~= 64.0", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["PySource", "PyGenSource"]
+
+[project]
+name = "hushh-whisper"
+version = "0.0.1"
+authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+  "flatbuffers",
+  "quartodoc",
+  "black",
+  "pip-tools",
+  "flake8",
+  "bumpversion",
+  "dataclasses-json",
+  "hushh-whisper[ci]"
+]
+ci = [
+  "pytest-cov",
+  "requests-mock"
+]
+# [project.scripts]
+# hushh = "hushh.catalog:collect"
