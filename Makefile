@@ -8,7 +8,7 @@
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
-PROJECT_NAME = hushh-whisper
+PROJECT_NAME = hushh-vibe-catalog-reader
 PYTHON_INTERPRETER = python3
 
 ifeq (,$(shell which conda))
@@ -49,7 +49,7 @@ preflight: test
 	conda env export > environment.yml
 
 test:
-	pytest --cov=PyGenSources/hushh PyTests
+	pytest --cov=PyGenSources PyTests
 
 docs:
 	quartodoc build
@@ -68,7 +68,7 @@ lint:
 
 ## Test python environment is setup correctly
 test_environment:
-	$(PYTHON_INTERPRETER) test_environment.py
+	$(PYTHON_INTERPRETER) Pytests/test_environment.py
 
 flatbuffers:
 	flatc --python -o PyGenSources/ schemas/hushh-catalog.fbs
