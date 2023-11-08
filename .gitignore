@@ -9,3 +9,4 @@ DerivedData/
 *.egg-info/
 .coverage
 *.pyc
+dist/
