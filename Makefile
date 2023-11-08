@@ -49,7 +49,7 @@ preflight: test
 	conda env export > environment.yml
 
 test:
-	pytest --cov=src/hushh tests
+	pytest --cov=PyGenSources/hushh PyTests
 
 docs:
 	quartodoc build
