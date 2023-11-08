@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 where = ["PySource", "PyGenSource"]
 
 [project]
-name = "hushh-whisper"
+name = "hushh-vibe-catalog-reader"
 version = "0.0.1"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
@@ -21,7 +21,7 @@ dev = [
   "flake8",
   "bumpversion",
   "dataclasses-json",
-  "hushh-whisper[ci]"
+  "hushh-vibe-catalog-reader[ci]"
 ]
 ci = [
   "pytest-cov",
