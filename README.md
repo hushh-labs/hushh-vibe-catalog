@@ -1,2 +1,2 @@
-# hushh-whisper
-Support clients for the hushh whisper file format
+# hushh-vibe-catalog-reader
+Support clients for the hushh vibe-catalog file format
