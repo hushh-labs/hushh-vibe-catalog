@@ -3,7 +3,7 @@ requires = ["setuptools ~= 64.0", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["PySources", "PyGenSources"]
+where = ["python/src"]
 
 [project]
 name = "hushh-vibe-catalog-reader"
@@ -28,7 +28,6 @@ ci = [
   "requests-mock"
 ]
 [tool.pyright]
-include=["PyGenSources"]
 executionEnvironments = [
-  { root = "PyGenSources" }
+  { root = "python/src" }
 ]
