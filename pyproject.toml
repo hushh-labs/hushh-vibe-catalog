@@ -27,5 +27,8 @@ ci = [
   "pytest-cov",
   "requests-mock"
 ]
-# [project.scripts]
-# hushh = "hushh.catalog:collect"
+[tool.pyright]
+include=["PyGenSources"]
+executionEnvironments = [
+  { root = "PyGenSources" }
+]

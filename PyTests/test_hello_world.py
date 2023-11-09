@@ -1,8 +1,9 @@
-from hushh import Catalog
-class Foo:
-    v  = 0
+from hushh import Catalog, Product
+
 
 def test_hello():
-    print(Catalog)
+    assert 1 == 1
 
-    assert 1==1
+
+if __name__ == "__main__":
+    test_hello()
