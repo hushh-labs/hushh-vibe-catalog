@@ -74,3 +74,55 @@ def CharacterizationEmbeddingsEnd(builder):
 
 def End(builder):
     return CharacterizationEmbeddingsEnd(builder)
+
+
+class CharacterizationEmbeddingsT(object):
+
+    # CharacterizationEmbeddingsT
+    def __init__(self):
+        self.id = None  # type: str
+        self.description = None  # type: str
+        self.url = None  # type: str
+
+    @classmethod
+    def InitFromBuf(cls, buf, pos):
+        characterizationEmbeddings = CharacterizationEmbeddings()
+        characterizationEmbeddings.Init(buf, pos)
+        return cls.InitFromObj(characterizationEmbeddings)
+
+    @classmethod
+    def InitFromPackedBuf(cls, buf, pos=0):
+        n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
+        return cls.InitFromBuf(buf, pos+n)
+
+    @classmethod
+    def InitFromObj(cls, characterizationEmbeddings):
+        x = CharacterizationEmbeddingsT()
+        x._UnPack(characterizationEmbeddings)
+        return x
+
+    # CharacterizationEmbeddingsT
+    def _UnPack(self, characterizationEmbeddings):
+        if characterizationEmbeddings is None:
+            return
+        self.id = characterizationEmbeddings.Id()
+        self.description = characterizationEmbeddings.Description()
+        self.url = characterizationEmbeddings.Url()
+
+    # CharacterizationEmbeddingsT
+    def Pack(self, builder):
+        if self.id is not None:
+            id = builder.CreateString(self.id)
+        if self.description is not None:
+            description = builder.CreateString(self.description)
+        if self.url is not None:
+            url = builder.CreateString(self.url)
+        CharacterizationEmbeddingsStart(builder)
+        if self.id is not None:
+            CharacterizationEmbeddingsAddId(builder, id)
+        if self.description is not None:
+            CharacterizationEmbeddingsAddDescription(builder, description)
+        if self.url is not None:
+            CharacterizationEmbeddingsAddUrl(builder, url)
+        characterizationEmbeddings = CharacterizationEmbeddingsEnd(builder)
+        return characterizationEmbeddings

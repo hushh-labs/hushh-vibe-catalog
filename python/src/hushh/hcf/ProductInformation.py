@@ -87,3 +87,61 @@ def ProductInformationEnd(builder):
 
 def End(builder):
     return ProductInformationEnd(builder)
+
+
+class ProductInformationT(object):
+
+    # ProductInformationT
+    def __init__(self):
+        self.id = None  # type: str
+        self.description = None  # type: str
+        self.imageBase64 = None  # type: str
+        self.url = None  # type: str
+
+    @classmethod
+    def InitFromBuf(cls, buf, pos):
+        productInformation = ProductInformation()
+        productInformation.Init(buf, pos)
+        return cls.InitFromObj(productInformation)
+
+    @classmethod
+    def InitFromPackedBuf(cls, buf, pos=0):
+        n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
+        return cls.InitFromBuf(buf, pos+n)
+
+    @classmethod
+    def InitFromObj(cls, productInformation):
+        x = ProductInformationT()
+        x._UnPack(productInformation)
+        return x
+
+    # ProductInformationT
+    def _UnPack(self, productInformation):
+        if productInformation is None:
+            return
+        self.id = productInformation.Id()
+        self.description = productInformation.Description()
+        self.imageBase64 = productInformation.ImageBase64()
+        self.url = productInformation.Url()
+
+    # ProductInformationT
+    def Pack(self, builder):
+        if self.id is not None:
+            id = builder.CreateString(self.id)
+        if self.description is not None:
+            description = builder.CreateString(self.description)
+        if self.imageBase64 is not None:
+            imageBase64 = builder.CreateString(self.imageBase64)
+        if self.url is not None:
+            url = builder.CreateString(self.url)
+        ProductInformationStart(builder)
+        if self.id is not None:
+            ProductInformationAddId(builder, id)
+        if self.description is not None:
+            ProductInformationAddDescription(builder, description)
+        if self.imageBase64 is not None:
+            ProductInformationAddImageBase64(builder, imageBase64)
+        if self.url is not None:
+            ProductInformationAddUrl(builder, url)
+        productInformation = ProductInformationEnd(builder)
+        return productInformation

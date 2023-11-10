@@ -106,3 +106,74 @@ def ProductCharacterizationEnd(builder):
 
 def End(builder):
     return ProductCharacterizationEnd(builder)
+
+try:
+    from typing import List
+except:
+    pass
+
+class ProductCharacterizationT(object):
+
+    # ProductCharacterizationT
+    def __init__(self):
+        self.id = None  # type: str
+        self.description = None  # type: str
+        self.url = None  # type: str
+        self.productIds = None  # type: List[str]
+
+    @classmethod
+    def InitFromBuf(cls, buf, pos):
+        productCharacterization = ProductCharacterization()
+        productCharacterization.Init(buf, pos)
+        return cls.InitFromObj(productCharacterization)
+
+    @classmethod
+    def InitFromPackedBuf(cls, buf, pos=0):
+        n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
+        return cls.InitFromBuf(buf, pos+n)
+
+    @classmethod
+    def InitFromObj(cls, productCharacterization):
+        x = ProductCharacterizationT()
+        x._UnPack(productCharacterization)
+        return x
+
+    # ProductCharacterizationT
+    def _UnPack(self, productCharacterization):
+        if productCharacterization is None:
+            return
+        self.id = productCharacterization.Id()
+        self.description = productCharacterization.Description()
+        self.url = productCharacterization.Url()
+        if not productCharacterization.ProductIdsIsNone():
+            self.productIds = []
+            for i in range(productCharacterization.ProductIdsLength()):
+                self.productIds.append(productCharacterization.ProductIds(i))
+
+    # ProductCharacterizationT
+    def Pack(self, builder):
+        if self.id is not None:
+            id = builder.CreateString(self.id)
+        if self.description is not None:
+            description = builder.CreateString(self.description)
+        if self.url is not None:
+            url = builder.CreateString(self.url)
+        if self.productIds is not None:
+            productIdslist = []
+            for i in range(len(self.productIds)):
+                productIdslist.append(builder.CreateString(self.productIds[i]))
+            ProductCharacterizationStartProductIdsVector(builder, len(self.productIds))
+            for i in reversed(range(len(self.productIds))):
+                builder.PrependUOffsetTRelative(productIdslist[i])
+            productIds = builder.EndVector()
+        ProductCharacterizationStart(builder)
+        if self.id is not None:
+            ProductCharacterizationAddId(builder, id)
+        if self.description is not None:
+            ProductCharacterizationAddDescription(builder, description)
+        if self.url is not None:
+            ProductCharacterizationAddUrl(builder, url)
+        if self.productIds is not None:
+            ProductCharacterizationAddProductIds(builder, productIds)
+        productCharacterization = ProductCharacterizationEnd(builder)
+        return productCharacterization

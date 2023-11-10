@@ -74,3 +74,59 @@ def EmbeddingEnd(builder):
 
 def End(builder):
     return EmbeddingEnd(builder)
+
+try:
+    from typing import List
+except:
+    pass
+
+class EmbeddingT(object):
+
+    # EmbeddingT
+    def __init__(self):
+        self.v = None  # type: List[float]
+
+    @classmethod
+    def InitFromBuf(cls, buf, pos):
+        embedding = Embedding()
+        embedding.Init(buf, pos)
+        return cls.InitFromObj(embedding)
+
+    @classmethod
+    def InitFromPackedBuf(cls, buf, pos=0):
+        n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
+        return cls.InitFromBuf(buf, pos+n)
+
+    @classmethod
+    def InitFromObj(cls, embedding):
+        x = EmbeddingT()
+        x._UnPack(embedding)
+        return x
+
+    # EmbeddingT
+    def _UnPack(self, embedding):
+        if embedding is None:
+            return
+        if not embedding.VIsNone():
+            if np is None:
+                self.v = []
+                for i in range(embedding.VLength()):
+                    self.v.append(embedding.V(i))
+            else:
+                self.v = embedding.VAsNumpy()
+
+    # EmbeddingT
+    def Pack(self, builder):
+        if self.v is not None:
+            if np is not None and type(self.v) is np.ndarray:
+                v = builder.CreateNumpyVector(self.v)
+            else:
+                EmbeddingStartVVector(builder, len(self.v))
+                for i in reversed(range(len(self.v))):
+                    builder.PrependFloat32(self.v[i])
+                v = builder.EndVector()
+        EmbeddingStart(builder)
+        if self.v is not None:
+            EmbeddingAddV(builder, v)
+        embedding = EmbeddingEnd(builder)
+        return embedding

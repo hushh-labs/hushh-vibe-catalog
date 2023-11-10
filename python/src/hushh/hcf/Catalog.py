@@ -259,3 +259,158 @@ def CatalogEnd(builder):
 
 def End(builder):
     return CatalogEnd(builder)
+
+import hushh.hcf.Embedding
+import hushh.hcf.Product
+import hushh.hcf.ProductCharacterization
+import hushh.hcf.ProductInformation
+try:
+    from typing import List
+except:
+    pass
+
+class CatalogT(object):
+
+    # CatalogT
+    def __init__(self):
+        self.id = None  # type: str
+        self.version = None  # type: str
+        self.head = None  # type: str
+        self.products = None  # type: List[hushh.hcf.Product.ProductT]
+        self.productEmbeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
+        self.characterizations = None  # type: List[hushh.hcf.ProductCharacterization.ProductCharacterizationT]
+        self.characterizationEmbeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
+        self.productInformation = None  # type: List[hushh.hcf.ProductInformation.ProductInformationT]
+
+    @classmethod
+    def InitFromBuf(cls, buf, pos):
+        catalog = Catalog()
+        catalog.Init(buf, pos)
+        return cls.InitFromObj(catalog)
+
+    @classmethod
+    def InitFromPackedBuf(cls, buf, pos=0):
+        n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
+        return cls.InitFromBuf(buf, pos+n)
+
+    @classmethod
+    def InitFromObj(cls, catalog):
+        x = CatalogT()
+        x._UnPack(catalog)
+        return x
+
+    # CatalogT
+    def _UnPack(self, catalog):
+        if catalog is None:
+            return
+        self.id = catalog.Id()
+        self.version = catalog.Version()
+        self.head = catalog.Head()
+        if not catalog.ProductsIsNone():
+            self.products = []
+            for i in range(catalog.ProductsLength()):
+                if catalog.Products(i) is None:
+                    self.products.append(None)
+                else:
+                    product_ = hushh.hcf.Product.ProductT.InitFromObj(catalog.Products(i))
+                    self.products.append(product_)
+        if not catalog.ProductEmbeddingsIsNone():
+            self.productEmbeddings = []
+            for i in range(catalog.ProductEmbeddingsLength()):
+                if catalog.ProductEmbeddings(i) is None:
+                    self.productEmbeddings.append(None)
+                else:
+                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(catalog.ProductEmbeddings(i))
+                    self.productEmbeddings.append(embedding_)
+        if not catalog.CharacterizationsIsNone():
+            self.characterizations = []
+            for i in range(catalog.CharacterizationsLength()):
+                if catalog.Characterizations(i) is None:
+                    self.characterizations.append(None)
+                else:
+                    productCharacterization_ = hushh.hcf.ProductCharacterization.ProductCharacterizationT.InitFromObj(catalog.Characterizations(i))
+                    self.characterizations.append(productCharacterization_)
+        if not catalog.CharacterizationEmbeddingsIsNone():
+            self.characterizationEmbeddings = []
+            for i in range(catalog.CharacterizationEmbeddingsLength()):
+                if catalog.CharacterizationEmbeddings(i) is None:
+                    self.characterizationEmbeddings.append(None)
+                else:
+                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(catalog.CharacterizationEmbeddings(i))
+                    self.characterizationEmbeddings.append(embedding_)
+        if not catalog.ProductInformationIsNone():
+            self.productInformation = []
+            for i in range(catalog.ProductInformationLength()):
+                if catalog.ProductInformation(i) is None:
+                    self.productInformation.append(None)
+                else:
+                    productInformation_ = hushh.hcf.ProductInformation.ProductInformationT.InitFromObj(catalog.ProductInformation(i))
+                    self.productInformation.append(productInformation_)
+
+    # CatalogT
+    def Pack(self, builder):
+        if self.id is not None:
+            id = builder.CreateString(self.id)
+        if self.version is not None:
+            version = builder.CreateString(self.version)
+        if self.head is not None:
+            head = builder.CreateString(self.head)
+        if self.products is not None:
+            productslist = []
+            for i in range(len(self.products)):
+                productslist.append(self.products[i].Pack(builder))
+            CatalogStartProductsVector(builder, len(self.products))
+            for i in reversed(range(len(self.products))):
+                builder.PrependUOffsetTRelative(productslist[i])
+            products = builder.EndVector()
+        if self.productEmbeddings is not None:
+            productEmbeddingslist = []
+            for i in range(len(self.productEmbeddings)):
+                productEmbeddingslist.append(self.productEmbeddings[i].Pack(builder))
+            CatalogStartProductEmbeddingsVector(builder, len(self.productEmbeddings))
+            for i in reversed(range(len(self.productEmbeddings))):
+                builder.PrependUOffsetTRelative(productEmbeddingslist[i])
+            productEmbeddings = builder.EndVector()
+        if self.characterizations is not None:
+            characterizationslist = []
+            for i in range(len(self.characterizations)):
+                characterizationslist.append(self.characterizations[i].Pack(builder))
+            CatalogStartCharacterizationsVector(builder, len(self.characterizations))
+            for i in reversed(range(len(self.characterizations))):
+                builder.PrependUOffsetTRelative(characterizationslist[i])
+            characterizations = builder.EndVector()
+        if self.characterizationEmbeddings is not None:
+            characterizationEmbeddingslist = []
+            for i in range(len(self.characterizationEmbeddings)):
+                characterizationEmbeddingslist.append(self.characterizationEmbeddings[i].Pack(builder))
+            CatalogStartCharacterizationEmbeddingsVector(builder, len(self.characterizationEmbeddings))
+            for i in reversed(range(len(self.characterizationEmbeddings))):
+                builder.PrependUOffsetTRelative(characterizationEmbeddingslist[i])
+            characterizationEmbeddings = builder.EndVector()
+        if self.productInformation is not None:
+            productInformationlist = []
+            for i in range(len(self.productInformation)):
+                productInformationlist.append(self.productInformation[i].Pack(builder))
+            CatalogStartProductInformationVector(builder, len(self.productInformation))
+            for i in reversed(range(len(self.productInformation))):
+                builder.PrependUOffsetTRelative(productInformationlist[i])
+            productInformation = builder.EndVector()
+        CatalogStart(builder)
+        if self.id is not None:
+            CatalogAddId(builder, id)
+        if self.version is not None:
+            CatalogAddVersion(builder, version)
+        if self.head is not None:
+            CatalogAddHead(builder, head)
+        if self.products is not None:
+            CatalogAddProducts(builder, products)
+        if self.productEmbeddings is not None:
+            CatalogAddProductEmbeddings(builder, productEmbeddings)
+        if self.characterizations is not None:
+            CatalogAddCharacterizations(builder, characterizations)
+        if self.characterizationEmbeddings is not None:
+            CatalogAddCharacterizationEmbeddings(builder, characterizationEmbeddings)
+        if self.productInformation is not None:
+            CatalogAddProductInformation(builder, productInformation)
+        catalog = CatalogEnd(builder)
+        return catalog

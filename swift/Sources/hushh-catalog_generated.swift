@@ -4,7 +4,7 @@
 
 import FlatBuffers
 
-public struct hushh_hcf_ProductCharacterization: FlatBufferObject, Verifiable {
+public struct hushh_hcf_ProductCharacterization: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -51,6 +51,46 @@ public struct hushh_hcf_ProductCharacterization: FlatBufferObject, Verifiable {
     hushh_hcf_ProductCharacterization.addVectorOf(productIds: productIds, &fbb)
     return hushh_hcf_ProductCharacterization.endProductCharacterization(&fbb, start: __start)
   }
+  
+
+  public mutating func unpack() -> hushh_hcf_ProductCharacterizationT {
+    return hushh_hcf_ProductCharacterizationT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductCharacterizationT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductCharacterizationT) -> Offset {
+    let __id: Offset
+    if let s = obj.id {
+      __id = builder.create(string: s)
+    } else {
+      __id = Offset()
+    }
+
+    let __description: Offset
+    if let s = obj.description {
+      __description = builder.create(string: s)
+    } else {
+      __description = Offset()
+    }
+
+    let __url: Offset
+    if let s = obj.url {
+      __url = builder.create(string: s)
+    } else {
+      __url = Offset()
+    }
+
+    let __productIds = builder.createVector(ofStrings: obj.productIds.compactMap({ $0 }) )
+    let __root = hushh_hcf_ProductCharacterization.startProductCharacterization(&builder)
+    hushh_hcf_ProductCharacterization.add(id: __id, &builder)
+    hushh_hcf_ProductCharacterization.add(description: __description, &builder)
+    hushh_hcf_ProductCharacterization.add(url: __url, &builder)
+    hushh_hcf_ProductCharacterization.addVectorOf(productIds: __productIds, &builder)
+    return hushh_hcf_ProductCharacterization.endProductCharacterization(&builder, start: __root)
+  }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
@@ -62,7 +102,31 @@ public struct hushh_hcf_ProductCharacterization: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_hcf_Product: FlatBufferObject, Verifiable {
+public class hushh_hcf_ProductCharacterizationT: NativeObject {
+
+  public var id: String?
+  public var description: String?
+  public var url: String?
+  public var productIds: [String?]
+
+  public init(_ _t: inout hushh_hcf_ProductCharacterization) {
+    id = _t.id
+    description = _t.description
+    url = _t.url
+    productIds = []
+    for index in 0..<_t.productIdsCount {
+        productIds.append(_t.productIds(at: index))
+    }
+  }
+
+  public init() {
+    productIds = []
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_ProductCharacterization.self) }
+
+}
+public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -109,6 +173,46 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable {
     hushh_hcf_Product.addVectorOf(characterizationIds: characterizationIds, &fbb)
     return hushh_hcf_Product.endProduct(&fbb, start: __start)
   }
+  
+
+  public mutating func unpack() -> hushh_hcf_ProductT {
+    return hushh_hcf_ProductT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductT) -> Offset {
+    let __id: Offset
+    if let s = obj.id {
+      __id = builder.create(string: s)
+    } else {
+      __id = Offset()
+    }
+
+    let __description: Offset
+    if let s = obj.description {
+      __description = builder.create(string: s)
+    } else {
+      __description = Offset()
+    }
+
+    let __url: Offset
+    if let s = obj.url {
+      __url = builder.create(string: s)
+    } else {
+      __url = Offset()
+    }
+
+    let __characterizationIds = builder.createVector(ofStrings: obj.characterizationIds.compactMap({ $0 }) )
+    let __root = hushh_hcf_Product.startProduct(&builder)
+    hushh_hcf_Product.add(id: __id, &builder)
+    hushh_hcf_Product.add(description: __description, &builder)
+    hushh_hcf_Product.add(url: __url, &builder)
+    hushh_hcf_Product.addVectorOf(characterizationIds: __characterizationIds, &builder)
+    return hushh_hcf_Product.endProduct(&builder, start: __root)
+  }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
@@ -120,7 +224,31 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_hcf_Embedding: FlatBufferObject, Verifiable {
+public class hushh_hcf_ProductT: NativeObject {
+
+  public var id: String?
+  public var description: String?
+  public var url: String?
+  public var characterizationIds: [String?]
+
+  public init(_ _t: inout hushh_hcf_Product) {
+    id = _t.id
+    description = _t.description
+    url = _t.url
+    characterizationIds = []
+    for index in 0..<_t.characterizationIdsCount {
+        characterizationIds.append(_t.characterizationIds(at: index))
+    }
+  }
+
+  public init() {
+    characterizationIds = []
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Product.self) }
+
+}
+public struct hushh_hcf_Embedding: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -150,6 +278,22 @@ public struct hushh_hcf_Embedding: FlatBufferObject, Verifiable {
     hushh_hcf_Embedding.addVectorOf(v: v, &fbb)
     return hushh_hcf_Embedding.endEmbedding(&fbb, start: __start)
   }
+  
+
+  public mutating func unpack() -> hushh_hcf_EmbeddingT {
+    return hushh_hcf_EmbeddingT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_EmbeddingT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_EmbeddingT) -> Offset {
+    let __v = builder.createVector(obj.v)
+    let __root = hushh_hcf_Embedding.startEmbedding(&builder)
+    hushh_hcf_Embedding.addVectorOf(v: __v, &builder)
+    return hushh_hcf_Embedding.endEmbedding(&builder, start: __root)
+  }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
@@ -158,7 +302,25 @@ public struct hushh_hcf_Embedding: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_hcf_ProductInformation: FlatBufferObject, Verifiable {
+public class hushh_hcf_EmbeddingT: NativeObject {
+
+  public var v: [Float32]
+
+  public init(_ _t: inout hushh_hcf_Embedding) {
+    v = []
+    for index in 0..<_t.vCount {
+        v.append(_t.v(at: index))
+    }
+  }
+
+  public init() {
+    v = []
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Embedding.self) }
+
+}
+public struct hushh_hcf_ProductInformation: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -204,6 +366,52 @@ public struct hushh_hcf_ProductInformation: FlatBufferObject, Verifiable {
     hushh_hcf_ProductInformation.add(url: url, &fbb)
     return hushh_hcf_ProductInformation.endProductInformation(&fbb, start: __start)
   }
+  
+
+  public mutating func unpack() -> hushh_hcf_ProductInformationT {
+    return hushh_hcf_ProductInformationT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductInformationT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductInformationT) -> Offset {
+    let __id: Offset
+    if let s = obj.id {
+      __id = builder.create(string: s)
+    } else {
+      __id = Offset()
+    }
+
+    let __description: Offset
+    if let s = obj.description {
+      __description = builder.create(string: s)
+    } else {
+      __description = Offset()
+    }
+
+    let __imageBase64: Offset
+    if let s = obj.imageBase64 {
+      __imageBase64 = builder.create(string: s)
+    } else {
+      __imageBase64 = Offset()
+    }
+
+    let __url: Offset
+    if let s = obj.url {
+      __url = builder.create(string: s)
+    } else {
+      __url = Offset()
+    }
+
+    let __root = hushh_hcf_ProductInformation.startProductInformation(&builder)
+    hushh_hcf_ProductInformation.add(id: __id, &builder)
+    hushh_hcf_ProductInformation.add(description: __description, &builder)
+    hushh_hcf_ProductInformation.add(imageBase64: __imageBase64, &builder)
+    hushh_hcf_ProductInformation.add(url: __url, &builder)
+    return hushh_hcf_ProductInformation.endProductInformation(&builder, start: __root)
+  }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
@@ -215,7 +423,27 @@ public struct hushh_hcf_ProductInformation: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_hcf_CharacterizationEmbeddings: FlatBufferObject, Verifiable {
+public class hushh_hcf_ProductInformationT: NativeObject {
+
+  public var id: String?
+  public var description: String?
+  public var imageBase64: String?
+  public var url: String?
+
+  public init(_ _t: inout hushh_hcf_ProductInformation) {
+    id = _t.id
+    description = _t.description
+    imageBase64 = _t.imageBase64
+    url = _t.url
+  }
+
+  public init() {
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_ProductInformation.self) }
+
+}
+public struct hushh_hcf_CharacterizationEmbeddings: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -255,6 +483,44 @@ public struct hushh_hcf_CharacterizationEmbeddings: FlatBufferObject, Verifiable
     hushh_hcf_CharacterizationEmbeddings.add(url: url, &fbb)
     return hushh_hcf_CharacterizationEmbeddings.endCharacterizationEmbeddings(&fbb, start: __start)
   }
+  
+
+  public mutating func unpack() -> hushh_hcf_CharacterizationEmbeddingsT {
+    return hushh_hcf_CharacterizationEmbeddingsT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_CharacterizationEmbeddingsT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_CharacterizationEmbeddingsT) -> Offset {
+    let __id: Offset
+    if let s = obj.id {
+      __id = builder.create(string: s)
+    } else {
+      __id = Offset()
+    }
+
+    let __description: Offset
+    if let s = obj.description {
+      __description = builder.create(string: s)
+    } else {
+      __description = Offset()
+    }
+
+    let __url: Offset
+    if let s = obj.url {
+      __url = builder.create(string: s)
+    } else {
+      __url = Offset()
+    }
+
+    let __root = hushh_hcf_CharacterizationEmbeddings.startCharacterizationEmbeddings(&builder)
+    hushh_hcf_CharacterizationEmbeddings.add(id: __id, &builder)
+    hushh_hcf_CharacterizationEmbeddings.add(description: __description, &builder)
+    hushh_hcf_CharacterizationEmbeddings.add(url: __url, &builder)
+    return hushh_hcf_CharacterizationEmbeddings.endCharacterizationEmbeddings(&builder, start: __root)
+  }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
@@ -265,7 +531,25 @@ public struct hushh_hcf_CharacterizationEmbeddings: FlatBufferObject, Verifiable
   }
 }
 
-public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable {
+public class hushh_hcf_CharacterizationEmbeddingsT: NativeObject {
+
+  public var id: String?
+  public var description: String?
+  public var url: String?
+
+  public init(_ _t: inout hushh_hcf_CharacterizationEmbeddings) {
+    id = _t.id
+    description = _t.description
+    url = _t.url
+  }
+
+  public init() {
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_CharacterizationEmbeddings.self) }
+
+}
+public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -340,6 +624,74 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable {
     hushh_hcf_Catalog.addVectorOf(productInformation: productInformation, &fbb)
     return hushh_hcf_Catalog.endCatalog(&fbb, start: __start)
   }
+  
+
+  public mutating func unpack() -> hushh_hcf_CatalogT {
+    return hushh_hcf_CatalogT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_CatalogT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_CatalogT) -> Offset {
+    let __id: Offset
+    if let s = obj.id {
+      __id = builder.create(string: s)
+    } else {
+      __id = Offset()
+    }
+
+    let __version: Offset
+    if let s = obj.version {
+      __version = builder.create(string: s)
+    } else {
+      __version = Offset()
+    }
+
+    let __head: Offset
+    if let s = obj.head {
+      __head = builder.create(string: s)
+    } else {
+      __head = Offset()
+    }
+
+    var __products__: [Offset] = []
+    for var i in obj.products {
+      __products__.append(hushh_hcf_Product.pack(&builder, obj: &i))
+    }
+    let __products = builder.createVector(ofOffsets: __products__)
+    var __productEmbeddings__: [Offset] = []
+    for var i in obj.productEmbeddings {
+      __productEmbeddings__.append(hushh_hcf_Embedding.pack(&builder, obj: &i))
+    }
+    let __productEmbeddings = builder.createVector(ofOffsets: __productEmbeddings__)
+    var __characterizations__: [Offset] = []
+    for var i in obj.characterizations {
+      __characterizations__.append(hushh_hcf_ProductCharacterization.pack(&builder, obj: &i))
+    }
+    let __characterizations = builder.createVector(ofOffsets: __characterizations__)
+    var __characterizationEmbeddings__: [Offset] = []
+    for var i in obj.characterizationEmbeddings {
+      __characterizationEmbeddings__.append(hushh_hcf_Embedding.pack(&builder, obj: &i))
+    }
+    let __characterizationEmbeddings = builder.createVector(ofOffsets: __characterizationEmbeddings__)
+    var __productInformation__: [Offset] = []
+    for var i in obj.productInformation {
+      __productInformation__.append(hushh_hcf_ProductInformation.pack(&builder, obj: &i))
+    }
+    let __productInformation = builder.createVector(ofOffsets: __productInformation__)
+    let __root = hushh_hcf_Catalog.startCatalog(&builder)
+    hushh_hcf_Catalog.add(id: __id, &builder)
+    hushh_hcf_Catalog.add(version: __version, &builder)
+    hushh_hcf_Catalog.add(head: __head, &builder)
+    hushh_hcf_Catalog.addVectorOf(products: __products, &builder)
+    hushh_hcf_Catalog.addVectorOf(productEmbeddings: __productEmbeddings, &builder)
+    hushh_hcf_Catalog.addVectorOf(characterizations: __characterizations, &builder)
+    hushh_hcf_Catalog.addVectorOf(characterizationEmbeddings: __characterizationEmbeddings, &builder)
+    hushh_hcf_Catalog.addVectorOf(productInformation: __productInformation, &builder)
+    return hushh_hcf_Catalog.endCatalog(&builder, start: __root)
+  }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
@@ -355,3 +707,56 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable {
   }
 }
 
+public class hushh_hcf_CatalogT: NativeObject {
+
+  public var id: String?
+  public var version: String?
+  public var head: String?
+  public var products: [hushh_hcf_ProductT?]
+  public var productEmbeddings: [hushh_hcf_EmbeddingT?]
+  public var characterizations: [hushh_hcf_ProductCharacterizationT?]
+  public var characterizationEmbeddings: [hushh_hcf_EmbeddingT?]
+  public var productInformation: [hushh_hcf_ProductInformationT?]
+
+  public init(_ _t: inout hushh_hcf_Catalog) {
+    id = _t.id
+    version = _t.version
+    head = _t.head
+    products = []
+    for index in 0..<_t.productsCount {
+        var __v_ = _t.products(at: index)
+        products.append(__v_?.unpack())
+    }
+    productEmbeddings = []
+    for index in 0..<_t.productEmbeddingsCount {
+        var __v_ = _t.productEmbeddings(at: index)
+        productEmbeddings.append(__v_?.unpack())
+    }
+    characterizations = []
+    for index in 0..<_t.characterizationsCount {
+        var __v_ = _t.characterizations(at: index)
+        characterizations.append(__v_?.unpack())
+    }
+    characterizationEmbeddings = []
+    for index in 0..<_t.characterizationEmbeddingsCount {
+        var __v_ = _t.characterizationEmbeddings(at: index)
+        characterizationEmbeddings.append(__v_?.unpack())
+    }
+    productInformation = []
+    for index in 0..<_t.productInformationCount {
+        var __v_ = _t.productInformation(at: index)
+        productInformation.append(__v_?.unpack())
+    }
+  }
+
+  public init() {
+    products = []
+    productEmbeddings = []
+    characterizations = []
+    characterizationEmbeddings = []
+    productInformation = []
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Catalog.self) }
+
+}
