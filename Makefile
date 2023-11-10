@@ -71,8 +71,8 @@ test_environment:
 	$(PYTHON_INTERPRETER) Pytests/test_environment.py
 
 flatbuffers:
-	flatc --python -o PyGenSources/ schemas/hushh-catalog.fbs
-	flatc --swift -o SwiftGenSources/ schemas/hushh-catalog.fbs
+	flatc --python -o python/src schemas/hushh-catalog.fbs
+	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs
 
 #################################################################################
 # PROJECT RULES                                                                 #
