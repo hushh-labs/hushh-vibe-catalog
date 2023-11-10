@@ -4,7 +4,7 @@
 
 import FlatBuffers
 
-public struct hushh_ProductCharacterization: FlatBufferObject, Verifiable {
+public struct hushh_hcf_ProductCharacterization: FlatBufferObject, Verifiable {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -44,12 +44,12 @@ public struct hushh_ProductCharacterization: FlatBufferObject, Verifiable {
     urlOffset url: Offset = Offset(),
     productIdsVectorOffset productIds: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_ProductCharacterization.startProductCharacterization(&fbb)
-    hushh_ProductCharacterization.add(id: id, &fbb)
-    hushh_ProductCharacterization.add(description: description, &fbb)
-    hushh_ProductCharacterization.add(url: url, &fbb)
-    hushh_ProductCharacterization.addVectorOf(productIds: productIds, &fbb)
-    return hushh_ProductCharacterization.endProductCharacterization(&fbb, start: __start)
+    let __start = hushh_hcf_ProductCharacterization.startProductCharacterization(&fbb)
+    hushh_hcf_ProductCharacterization.add(id: id, &fbb)
+    hushh_hcf_ProductCharacterization.add(description: description, &fbb)
+    hushh_hcf_ProductCharacterization.add(url: url, &fbb)
+    hushh_hcf_ProductCharacterization.addVectorOf(productIds: productIds, &fbb)
+    return hushh_hcf_ProductCharacterization.endProductCharacterization(&fbb, start: __start)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
@@ -62,7 +62,7 @@ public struct hushh_ProductCharacterization: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_Product: FlatBufferObject, Verifiable {
+public struct hushh_hcf_Product: FlatBufferObject, Verifiable {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -102,12 +102,12 @@ public struct hushh_Product: FlatBufferObject, Verifiable {
     urlOffset url: Offset = Offset(),
     characterizationIdsVectorOffset characterizationIds: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_Product.startProduct(&fbb)
-    hushh_Product.add(id: id, &fbb)
-    hushh_Product.add(description: description, &fbb)
-    hushh_Product.add(url: url, &fbb)
-    hushh_Product.addVectorOf(characterizationIds: characterizationIds, &fbb)
-    return hushh_Product.endProduct(&fbb, start: __start)
+    let __start = hushh_hcf_Product.startProduct(&fbb)
+    hushh_hcf_Product.add(id: id, &fbb)
+    hushh_hcf_Product.add(description: description, &fbb)
+    hushh_hcf_Product.add(url: url, &fbb)
+    hushh_hcf_Product.addVectorOf(characterizationIds: characterizationIds, &fbb)
+    return hushh_hcf_Product.endProduct(&fbb, start: __start)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
@@ -120,7 +120,7 @@ public struct hushh_Product: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_Embedding: FlatBufferObject, Verifiable {
+public struct hushh_hcf_Embedding: FlatBufferObject, Verifiable {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -146,9 +146,9 @@ public struct hushh_Embedding: FlatBufferObject, Verifiable {
     _ fbb: inout FlatBufferBuilder,
     vVectorOffset v: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_Embedding.startEmbedding(&fbb)
-    hushh_Embedding.addVectorOf(v: v, &fbb)
-    return hushh_Embedding.endEmbedding(&fbb, start: __start)
+    let __start = hushh_hcf_Embedding.startEmbedding(&fbb)
+    hushh_hcf_Embedding.addVectorOf(v: v, &fbb)
+    return hushh_hcf_Embedding.endEmbedding(&fbb, start: __start)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
@@ -158,7 +158,7 @@ public struct hushh_Embedding: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_ProductInformation: FlatBufferObject, Verifiable {
+public struct hushh_hcf_ProductInformation: FlatBufferObject, Verifiable {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -197,12 +197,12 @@ public struct hushh_ProductInformation: FlatBufferObject, Verifiable {
     imageBase64Offset imageBase64: Offset = Offset(),
     urlOffset url: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_ProductInformation.startProductInformation(&fbb)
-    hushh_ProductInformation.add(id: id, &fbb)
-    hushh_ProductInformation.add(description: description, &fbb)
-    hushh_ProductInformation.add(imageBase64: imageBase64, &fbb)
-    hushh_ProductInformation.add(url: url, &fbb)
-    return hushh_ProductInformation.endProductInformation(&fbb, start: __start)
+    let __start = hushh_hcf_ProductInformation.startProductInformation(&fbb)
+    hushh_hcf_ProductInformation.add(id: id, &fbb)
+    hushh_hcf_ProductInformation.add(description: description, &fbb)
+    hushh_hcf_ProductInformation.add(imageBase64: imageBase64, &fbb)
+    hushh_hcf_ProductInformation.add(url: url, &fbb)
+    return hushh_hcf_ProductInformation.endProductInformation(&fbb, start: __start)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
@@ -215,7 +215,7 @@ public struct hushh_ProductInformation: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_CharacterizationEmbeddings: FlatBufferObject, Verifiable {
+public struct hushh_hcf_CharacterizationEmbeddings: FlatBufferObject, Verifiable {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -249,11 +249,11 @@ public struct hushh_CharacterizationEmbeddings: FlatBufferObject, Verifiable {
     descriptionOffset description: Offset = Offset(),
     urlOffset url: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_CharacterizationEmbeddings.startCharacterizationEmbeddings(&fbb)
-    hushh_CharacterizationEmbeddings.add(id: id, &fbb)
-    hushh_CharacterizationEmbeddings.add(description: description, &fbb)
-    hushh_CharacterizationEmbeddings.add(url: url, &fbb)
-    return hushh_CharacterizationEmbeddings.endCharacterizationEmbeddings(&fbb, start: __start)
+    let __start = hushh_hcf_CharacterizationEmbeddings.startCharacterizationEmbeddings(&fbb)
+    hushh_hcf_CharacterizationEmbeddings.add(id: id, &fbb)
+    hushh_hcf_CharacterizationEmbeddings.add(description: description, &fbb)
+    hushh_hcf_CharacterizationEmbeddings.add(url: url, &fbb)
+    return hushh_hcf_CharacterizationEmbeddings.endCharacterizationEmbeddings(&fbb, start: __start)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
@@ -265,7 +265,7 @@ public struct hushh_CharacterizationEmbeddings: FlatBufferObject, Verifiable {
   }
 }
 
-public struct hushh_Catalog: FlatBufferObject, Verifiable {
+public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -295,19 +295,19 @@ public struct hushh_Catalog: FlatBufferObject, Verifiable {
   public var headSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.head.v) }
   public var hasProducts: Bool { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? false : true }
   public var productsCount: Int32 { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func products(at index: Int32) -> hushh_Product? { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? nil : hushh_Product(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public func products(at index: Int32) -> hushh_hcf_Product? { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? nil : hushh_hcf_Product(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
   public var hasProductEmbeddings: Bool { let o = _accessor.offset(VTOFFSET.productEmbeddings.v); return o == 0 ? false : true }
   public var productEmbeddingsCount: Int32 { let o = _accessor.offset(VTOFFSET.productEmbeddings.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func productEmbeddings(at index: Int32) -> hushh_Embedding? { let o = _accessor.offset(VTOFFSET.productEmbeddings.v); return o == 0 ? nil : hushh_Embedding(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public func productEmbeddings(at index: Int32) -> hushh_hcf_Embedding? { let o = _accessor.offset(VTOFFSET.productEmbeddings.v); return o == 0 ? nil : hushh_hcf_Embedding(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
   public var hasCharacterizations: Bool { let o = _accessor.offset(VTOFFSET.characterizations.v); return o == 0 ? false : true }
   public var characterizationsCount: Int32 { let o = _accessor.offset(VTOFFSET.characterizations.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func characterizations(at index: Int32) -> hushh_ProductCharacterization? { let o = _accessor.offset(VTOFFSET.characterizations.v); return o == 0 ? nil : hushh_ProductCharacterization(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public func characterizations(at index: Int32) -> hushh_hcf_ProductCharacterization? { let o = _accessor.offset(VTOFFSET.characterizations.v); return o == 0 ? nil : hushh_hcf_ProductCharacterization(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
   public var hasCharacterizationEmbeddings: Bool { let o = _accessor.offset(VTOFFSET.characterizationEmbeddings.v); return o == 0 ? false : true }
   public var characterizationEmbeddingsCount: Int32 { let o = _accessor.offset(VTOFFSET.characterizationEmbeddings.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func characterizationEmbeddings(at index: Int32) -> hushh_Embedding? { let o = _accessor.offset(VTOFFSET.characterizationEmbeddings.v); return o == 0 ? nil : hushh_Embedding(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public func characterizationEmbeddings(at index: Int32) -> hushh_hcf_Embedding? { let o = _accessor.offset(VTOFFSET.characterizationEmbeddings.v); return o == 0 ? nil : hushh_hcf_Embedding(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
   public var hasProductInformation: Bool { let o = _accessor.offset(VTOFFSET.productInformation.v); return o == 0 ? false : true }
   public var productInformationCount: Int32 { let o = _accessor.offset(VTOFFSET.productInformation.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func productInformation(at index: Int32) -> hushh_ProductInformation? { let o = _accessor.offset(VTOFFSET.productInformation.v); return o == 0 ? nil : hushh_ProductInformation(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public func productInformation(at index: Int32) -> hushh_hcf_ProductInformation? { let o = _accessor.offset(VTOFFSET.productInformation.v); return o == 0 ? nil : hushh_hcf_ProductInformation(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
   public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 8) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(version: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: version, at: VTOFFSET.version.p) }
@@ -329,16 +329,16 @@ public struct hushh_Catalog: FlatBufferObject, Verifiable {
     characterizationEmbeddingsVectorOffset characterizationEmbeddings: Offset = Offset(),
     productInformationVectorOffset productInformation: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_Catalog.startCatalog(&fbb)
-    hushh_Catalog.add(id: id, &fbb)
-    hushh_Catalog.add(version: version, &fbb)
-    hushh_Catalog.add(head: head, &fbb)
-    hushh_Catalog.addVectorOf(products: products, &fbb)
-    hushh_Catalog.addVectorOf(productEmbeddings: productEmbeddings, &fbb)
-    hushh_Catalog.addVectorOf(characterizations: characterizations, &fbb)
-    hushh_Catalog.addVectorOf(characterizationEmbeddings: characterizationEmbeddings, &fbb)
-    hushh_Catalog.addVectorOf(productInformation: productInformation, &fbb)
-    return hushh_Catalog.endCatalog(&fbb, start: __start)
+    let __start = hushh_hcf_Catalog.startCatalog(&fbb)
+    hushh_hcf_Catalog.add(id: id, &fbb)
+    hushh_hcf_Catalog.add(version: version, &fbb)
+    hushh_hcf_Catalog.add(head: head, &fbb)
+    hushh_hcf_Catalog.addVectorOf(products: products, &fbb)
+    hushh_hcf_Catalog.addVectorOf(productEmbeddings: productEmbeddings, &fbb)
+    hushh_hcf_Catalog.addVectorOf(characterizations: characterizations, &fbb)
+    hushh_hcf_Catalog.addVectorOf(characterizationEmbeddings: characterizationEmbeddings, &fbb)
+    hushh_hcf_Catalog.addVectorOf(productInformation: productInformation, &fbb)
+    return hushh_hcf_Catalog.endCatalog(&fbb, start: __start)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
@@ -346,11 +346,11 @@ public struct hushh_Catalog: FlatBufferObject, Verifiable {
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.version.p, fieldName: "version", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.head.p, fieldName: "head", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.products.p, fieldName: "products", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_Product>, hushh_Product>>.self)
-    try _v.visit(field: VTOFFSET.productEmbeddings.p, fieldName: "productEmbeddings", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_Embedding>, hushh_Embedding>>.self)
-    try _v.visit(field: VTOFFSET.characterizations.p, fieldName: "characterizations", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_ProductCharacterization>, hushh_ProductCharacterization>>.self)
-    try _v.visit(field: VTOFFSET.characterizationEmbeddings.p, fieldName: "characterizationEmbeddings", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_Embedding>, hushh_Embedding>>.self)
-    try _v.visit(field: VTOFFSET.productInformation.p, fieldName: "productInformation", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_ProductInformation>, hushh_ProductInformation>>.self)
+    try _v.visit(field: VTOFFSET.products.p, fieldName: "products", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Product>, hushh_hcf_Product>>.self)
+    try _v.visit(field: VTOFFSET.productEmbeddings.p, fieldName: "productEmbeddings", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Embedding>, hushh_hcf_Embedding>>.self)
+    try _v.visit(field: VTOFFSET.characterizations.p, fieldName: "characterizations", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_ProductCharacterization>, hushh_hcf_ProductCharacterization>>.self)
+    try _v.visit(field: VTOFFSET.characterizationEmbeddings.p, fieldName: "characterizationEmbeddings", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Embedding>, hushh_hcf_Embedding>>.self)
+    try _v.visit(field: VTOFFSET.productInformation.p, fieldName: "productInformation", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_ProductInformation>, hushh_hcf_ProductInformation>>.self)
     _v.finish()
   }
 }

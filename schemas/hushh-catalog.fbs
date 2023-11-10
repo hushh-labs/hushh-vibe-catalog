@@ -1,4 +1,4 @@
-namespace hushh;
+namespace hushh.hcf;
 
 table ProductCharacterization {
   id: string;
