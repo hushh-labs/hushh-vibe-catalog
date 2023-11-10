@@ -4,13 +4,15 @@
 
 import flatbuffers
 from flatbuffers.compat import import_numpy
+from typing import Any
+from typing import Optional
 np = import_numpy()
 
 class ProductCharacterization(object):
     __slots__ = ['_tab']
 
     @classmethod
-    def GetRootAs(cls, buf, offset=0):
+    def GetRootAs(cls, buf, offset: int = 0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = ProductCharacterization()
         x.Init(buf, n + offset)
@@ -21,32 +23,32 @@ class ProductCharacterization(object):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
     # ProductCharacterization
-    def Init(self, buf, pos):
+    def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # ProductCharacterization
-    def Id(self):
+    def Id(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
     # ProductCharacterization
-    def Description(self):
+    def Description(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
     # ProductCharacterization
-    def Url(self):
+    def Url(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
     # ProductCharacterization
-    def ProductIds(self, j):
+    def ProductIds(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             a = self._tab.Vector(o)
@@ -54,57 +56,57 @@ class ProductCharacterization(object):
         return ""
 
     # ProductCharacterization
-    def ProductIdsLength(self):
+    def ProductIdsLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # ProductCharacterization
-    def ProductIdsIsNone(self):
+    def ProductIdsIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
-def ProductCharacterizationStart(builder):
+def ProductCharacterizationStart(builder: flatbuffers.Builder):
     builder.StartObject(4)
 
-def Start(builder):
+def Start(builder: flatbuffers.Builder):
     ProductCharacterizationStart(builder)
 
-def ProductCharacterizationAddId(builder, id):
+def ProductCharacterizationAddId(builder: flatbuffers.Builder, id: int):
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
-def AddId(builder, id):
+def AddId(builder: flatbuffers.Builder, id: int):
     ProductCharacterizationAddId(builder, id)
 
-def ProductCharacterizationAddDescription(builder, description):
+def ProductCharacterizationAddDescription(builder: flatbuffers.Builder, description: int):
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
-def AddDescription(builder, description):
+def AddDescription(builder: flatbuffers.Builder, description: int):
     ProductCharacterizationAddDescription(builder, description)
 
-def ProductCharacterizationAddUrl(builder, url):
+def ProductCharacterizationAddUrl(builder: flatbuffers.Builder, url: int):
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
-def AddUrl(builder, url):
+def AddUrl(builder: flatbuffers.Builder, url: int):
     ProductCharacterizationAddUrl(builder, url)
 
-def ProductCharacterizationAddProductIds(builder, productIds):
+def ProductCharacterizationAddProductIds(builder: flatbuffers.Builder, productIds: int):
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIds), 0)
 
-def AddProductIds(builder, productIds):
+def AddProductIds(builder: flatbuffers.Builder, productIds: int):
     ProductCharacterizationAddProductIds(builder, productIds)
 
-def ProductCharacterizationStartProductIdsVector(builder, numElems):
+def ProductCharacterizationStartProductIdsVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdsVector(builder, numElems: int) -> int:
     return ProductCharacterizationStartProductIdsVector(builder, numElems)
 
-def ProductCharacterizationEnd(builder):
+def ProductCharacterizationEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
-def End(builder):
+def End(builder: flatbuffers.Builder) -> int:
     return ProductCharacterizationEnd(builder)
 
 try:

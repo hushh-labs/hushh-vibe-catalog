@@ -4,13 +4,15 @@
 
 import flatbuffers
 from flatbuffers.compat import import_numpy
+from typing import Any
+from typing import Optional
 np = import_numpy()
 
 class CharacterizationEmbeddings(object):
     __slots__ = ['_tab']
 
     @classmethod
-    def GetRootAs(cls, buf, offset=0):
+    def GetRootAs(cls, buf, offset: int = 0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = CharacterizationEmbeddings()
         x.Init(buf, n + offset)
@@ -21,58 +23,58 @@ class CharacterizationEmbeddings(object):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
     # CharacterizationEmbeddings
-    def Init(self, buf, pos):
+    def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # CharacterizationEmbeddings
-    def Id(self):
+    def Id(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
     # CharacterizationEmbeddings
-    def Description(self):
+    def Description(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
     # CharacterizationEmbeddings
-    def Url(self):
+    def Url(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-def CharacterizationEmbeddingsStart(builder):
+def CharacterizationEmbeddingsStart(builder: flatbuffers.Builder):
     builder.StartObject(3)
 
-def Start(builder):
+def Start(builder: flatbuffers.Builder):
     CharacterizationEmbeddingsStart(builder)
 
-def CharacterizationEmbeddingsAddId(builder, id):
+def CharacterizationEmbeddingsAddId(builder: flatbuffers.Builder, id: int):
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
-def AddId(builder, id):
+def AddId(builder: flatbuffers.Builder, id: int):
     CharacterizationEmbeddingsAddId(builder, id)
 
-def CharacterizationEmbeddingsAddDescription(builder, description):
+def CharacterizationEmbeddingsAddDescription(builder: flatbuffers.Builder, description: int):
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
-def AddDescription(builder, description):
+def AddDescription(builder: flatbuffers.Builder, description: int):
     CharacterizationEmbeddingsAddDescription(builder, description)
 
-def CharacterizationEmbeddingsAddUrl(builder, url):
+def CharacterizationEmbeddingsAddUrl(builder: flatbuffers.Builder, url: int):
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
-def AddUrl(builder, url):
+def AddUrl(builder: flatbuffers.Builder, url: int):
     CharacterizationEmbeddingsAddUrl(builder, url)
 
-def CharacterizationEmbeddingsEnd(builder):
+def CharacterizationEmbeddingsEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
-def End(builder):
+def End(builder: flatbuffers.Builder) -> int:
     return CharacterizationEmbeddingsEnd(builder)
 
 

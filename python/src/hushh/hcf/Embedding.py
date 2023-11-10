@@ -4,13 +4,14 @@
 
 import flatbuffers
 from flatbuffers.compat import import_numpy
+from typing import Any
 np = import_numpy()
 
 class Embedding(object):
     __slots__ = ['_tab']
 
     @classmethod
-    def GetRootAs(cls, buf, offset=0):
+    def GetRootAs(cls, buf, offset: int = 0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = Embedding()
         x.Init(buf, n + offset)
@@ -21,11 +22,11 @@ class Embedding(object):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
     # Embedding
-    def Init(self, buf, pos):
+    def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Embedding
-    def V(self, j):
+    def V(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             a = self._tab.Vector(o)
@@ -40,39 +41,39 @@ class Embedding(object):
         return 0
 
     # Embedding
-    def VLength(self):
+    def VLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Embedding
-    def VIsNone(self):
+    def VIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         return o == 0
 
-def EmbeddingStart(builder):
+def EmbeddingStart(builder: flatbuffers.Builder):
     builder.StartObject(1)
 
-def Start(builder):
+def Start(builder: flatbuffers.Builder):
     EmbeddingStart(builder)
 
-def EmbeddingAddV(builder, v):
+def EmbeddingAddV(builder: flatbuffers.Builder, v: int):
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(v), 0)
 
-def AddV(builder, v):
+def AddV(builder: flatbuffers.Builder, v: int):
     EmbeddingAddV(builder, v)
 
-def EmbeddingStartVVector(builder, numElems):
+def EmbeddingStartVVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
 def StartVVector(builder, numElems: int) -> int:
     return EmbeddingStartVVector(builder, numElems)
 
-def EmbeddingEnd(builder):
+def EmbeddingEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
-def End(builder):
+def End(builder: flatbuffers.Builder) -> int:
     return EmbeddingEnd(builder)
 
 try:
