@@ -102,6 +102,29 @@ public struct hushh_hcf_ProductCharacterization: FlatBufferObject, Verifiable, O
   }
 }
 
+extension hushh_hcf_ProductCharacterization: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case description = "description"
+    case url = "url"
+    case productIds = "product_ids"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(id, forKey: .id)
+    try container.encodeIfPresent(description, forKey: .description)
+    try container.encodeIfPresent(url, forKey: .url)
+    if productIdsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .productIds)
+      for index in 0..<productIdsCount {
+        guard let type = productIds(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+  }
+}
+
 public class hushh_hcf_ProductCharacterizationT: NativeObject {
 
   public var id: String?
@@ -224,6 +247,29 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
   }
 }
 
+extension hushh_hcf_Product: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case description = "description"
+    case url = "url"
+    case characterizationIds = "characterization_ids"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(id, forKey: .id)
+    try container.encodeIfPresent(description, forKey: .description)
+    try container.encodeIfPresent(url, forKey: .url)
+    if characterizationIdsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .characterizationIds)
+      for index in 0..<characterizationIdsCount {
+        guard let type = characterizationIds(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+  }
+}
+
 public class hushh_hcf_ProductT: NativeObject {
 
   public var id: String?
@@ -299,6 +345,19 @@ public struct hushh_hcf_Embedding: FlatBufferObject, Verifiable, ObjectAPIPacker
     var _v = try verifier.visitTable(at: position)
     try _v.visit(field: VTOFFSET.v.p, fieldName: "v", required: false, type: ForwardOffset<Vector<Float32, Float32>>.self)
     _v.finish()
+  }
+}
+
+extension hushh_hcf_Embedding: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case v = "v"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    if vCount > 0 {
+      try container.encodeIfPresent(v, forKey: .v)
+    }
   }
 }
 
@@ -423,6 +482,23 @@ public struct hushh_hcf_ProductInformation: FlatBufferObject, Verifiable, Object
   }
 }
 
+extension hushh_hcf_ProductInformation: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case description = "description"
+    case imageBase64 = "image_base64"
+    case url = "url"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(id, forKey: .id)
+    try container.encodeIfPresent(description, forKey: .description)
+    try container.encodeIfPresent(imageBase64, forKey: .imageBase64)
+    try container.encodeIfPresent(url, forKey: .url)
+  }
+}
+
 public class hushh_hcf_ProductInformationT: NativeObject {
 
   public var id: String?
@@ -528,6 +604,21 @@ public struct hushh_hcf_CharacterizationEmbeddings: FlatBufferObject, Verifiable
     try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.url.p, fieldName: "url", required: false, type: ForwardOffset<String>.self)
     _v.finish()
+  }
+}
+
+extension hushh_hcf_CharacterizationEmbeddings: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case description = "description"
+    case url = "url"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(id, forKey: .id)
+    try container.encodeIfPresent(description, forKey: .description)
+    try container.encodeIfPresent(url, forKey: .url)
   }
 }
 
@@ -704,6 +795,61 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.characterizationEmbeddings.p, fieldName: "characterizationEmbeddings", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Embedding>, hushh_hcf_Embedding>>.self)
     try _v.visit(field: VTOFFSET.productInformation.p, fieldName: "productInformation", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_ProductInformation>, hushh_hcf_ProductInformation>>.self)
     _v.finish()
+  }
+}
+
+extension hushh_hcf_Catalog: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case version = "version"
+    case head = "head"
+    case products = "products"
+    case productEmbeddings = "product_embeddings"
+    case characterizations = "characterizations"
+    case characterizationEmbeddings = "characterization_embeddings"
+    case productInformation = "product_information"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(id, forKey: .id)
+    try container.encodeIfPresent(version, forKey: .version)
+    try container.encodeIfPresent(head, forKey: .head)
+    if productsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .products)
+      for index in 0..<productsCount {
+        guard let type = products(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if productEmbeddingsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .productEmbeddings)
+      for index in 0..<productEmbeddingsCount {
+        guard let type = productEmbeddings(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if characterizationsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .characterizations)
+      for index in 0..<characterizationsCount {
+        guard let type = characterizations(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if characterizationEmbeddingsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .characterizationEmbeddings)
+      for index in 0..<characterizationEmbeddingsCount {
+        guard let type = characterizationEmbeddings(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if productInformationCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .productInformation)
+      for index in 0..<productInformationCount {
+        guard let type = productInformation(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
   }
 }
 

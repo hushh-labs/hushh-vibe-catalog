@@ -72,8 +72,8 @@ test_environment:
 
 flatbuffers:
 	# https://github.com/hushh-labs/flattools
-	flatc --python -o python/src schemas/hushh-catalog.fbs --gen-object-api
-	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs --gen-object-api
+	flatc --python -o python/src schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
+	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
 
 #################################################################################
 # PROJECT RULES                                                                 #
