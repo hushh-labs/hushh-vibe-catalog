@@ -27,6 +27,7 @@ ci = [
   "pytest-cov",
   "requests-mock"
 ]
+
 [tool.pyright]
 executionEnvironments = [
   { root = "python/src" }

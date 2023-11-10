@@ -49,7 +49,7 @@ preflight: test
 	conda env export > environment.yml
 
 test:
-	pytest --cov=PyGenSources PyTests
+	pytest --cov=PyGenSources python/test
 
 docs:
 	quartodoc build
