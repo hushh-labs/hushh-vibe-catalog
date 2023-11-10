@@ -10,17 +10,16 @@ name = "hushh-vibe-catalog-reader"
 version = "0.0.1"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
+  "flatbuffers",
 ]
 
 [project.optional-dependencies]
 dev = [
-  "flatbuffers",
   "quartodoc",
   "black",
   "pip-tools",
   "flake8",
   "bumpversion",
-  "dataclasses-json",
   "hushh-vibe-catalog-reader[ci]"
 ]
 ci = [
