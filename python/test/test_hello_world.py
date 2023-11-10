@@ -1,9 +1,6 @@
 import flatbuffers
-from hushh import Catalog
+from hushh.hcf import Catalog
 builder = flatbuffers.Builder(0)
-
-
-
 
 def test_product():
     builder = flatbuffers.Builder(0)
