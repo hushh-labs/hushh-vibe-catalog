@@ -1,6 +1,6 @@
 import flatbuffers
 from hushh.hcf import Catalog as RawCatalog
-from hushh.hcf.Catalog import CatalogT
+from hushh.catalog import Catalog
 builder = flatbuffers.Builder(0)
 
 def build_raw_catalog():
@@ -28,10 +28,6 @@ def test_raw_catalog():
     assert cat.Id() == b"foo"
     assert cat.Head() == b"bar"
     assert cat.Version() == b"1.2.0"
-
-
-class Catalog(CatalogT):
-    pass
 
 def test_catalog():
     cat = Catalog()

@@ -8,7 +8,7 @@ from typing import Any
 from hushh.hcf.Embedding import Embedding
 from hushh.hcf.Product import Product
 from hushh.hcf.ProductCharacterization import ProductCharacterization
-from hushh.hcf.ProductInformation import ProductInformation
+from hushh.hcf.ProductMetadata import ProductMetadata
 from typing import Optional
 np = import_numpy()
 
@@ -45,15 +45,8 @@ class Catalog(object):
         return None
 
     # Catalog
-    def Head(self) -> Optional[str]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
-        if o != 0:
-            return self._tab.String(o + self._tab.Pos)
-        return None
-
-    # Catalog
     def Products(self, j: int) -> Optional[Product]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -65,13 +58,37 @@ class Catalog(object):
 
     # Catalog
     def ProductsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Catalog
     def ProductsIsNone(self) -> bool:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        return o == 0
+
+    # Catalog
+    def ProductMetadata(self, j: int) -> Optional[ProductMetadata]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        if o != 0:
+            x = self._tab.Vector(o)
+            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
+            x = self._tab.Indirect(x)
+            obj = ProductMetadata()
+            obj.Init(self._tab.Bytes, x)
+            return obj
+        return None
+
+    # Catalog
+    def ProductMetadataLength(self) -> int:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        if o != 0:
+            return self._tab.VectorLen(o)
+        return 0
+
+    # Catalog
+    def ProductMetadataIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
@@ -147,32 +164,8 @@ class Catalog(object):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
         return o == 0
 
-    # Catalog
-    def ProductInformation(self, j: int) -> Optional[ProductInformation]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = ProductInformation()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Catalog
-    def ProductInformationLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Catalog
-    def ProductInformationIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
-        return o == 0
-
 def CatalogStart(builder: flatbuffers.Builder):
-    builder.StartObject(8)
+    builder.StartObject(7)
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
@@ -189,14 +182,8 @@ def CatalogAddVersion(builder: flatbuffers.Builder, version: int):
 def AddVersion(builder: flatbuffers.Builder, version: int):
     CatalogAddVersion(builder, version)
 
-def CatalogAddHead(builder: flatbuffers.Builder, head: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(head), 0)
-
-def AddHead(builder: flatbuffers.Builder, head: int):
-    CatalogAddHead(builder, head)
-
 def CatalogAddProducts(builder: flatbuffers.Builder, products: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
 
 def AddProducts(builder: flatbuffers.Builder, products: int):
     CatalogAddProducts(builder, products)
@@ -206,6 +193,18 @@ def CatalogStartProductsVector(builder, numElems: int) -> int:
 
 def StartProductsVector(builder, numElems: int) -> int:
     return CatalogStartProductsVector(builder, numElems)
+
+def CatalogAddProductMetadata(builder: flatbuffers.Builder, productMetadata: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productMetadata), 0)
+
+def AddProductMetadata(builder: flatbuffers.Builder, productMetadata: int):
+    CatalogAddProductMetadata(builder, productMetadata)
+
+def CatalogStartProductMetadataVector(builder, numElems: int) -> int:
+    return builder.StartVector(4, numElems, 4)
+
+def StartProductMetadataVector(builder, numElems: int) -> int:
+    return CatalogStartProductMetadataVector(builder, numElems)
 
 def CatalogAddProductEmbeddings(builder: flatbuffers.Builder, productEmbeddings: int):
     builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(productEmbeddings), 0)
@@ -243,18 +242,6 @@ def CatalogStartCharacterizationEmbeddingsVector(builder, numElems: int) -> int:
 def StartCharacterizationEmbeddingsVector(builder, numElems: int) -> int:
     return CatalogStartCharacterizationEmbeddingsVector(builder, numElems)
 
-def CatalogAddProductInformation(builder: flatbuffers.Builder, productInformation: int):
-    builder.PrependUOffsetTRelativeSlot(7, flatbuffers.number_types.UOffsetTFlags.py_type(productInformation), 0)
-
-def AddProductInformation(builder: flatbuffers.Builder, productInformation: int):
-    CatalogAddProductInformation(builder, productInformation)
-
-def CatalogStartProductInformationVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartProductInformationVector(builder, numElems: int) -> int:
-    return CatalogStartProductInformationVector(builder, numElems)
-
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
@@ -264,7 +251,7 @@ def End(builder: flatbuffers.Builder) -> int:
 import hushh.hcf.Embedding
 import hushh.hcf.Product
 import hushh.hcf.ProductCharacterization
-import hushh.hcf.ProductInformation
+import hushh.hcf.ProductMetadata
 try:
     from typing import List
 except:
@@ -276,12 +263,11 @@ class CatalogT(object):
     def __init__(self):
         self.id = None  # type: str
         self.version = None  # type: str
-        self.head = None  # type: str
         self.products = None  # type: List[hushh.hcf.Product.ProductT]
+        self.productMetadata = None  # type: List[hushh.hcf.ProductMetadata.ProductMetadataT]
         self.productEmbeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
         self.characterizations = None  # type: List[hushh.hcf.ProductCharacterization.ProductCharacterizationT]
         self.characterizationEmbeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
-        self.productInformation = None  # type: List[hushh.hcf.ProductInformation.ProductInformationT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -306,7 +292,6 @@ class CatalogT(object):
             return
         self.id = catalog.Id()
         self.version = catalog.Version()
-        self.head = catalog.Head()
         if not catalog.ProductsIsNone():
             self.products = []
             for i in range(catalog.ProductsLength()):
@@ -315,6 +300,14 @@ class CatalogT(object):
                 else:
                     product_ = hushh.hcf.Product.ProductT.InitFromObj(catalog.Products(i))
                     self.products.append(product_)
+        if not catalog.ProductMetadataIsNone():
+            self.productMetadata = []
+            for i in range(catalog.ProductMetadataLength()):
+                if catalog.ProductMetadata(i) is None:
+                    self.productMetadata.append(None)
+                else:
+                    productMetadata_ = hushh.hcf.ProductMetadata.ProductMetadataT.InitFromObj(catalog.ProductMetadata(i))
+                    self.productMetadata.append(productMetadata_)
         if not catalog.ProductEmbeddingsIsNone():
             self.productEmbeddings = []
             for i in range(catalog.ProductEmbeddingsLength()):
@@ -339,14 +332,6 @@ class CatalogT(object):
                 else:
                     embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(catalog.CharacterizationEmbeddings(i))
                     self.characterizationEmbeddings.append(embedding_)
-        if not catalog.ProductInformationIsNone():
-            self.productInformation = []
-            for i in range(catalog.ProductInformationLength()):
-                if catalog.ProductInformation(i) is None:
-                    self.productInformation.append(None)
-                else:
-                    productInformation_ = hushh.hcf.ProductInformation.ProductInformationT.InitFromObj(catalog.ProductInformation(i))
-                    self.productInformation.append(productInformation_)
 
     # CatalogT
     def Pack(self, builder):
@@ -354,8 +339,6 @@ class CatalogT(object):
             id = builder.CreateString(self.id)
         if self.version is not None:
             version = builder.CreateString(self.version)
-        if self.head is not None:
-            head = builder.CreateString(self.head)
         if self.products is not None:
             productslist = []
             for i in range(len(self.products)):
@@ -364,6 +347,14 @@ class CatalogT(object):
             for i in reversed(range(len(self.products))):
                 builder.PrependUOffsetTRelative(productslist[i])
             products = builder.EndVector()
+        if self.productMetadata is not None:
+            productMetadatalist = []
+            for i in range(len(self.productMetadata)):
+                productMetadatalist.append(self.productMetadata[i].Pack(builder))
+            CatalogStartProductMetadataVector(builder, len(self.productMetadata))
+            for i in reversed(range(len(self.productMetadata))):
+                builder.PrependUOffsetTRelative(productMetadatalist[i])
+            productMetadata = builder.EndVector()
         if self.productEmbeddings is not None:
             productEmbeddingslist = []
             for i in range(len(self.productEmbeddings)):
@@ -388,30 +379,20 @@ class CatalogT(object):
             for i in reversed(range(len(self.characterizationEmbeddings))):
                 builder.PrependUOffsetTRelative(characterizationEmbeddingslist[i])
             characterizationEmbeddings = builder.EndVector()
-        if self.productInformation is not None:
-            productInformationlist = []
-            for i in range(len(self.productInformation)):
-                productInformationlist.append(self.productInformation[i].Pack(builder))
-            CatalogStartProductInformationVector(builder, len(self.productInformation))
-            for i in reversed(range(len(self.productInformation))):
-                builder.PrependUOffsetTRelative(productInformationlist[i])
-            productInformation = builder.EndVector()
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
         if self.version is not None:
             CatalogAddVersion(builder, version)
-        if self.head is not None:
-            CatalogAddHead(builder, head)
         if self.products is not None:
             CatalogAddProducts(builder, products)
+        if self.productMetadata is not None:
+            CatalogAddProductMetadata(builder, productMetadata)
         if self.productEmbeddings is not None:
             CatalogAddProductEmbeddings(builder, productEmbeddings)
         if self.characterizations is not None:
             CatalogAddCharacterizations(builder, characterizations)
         if self.characterizationEmbeddings is not None:
             CatalogAddCharacterizationEmbeddings(builder, characterizationEmbeddings)
-        if self.productInformation is not None:
-            CatalogAddProductInformation(builder, productInformation)
         catalog = CatalogEnd(builder)
         return catalog
