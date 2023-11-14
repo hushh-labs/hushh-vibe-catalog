@@ -1,6 +1,6 @@
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Product import ProductT
-from hushh.hcf.ProductComposition import ProductCompositionT
+from hushh.hcf.Category import ProductCompositionT
 from hushh.hcf.ProductMetadata import ProductMetadataT
 from hushh.hcf.CharacterizationEmbeddings import CharacterizationEmbeddingsT
 

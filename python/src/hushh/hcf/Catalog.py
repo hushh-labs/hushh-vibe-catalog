@@ -5,10 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from hushh.hcf.CompositionMetadata import CompositionMetadata
-from hushh.hcf.Embedding import Embedding
 from hushh.hcf.Product import Product
-from hushh.hcf.VibeMetadata import VibeMetadata
 from typing import Optional
 np = import_numpy()
 
@@ -45,8 +42,15 @@ class Catalog(object):
         return None
 
     # Catalog
-    def Products(self, j: int) -> Optional[Product]:
+    def Description(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        if o != 0:
+            return self._tab.String(o + self._tab.Pos)
+        return None
+
+    # Catalog
+    def Products(self, j: int) -> Optional[Product]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -58,114 +62,18 @@ class Catalog(object):
 
     # Catalog
     def ProductsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Catalog
     def ProductsIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
-        return o == 0
-
-    # Catalog
-    def VibeMetadata(self, j: int) -> Optional[VibeMetadata]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = VibeMetadata()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Catalog
-    def VibeMetadataLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Catalog
-    def VibeMetadataIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        return o == 0
-
-    # Catalog
-    def VibeEmbeddings(self, j: int) -> Optional[Embedding]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Embedding()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Catalog
-    def VibeEmbeddingsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Catalog
-    def VibeEmbeddingsIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        return o == 0
-
-    # Catalog
-    def CompositionMetadata(self, j: int) -> Optional[CompositionMetadata]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = CompositionMetadata()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Catalog
-    def CompositionMetadataLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Catalog
-    def CompositionMetadataIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
-        return o == 0
-
-    # Catalog
-    def CompositionEmbedding(self, j: int) -> Optional[Embedding]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Embedding()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Catalog
-    def CompositionEmbeddingLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Catalog
-    def CompositionEmbeddingIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
         return o == 0
 
 def CatalogStart(builder: flatbuffers.Builder):
-    builder.StartObject(7)
+    builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
@@ -182,8 +90,14 @@ def CatalogAddVersion(builder: flatbuffers.Builder, version: int):
 def AddVersion(builder: flatbuffers.Builder, version: int):
     CatalogAddVersion(builder, version)
 
+def CatalogAddDescription(builder: flatbuffers.Builder, description: int):
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
+
+def AddDescription(builder: flatbuffers.Builder, description: int):
+    CatalogAddDescription(builder, description)
+
 def CatalogAddProducts(builder: flatbuffers.Builder, products: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
 
 def AddProducts(builder: flatbuffers.Builder, products: int):
     CatalogAddProducts(builder, products)
@@ -194,64 +108,13 @@ def CatalogStartProductsVector(builder, numElems: int) -> int:
 def StartProductsVector(builder, numElems: int) -> int:
     return CatalogStartProductsVector(builder, numElems)
 
-def CatalogAddVibeMetadata(builder: flatbuffers.Builder, vibeMetadata: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(vibeMetadata), 0)
-
-def AddVibeMetadata(builder: flatbuffers.Builder, vibeMetadata: int):
-    CatalogAddVibeMetadata(builder, vibeMetadata)
-
-def CatalogStartVibeMetadataVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartVibeMetadataVector(builder, numElems: int) -> int:
-    return CatalogStartVibeMetadataVector(builder, numElems)
-
-def CatalogAddVibeEmbeddings(builder: flatbuffers.Builder, vibeEmbeddings: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(vibeEmbeddings), 0)
-
-def AddVibeEmbeddings(builder: flatbuffers.Builder, vibeEmbeddings: int):
-    CatalogAddVibeEmbeddings(builder, vibeEmbeddings)
-
-def CatalogStartVibeEmbeddingsVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartVibeEmbeddingsVector(builder, numElems: int) -> int:
-    return CatalogStartVibeEmbeddingsVector(builder, numElems)
-
-def CatalogAddCompositionMetadata(builder: flatbuffers.Builder, compositionMetadata: int):
-    builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(compositionMetadata), 0)
-
-def AddCompositionMetadata(builder: flatbuffers.Builder, compositionMetadata: int):
-    CatalogAddCompositionMetadata(builder, compositionMetadata)
-
-def CatalogStartCompositionMetadataVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartCompositionMetadataVector(builder, numElems: int) -> int:
-    return CatalogStartCompositionMetadataVector(builder, numElems)
-
-def CatalogAddCompositionEmbedding(builder: flatbuffers.Builder, compositionEmbedding: int):
-    builder.PrependUOffsetTRelativeSlot(6, flatbuffers.number_types.UOffsetTFlags.py_type(compositionEmbedding), 0)
-
-def AddCompositionEmbedding(builder: flatbuffers.Builder, compositionEmbedding: int):
-    CatalogAddCompositionEmbedding(builder, compositionEmbedding)
-
-def CatalogStartCompositionEmbeddingVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartCompositionEmbeddingVector(builder, numElems: int) -> int:
-    return CatalogStartCompositionEmbeddingVector(builder, numElems)
-
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
     return CatalogEnd(builder)
 
-import hushh.hcf.CompositionMetadata
-import hushh.hcf.Embedding
 import hushh.hcf.Product
-import hushh.hcf.VibeMetadata
 try:
     from typing import List
 except:
@@ -263,11 +126,8 @@ class CatalogT(object):
     def __init__(self):
         self.id = None  # type: str
         self.version = None  # type: str
+        self.description = None  # type: str
         self.products = None  # type: List[hushh.hcf.Product.ProductT]
-        self.vibeMetadata = None  # type: List[hushh.hcf.VibeMetadata.VibeMetadataT]
-        self.vibeEmbeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
-        self.compositionMetadata = None  # type: List[hushh.hcf.CompositionMetadata.CompositionMetadataT]
-        self.compositionEmbedding = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -292,6 +152,7 @@ class CatalogT(object):
             return
         self.id = catalog.Id()
         self.version = catalog.Version()
+        self.description = catalog.Description()
         if not catalog.ProductsIsNone():
             self.products = []
             for i in range(catalog.ProductsLength()):
@@ -300,38 +161,6 @@ class CatalogT(object):
                 else:
                     product_ = hushh.hcf.Product.ProductT.InitFromObj(catalog.Products(i))
                     self.products.append(product_)
-        if not catalog.VibeMetadataIsNone():
-            self.vibeMetadata = []
-            for i in range(catalog.VibeMetadataLength()):
-                if catalog.VibeMetadata(i) is None:
-                    self.vibeMetadata.append(None)
-                else:
-                    vibeMetadata_ = hushh.hcf.VibeMetadata.VibeMetadataT.InitFromObj(catalog.VibeMetadata(i))
-                    self.vibeMetadata.append(vibeMetadata_)
-        if not catalog.VibeEmbeddingsIsNone():
-            self.vibeEmbeddings = []
-            for i in range(catalog.VibeEmbeddingsLength()):
-                if catalog.VibeEmbeddings(i) is None:
-                    self.vibeEmbeddings.append(None)
-                else:
-                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(catalog.VibeEmbeddings(i))
-                    self.vibeEmbeddings.append(embedding_)
-        if not catalog.CompositionMetadataIsNone():
-            self.compositionMetadata = []
-            for i in range(catalog.CompositionMetadataLength()):
-                if catalog.CompositionMetadata(i) is None:
-                    self.compositionMetadata.append(None)
-                else:
-                    compositionMetadata_ = hushh.hcf.CompositionMetadata.CompositionMetadataT.InitFromObj(catalog.CompositionMetadata(i))
-                    self.compositionMetadata.append(compositionMetadata_)
-        if not catalog.CompositionEmbeddingIsNone():
-            self.compositionEmbedding = []
-            for i in range(catalog.CompositionEmbeddingLength()):
-                if catalog.CompositionEmbedding(i) is None:
-                    self.compositionEmbedding.append(None)
-                else:
-                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(catalog.CompositionEmbedding(i))
-                    self.compositionEmbedding.append(embedding_)
 
     # CatalogT
     def Pack(self, builder):
@@ -339,6 +168,8 @@ class CatalogT(object):
             id = builder.CreateString(self.id)
         if self.version is not None:
             version = builder.CreateString(self.version)
+        if self.description is not None:
+            description = builder.CreateString(self.description)
         if self.products is not None:
             productslist = []
             for i in range(len(self.products)):
@@ -347,52 +178,14 @@ class CatalogT(object):
             for i in reversed(range(len(self.products))):
                 builder.PrependUOffsetTRelative(productslist[i])
             products = builder.EndVector()
-        if self.vibeMetadata is not None:
-            vibeMetadatalist = []
-            for i in range(len(self.vibeMetadata)):
-                vibeMetadatalist.append(self.vibeMetadata[i].Pack(builder))
-            CatalogStartVibeMetadataVector(builder, len(self.vibeMetadata))
-            for i in reversed(range(len(self.vibeMetadata))):
-                builder.PrependUOffsetTRelative(vibeMetadatalist[i])
-            vibeMetadata = builder.EndVector()
-        if self.vibeEmbeddings is not None:
-            vibeEmbeddingslist = []
-            for i in range(len(self.vibeEmbeddings)):
-                vibeEmbeddingslist.append(self.vibeEmbeddings[i].Pack(builder))
-            CatalogStartVibeEmbeddingsVector(builder, len(self.vibeEmbeddings))
-            for i in reversed(range(len(self.vibeEmbeddings))):
-                builder.PrependUOffsetTRelative(vibeEmbeddingslist[i])
-            vibeEmbeddings = builder.EndVector()
-        if self.compositionMetadata is not None:
-            compositionMetadatalist = []
-            for i in range(len(self.compositionMetadata)):
-                compositionMetadatalist.append(self.compositionMetadata[i].Pack(builder))
-            CatalogStartCompositionMetadataVector(builder, len(self.compositionMetadata))
-            for i in reversed(range(len(self.compositionMetadata))):
-                builder.PrependUOffsetTRelative(compositionMetadatalist[i])
-            compositionMetadata = builder.EndVector()
-        if self.compositionEmbedding is not None:
-            compositionEmbeddinglist = []
-            for i in range(len(self.compositionEmbedding)):
-                compositionEmbeddinglist.append(self.compositionEmbedding[i].Pack(builder))
-            CatalogStartCompositionEmbeddingVector(builder, len(self.compositionEmbedding))
-            for i in reversed(range(len(self.compositionEmbedding))):
-                builder.PrependUOffsetTRelative(compositionEmbeddinglist[i])
-            compositionEmbedding = builder.EndVector()
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
         if self.version is not None:
             CatalogAddVersion(builder, version)
+        if self.description is not None:
+            CatalogAddDescription(builder, description)
         if self.products is not None:
             CatalogAddProducts(builder, products)
-        if self.vibeMetadata is not None:
-            CatalogAddVibeMetadata(builder, vibeMetadata)
-        if self.vibeEmbeddings is not None:
-            CatalogAddVibeEmbeddings(builder, vibeEmbeddings)
-        if self.compositionMetadata is not None:
-            CatalogAddCompositionMetadata(builder, compositionMetadata)
-        if self.compositionEmbedding is not None:
-            CatalogAddCompositionEmbedding(builder, compositionEmbedding)
         catalog = CatalogEnd(builder)
         return catalog
