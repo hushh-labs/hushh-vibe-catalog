@@ -5,6 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
+from hushh.hcf.Embedding import Embedding
 from typing import Optional
 np = import_numpy()
 
@@ -54,8 +55,32 @@ class Vibe(object):
             return self._tab.String(o + self._tab.Pos)
         return None
 
+    # Vibe
+    def Embeddings(self, j: int) -> Optional[Embedding]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        if o != 0:
+            x = self._tab.Vector(o)
+            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
+            x = self._tab.Indirect(x)
+            obj = Embedding()
+            obj.Init(self._tab.Bytes, x)
+            return obj
+        return None
+
+    # Vibe
+    def EmbeddingsLength(self) -> int:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        if o != 0:
+            return self._tab.VectorLen(o)
+        return 0
+
+    # Vibe
+    def EmbeddingsIsNone(self) -> bool:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        return o == 0
+
 def VibeStart(builder: flatbuffers.Builder):
-    builder.StartObject(4)
+    builder.StartObject(5)
 
 def Start(builder: flatbuffers.Builder):
     VibeStart(builder)
@@ -84,12 +109,29 @@ def VibeAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     VibeAddUrl(builder, url)
 
+def VibeAddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
+    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(embeddings), 0)
+
+def AddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
+    VibeAddEmbeddings(builder, embeddings)
+
+def VibeStartEmbeddingsVector(builder, numElems: int) -> int:
+    return builder.StartVector(4, numElems, 4)
+
+def StartEmbeddingsVector(builder, numElems: int) -> int:
+    return VibeStartEmbeddingsVector(builder, numElems)
+
 def VibeEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
     return VibeEnd(builder)
 
+import hushh.hcf.Embedding
+try:
+    from typing import List
+except:
+    pass
 
 class VibeT(object):
 
@@ -99,6 +141,7 @@ class VibeT(object):
         self.description = None  # type: str
         self.imageBase64 = None  # type: str
         self.url = None  # type: str
+        self.embeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -125,6 +168,14 @@ class VibeT(object):
         self.description = vibe.Description()
         self.imageBase64 = vibe.ImageBase64()
         self.url = vibe.Url()
+        if not vibe.EmbeddingsIsNone():
+            self.embeddings = []
+            for i in range(vibe.EmbeddingsLength()):
+                if vibe.Embeddings(i) is None:
+                    self.embeddings.append(None)
+                else:
+                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(vibe.Embeddings(i))
+                    self.embeddings.append(embedding_)
 
     # VibeT
     def Pack(self, builder):
@@ -136,6 +187,14 @@ class VibeT(object):
             imageBase64 = builder.CreateString(self.imageBase64)
         if self.url is not None:
             url = builder.CreateString(self.url)
+        if self.embeddings is not None:
+            embeddingslist = []
+            for i in range(len(self.embeddings)):
+                embeddingslist.append(self.embeddings[i].Pack(builder))
+            VibeStartEmbeddingsVector(builder, len(self.embeddings))
+            for i in reversed(range(len(self.embeddings))):
+                builder.PrependUOffsetTRelative(embeddingslist[i])
+            embeddings = builder.EndVector()
         VibeStart(builder)
         if self.id is not None:
             VibeAddId(builder, id)
@@ -145,5 +204,7 @@ class VibeT(object):
             VibeAddImageBase64(builder, imageBase64)
         if self.url is not None:
             VibeAddUrl(builder, url)
+        if self.embeddings is not None:
+            VibeAddEmbeddings(builder, embeddings)
         vibe = VibeEnd(builder)
         return vibe

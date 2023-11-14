@@ -5,6 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
+from hushh.hcf.Embedding import Embedding
 from typing import Optional
 np = import_numpy()
 
@@ -47,8 +48,32 @@ class Category(object):
             return self._tab.String(o + self._tab.Pos)
         return None
 
+    # Category
+    def Embeddings(self, j: int) -> Optional[Embedding]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        if o != 0:
+            x = self._tab.Vector(o)
+            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
+            x = self._tab.Indirect(x)
+            obj = Embedding()
+            obj.Init(self._tab.Bytes, x)
+            return obj
+        return None
+
+    # Category
+    def EmbeddingsLength(self) -> int:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        if o != 0:
+            return self._tab.VectorLen(o)
+        return 0
+
+    # Category
+    def EmbeddingsIsNone(self) -> bool:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        return o == 0
+
 def CategoryStart(builder: flatbuffers.Builder):
-    builder.StartObject(3)
+    builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
     CategoryStart(builder)
@@ -71,12 +96,29 @@ def CategoryAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     CategoryAddUrl(builder, url)
 
+def CategoryAddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(embeddings), 0)
+
+def AddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
+    CategoryAddEmbeddings(builder, embeddings)
+
+def CategoryStartEmbeddingsVector(builder, numElems: int) -> int:
+    return builder.StartVector(4, numElems, 4)
+
+def StartEmbeddingsVector(builder, numElems: int) -> int:
+    return CategoryStartEmbeddingsVector(builder, numElems)
+
 def CategoryEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
     return CategoryEnd(builder)
 
+import hushh.hcf.Embedding
+try:
+    from typing import List
+except:
+    pass
 
 class CategoryT(object):
 
@@ -85,6 +127,7 @@ class CategoryT(object):
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
+        self.embeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -110,6 +153,14 @@ class CategoryT(object):
         self.id = category.Id()
         self.description = category.Description()
         self.url = category.Url()
+        if not category.EmbeddingsIsNone():
+            self.embeddings = []
+            for i in range(category.EmbeddingsLength()):
+                if category.Embeddings(i) is None:
+                    self.embeddings.append(None)
+                else:
+                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(category.Embeddings(i))
+                    self.embeddings.append(embedding_)
 
     # CategoryT
     def Pack(self, builder):
@@ -119,6 +170,14 @@ class CategoryT(object):
             description = builder.CreateString(self.description)
         if self.url is not None:
             url = builder.CreateString(self.url)
+        if self.embeddings is not None:
+            embeddingslist = []
+            for i in range(len(self.embeddings)):
+                embeddingslist.append(self.embeddings[i].Pack(builder))
+            CategoryStartEmbeddingsVector(builder, len(self.embeddings))
+            for i in reversed(range(len(self.embeddings))):
+                builder.PrependUOffsetTRelative(embeddingslist[i])
+            embeddings = builder.EndVector()
         CategoryStart(builder)
         if self.id is not None:
             CategoryAddId(builder, id)
@@ -126,5 +185,7 @@ class CategoryT(object):
             CategoryAddDescription(builder, description)
         if self.url is not None:
             CategoryAddUrl(builder, url)
+        if self.embeddings is not None:
+            CategoryAddEmbeddings(builder, embeddings)
         category = CategoryEnd(builder)
         return category
