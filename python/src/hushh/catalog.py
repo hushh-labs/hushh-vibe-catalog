@@ -1,6 +1,8 @@
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Product import ProductT
-from hushh.hcf.ProductCharacterization import ProductCharacterizationT
+from hushh.hcf.ProductComposition import ProductCompositionT
+from hushh.hcf.ProductMetadata import ProductMetadataT
+from hushh.hcf.CharacterizationEmbeddings import CharacterizationEmbeddingsT
 
 # import numpy.typing as npt
 # import numpy as np
@@ -9,8 +11,16 @@ import uuid
 from .version import VERSION
 
 
-class ProductCharacterization(ProductCharacterizationT):
+class ProductComposition(ProductCompositionT):
     product_ids: list[str]
+
+    def __init__(self, description: str, url: str, product_ids: Optional[list[str]]):
+        self.description = description
+        self.url = url
+        if product_ids is not None:
+            self.product_ids = product_ids
+        else:
+            self.product_ids = []
 
 
 class Product(ProductT):
@@ -35,3 +45,19 @@ class Catalog(CatalogT):
             self.products = products
         else:
             self.products = []
+
+
+class ProductMetadata(ProductMetadataT):
+    def __init__(self, description: str, image_base_64: Optional[str], url: str):
+        self.id = str(uuid.uuid1())
+        self.description = description
+        self.image_base_64 = image_base_64
+        self.url = url
+
+
+class CharacterizationEmbeddings(CharacterizationEmbeddingsT):
+    def __init__(self, description: str, image_base_64: Optional[str], url: str):
+        self.description = description
+        self.image_base_64 = image_base_64
+        self.url = url
+

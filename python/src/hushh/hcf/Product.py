@@ -47,28 +47,8 @@ class Product(object):
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Product
-    def CharacterizationIds(self, j: int):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            a = self._tab.Vector(o)
-            return self._tab.String(a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
-        return ""
-
-    # Product
-    def CharacterizationIdsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Product
-    def CharacterizationIdsIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        return o == 0
-
 def ProductStart(builder: flatbuffers.Builder):
-    builder.StartObject(4)
+    builder.StartObject(3)
 
 def Start(builder: flatbuffers.Builder):
     ProductStart(builder)
@@ -91,28 +71,12 @@ def ProductAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     ProductAddUrl(builder, url)
 
-def ProductAddCharacterizationIds(builder: flatbuffers.Builder, characterizationIds: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(characterizationIds), 0)
-
-def AddCharacterizationIds(builder: flatbuffers.Builder, characterizationIds: int):
-    ProductAddCharacterizationIds(builder, characterizationIds)
-
-def ProductStartCharacterizationIdsVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartCharacterizationIdsVector(builder, numElems: int) -> int:
-    return ProductStartCharacterizationIdsVector(builder, numElems)
-
 def ProductEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
     return ProductEnd(builder)
 
-try:
-    from typing import List
-except:
-    pass
 
 class ProductT(object):
 
@@ -121,7 +85,6 @@ class ProductT(object):
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
-        self.characterizationIds = None  # type: List[str]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -147,10 +110,6 @@ class ProductT(object):
         self.id = product.Id()
         self.description = product.Description()
         self.url = product.Url()
-        if not product.CharacterizationIdsIsNone():
-            self.characterizationIds = []
-            for i in range(product.CharacterizationIdsLength()):
-                self.characterizationIds.append(product.CharacterizationIds(i))
 
     # ProductT
     def Pack(self, builder):
@@ -160,14 +119,6 @@ class ProductT(object):
             description = builder.CreateString(self.description)
         if self.url is not None:
             url = builder.CreateString(self.url)
-        if self.characterizationIds is not None:
-            characterizationIdslist = []
-            for i in range(len(self.characterizationIds)):
-                characterizationIdslist.append(builder.CreateString(self.characterizationIds[i]))
-            ProductStartCharacterizationIdsVector(builder, len(self.characterizationIds))
-            for i in reversed(range(len(self.characterizationIds))):
-                builder.PrependUOffsetTRelative(characterizationIdslist[i])
-            characterizationIds = builder.EndVector()
         ProductStart(builder)
         if self.id is not None:
             ProductAddId(builder, id)
@@ -175,7 +126,5 @@ class ProductT(object):
             ProductAddDescription(builder, description)
         if self.url is not None:
             ProductAddUrl(builder, url)
-        if self.characterizationIds is not None:
-            ProductAddCharacterizationIds(builder, characterizationIds)
         product = ProductEnd(builder)
         return product

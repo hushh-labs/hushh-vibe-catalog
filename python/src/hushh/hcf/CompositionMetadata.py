@@ -8,46 +8,46 @@ from typing import Any
 from typing import Optional
 np = import_numpy()
 
-class ProductCharacterization(object):
+class CompositionMetadata(object):
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
-        x = ProductCharacterization()
+        x = CompositionMetadata()
         x.Init(buf, n + offset)
         return x
 
     @classmethod
-    def GetRootAsProductCharacterization(cls, buf, offset=0):
+    def GetRootAsCompositionMetadata(cls, buf, offset=0):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
-    # ProductCharacterization
+    # CompositionMetadata
     def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
 
-    # ProductCharacterization
+    # CompositionMetadata
     def Id(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # ProductCharacterization
+    # CompositionMetadata
     def Description(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # ProductCharacterization
+    # CompositionMetadata
     def Url(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # ProductCharacterization
+    # CompositionMetadata
     def ProductIds(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
@@ -55,68 +55,68 @@ class ProductCharacterization(object):
             return self._tab.String(a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
         return ""
 
-    # ProductCharacterization
+    # CompositionMetadata
     def ProductIdsLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
-    # ProductCharacterization
+    # CompositionMetadata
     def ProductIdsIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
-def ProductCharacterizationStart(builder: flatbuffers.Builder):
+def CompositionMetadataStart(builder: flatbuffers.Builder):
     builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
-    ProductCharacterizationStart(builder)
+    CompositionMetadataStart(builder)
 
-def ProductCharacterizationAddId(builder: flatbuffers.Builder, id: int):
+def CompositionMetadataAddId(builder: flatbuffers.Builder, id: int):
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
-    ProductCharacterizationAddId(builder, id)
+    CompositionMetadataAddId(builder, id)
 
-def ProductCharacterizationAddDescription(builder: flatbuffers.Builder, description: int):
+def CompositionMetadataAddDescription(builder: flatbuffers.Builder, description: int):
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
-    ProductCharacterizationAddDescription(builder, description)
+    CompositionMetadataAddDescription(builder, description)
 
-def ProductCharacterizationAddUrl(builder: flatbuffers.Builder, url: int):
+def CompositionMetadataAddUrl(builder: flatbuffers.Builder, url: int):
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
-    ProductCharacterizationAddUrl(builder, url)
+    CompositionMetadataAddUrl(builder, url)
 
-def ProductCharacterizationAddProductIds(builder: flatbuffers.Builder, productIds: int):
+def CompositionMetadataAddProductIds(builder: flatbuffers.Builder, productIds: int):
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIds), 0)
 
 def AddProductIds(builder: flatbuffers.Builder, productIds: int):
-    ProductCharacterizationAddProductIds(builder, productIds)
+    CompositionMetadataAddProductIds(builder, productIds)
 
-def ProductCharacterizationStartProductIdsVector(builder, numElems: int) -> int:
+def CompositionMetadataStartProductIdsVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdsVector(builder, numElems: int) -> int:
-    return ProductCharacterizationStartProductIdsVector(builder, numElems)
+    return CompositionMetadataStartProductIdsVector(builder, numElems)
 
-def ProductCharacterizationEnd(builder: flatbuffers.Builder) -> int:
+def CompositionMetadataEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
-    return ProductCharacterizationEnd(builder)
+    return CompositionMetadataEnd(builder)
 
 try:
     from typing import List
 except:
     pass
 
-class ProductCharacterizationT(object):
+class CompositionMetadataT(object):
 
-    # ProductCharacterizationT
+    # CompositionMetadataT
     def __init__(self):
         self.id = None  # type: str
         self.description = None  # type: str
@@ -125,9 +125,9 @@ class ProductCharacterizationT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
-        productCharacterization = ProductCharacterization()
-        productCharacterization.Init(buf, pos)
-        return cls.InitFromObj(productCharacterization)
+        compositionMetadata = CompositionMetadata()
+        compositionMetadata.Init(buf, pos)
+        return cls.InitFromObj(compositionMetadata)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
@@ -135,24 +135,24 @@ class ProductCharacterizationT(object):
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
-    def InitFromObj(cls, productCharacterization):
-        x = ProductCharacterizationT()
-        x._UnPack(productCharacterization)
+    def InitFromObj(cls, compositionMetadata):
+        x = CompositionMetadataT()
+        x._UnPack(compositionMetadata)
         return x
 
-    # ProductCharacterizationT
-    def _UnPack(self, productCharacterization):
-        if productCharacterization is None:
+    # CompositionMetadataT
+    def _UnPack(self, compositionMetadata):
+        if compositionMetadata is None:
             return
-        self.id = productCharacterization.Id()
-        self.description = productCharacterization.Description()
-        self.url = productCharacterization.Url()
-        if not productCharacterization.ProductIdsIsNone():
+        self.id = compositionMetadata.Id()
+        self.description = compositionMetadata.Description()
+        self.url = compositionMetadata.Url()
+        if not compositionMetadata.ProductIdsIsNone():
             self.productIds = []
-            for i in range(productCharacterization.ProductIdsLength()):
-                self.productIds.append(productCharacterization.ProductIds(i))
+            for i in range(compositionMetadata.ProductIdsLength()):
+                self.productIds.append(compositionMetadata.ProductIds(i))
 
-    # ProductCharacterizationT
+    # CompositionMetadataT
     def Pack(self, builder):
         if self.id is not None:
             id = builder.CreateString(self.id)
@@ -164,18 +164,18 @@ class ProductCharacterizationT(object):
             productIdslist = []
             for i in range(len(self.productIds)):
                 productIdslist.append(builder.CreateString(self.productIds[i]))
-            ProductCharacterizationStartProductIdsVector(builder, len(self.productIds))
+            CompositionMetadataStartProductIdsVector(builder, len(self.productIds))
             for i in reversed(range(len(self.productIds))):
                 builder.PrependUOffsetTRelative(productIdslist[i])
             productIds = builder.EndVector()
-        ProductCharacterizationStart(builder)
+        CompositionMetadataStart(builder)
         if self.id is not None:
-            ProductCharacterizationAddId(builder, id)
+            CompositionMetadataAddId(builder, id)
         if self.description is not None:
-            ProductCharacterizationAddDescription(builder, description)
+            CompositionMetadataAddDescription(builder, description)
         if self.url is not None:
-            ProductCharacterizationAddUrl(builder, url)
+            CompositionMetadataAddUrl(builder, url)
         if self.productIds is not None:
-            ProductCharacterizationAddProductIds(builder, productIds)
-        productCharacterization = ProductCharacterizationEnd(builder)
-        return productCharacterization
+            CompositionMetadataAddProductIds(builder, productIds)
+        compositionMetadata = CompositionMetadataEnd(builder)
+        return compositionMetadata
