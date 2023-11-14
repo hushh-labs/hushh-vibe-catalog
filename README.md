@@ -4,49 +4,40 @@ Support clients for the hushh vibe-catalog file format
 
 # Schema
 ```flatbuffer
-namespace hushh;
-
-table ProductCharacterization {
-  id: string;
-  description: string;
-  url: string;
-  product_ids: [string];
-}
+namespace hushh.hcf;
 
 table Product {
   id: string;
   description: string;
   url: string;
-  characterization_ids: [string];
+  categories: [Category];
+  vibes: [Vibe];
+}
+
+table Category {
+  id: string;
+  description: string;
+  url: string;
+  embeddings: [Embedding];
 }
 
 table Embedding {
     v:[float];
 }
 
-table ProductInformation {
+table Vibe {
   id: string;
   description: string;
   image_base64: string;
   url: string;
+  embeddings: [Embedding];
 }
-
-table CharacterizationEmbeddings {
-  id: string;
-  description: string;
-  url: string;
-}
-
 
 table Catalog {
   id : string;
   version: string;
-  head: string;
+  description: string;
   products: [Product];
-  product_embeddings: [Embedding];
-  characterizations: [ProductCharacterization];
-  characterization_embeddings: [Embedding];
-  product_information: [ProductInformation];
 }
 
 root_type Catalog;
