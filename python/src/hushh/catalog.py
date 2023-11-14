@@ -1,8 +1,8 @@
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Product import ProductT
-from hushh.hcf.Category import ProductCompositionT
-from hushh.hcf.ProductMetadata import ProductMetadataT
-from hushh.hcf.CharacterizationEmbeddings import CharacterizationEmbeddingsT
+from hushh.hcf.Category import CategoryT
+from hushh.hcf.Embedding import EmbeddingT
+from hushh.hcf.Vibe import VibeT
 
 # import numpy.typing as npt
 # import numpy as np
@@ -11,16 +11,17 @@ import uuid
 from .version import VERSION
 
 
-class ProductComposition(ProductCompositionT):
-    product_ids: list[str]
+class Embedding(EmbeddingT):
+    pass
 
-    def __init__(self, description: str, url: str, product_ids: Optional[list[str]]):
+class Category(CategoryT):
+    def __init__(self, description: str, url: str, embeddings: Optional[list[EmbeddingT]]):
         self.description = description
         self.url = url
-        if product_ids is not None:
-            self.product_ids = product_ids
+        if embeddings is not None:
+            self.embeddings = embeddings
         else:
-            self.product_ids = []
+            self.embeddings = []
 
 
 class Product(ProductT):
@@ -38,26 +39,25 @@ class Product(ProductT):
 class Catalog(CatalogT):
     products: list[Product]
 
-    def __init__(self, products: Optional[list[Product]]):
+    def __init__(self, description: str, products: Optional[list[Product]] = None):
         self.id = str(uuid.uuid1())
         self.version = VERSION
+        self.description = description
         if products is not None:
             self.products = products
         else:
             self.products = []
 
 
-class ProductMetadata(ProductMetadataT):
-    def __init__(self, description: str, image_base_64: Optional[str], url: str):
+class Vibe(VibeT):
+    def __init__(self, description: str, image_base_64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
         self.id = str(uuid.uuid1())
+
         self.description = description
         self.image_base_64 = image_base_64
         self.url = url
-
-
-class CharacterizationEmbeddings(CharacterizationEmbeddingsT):
-    def __init__(self, description: str, image_base_64: Optional[str], url: str):
-        self.description = description
-        self.image_base_64 = image_base_64
-        self.url = url
+        if embeddings is not None:
+            self.embeddings = embeddings
+        else:
+            self.embeddings = []
 
