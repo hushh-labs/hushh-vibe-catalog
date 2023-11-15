@@ -1,6 +1,8 @@
-import pkg_resources
+from importlib.metadata import version, packages_distributions
 import subprocess
 try:
     VERSION = str(subprocess.check_output(["git", "describe"]).strip())
 except ValueError:
-    VERSION = pkg_resources.get_distribution('hushh-vibe-catalog-reader').version
+    base_module = __name__.split(".")[0]
+    package = packages_distributions()[base_module][0]
+    VERSION = version(package)

@@ -6,7 +6,7 @@ from hushh.hcf.Vibe import VibeT
 
 # import numpy.typing as npt
 # import numpy as np
-from typing import Optional
+from typing import Optional, cast
 import uuid
 from .version import VERSION
 
@@ -25,15 +25,15 @@ class Category(CategoryT):
 
 
 class Product(ProductT):
-    characterization_ids: list[str]
 
-    def __init__(self, url: str, characterization_ids: Optional[list[str]]):
+    def __init__(self, description: str, url: str, categories: Optional[list[Category]]):
         self.id = str(uuid.uuid1())
+        self.description = description
         self.url = url
-        if characterization_ids is not None:
-            self.characterization_ids = characterization_ids
+        if categories is not None:
+            self.categories = cast(list[CategoryT], categories)
         else:
-            self.characterization_ids = []
+            self.categories = []
 
 
 class Catalog(CatalogT):

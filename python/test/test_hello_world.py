@@ -37,5 +37,13 @@ def test_catalog():
     assert rcat.Id() == b"foo"
     assert rcat.Version() == b"1.2.0"
 
+def test_embeddings():
+    # for i in 0...10:
+    #     p = Product("")
+    # cat = Catalog("test2")
+    # cat.id = "foo"
+    # cat.version = "1.2.0"
+    # cat.
+    pass
 
 
