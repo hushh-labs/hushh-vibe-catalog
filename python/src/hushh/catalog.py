@@ -4,6 +4,10 @@ from hushh.hcf.Category import CategoryT
 from hushh.hcf.Embedding import EmbeddingT
 from hushh.hcf.Vibe import VibeT
 
+from typing import Optional, cast
+import uuid
+from .version import VERSION
+
 # import numpy.typing as npt
 # import numpy as np
 """
@@ -16,12 +20,6 @@ Classes:
 - Catalog: Represents a catalog of products with a description and a list of products.
 - Vibe: Represents a vibe with a description, image, URL, and embeddings.
 """
-
-from typing import Optional, cast
-import uuid
-from .version import VERSION
-
-
 class Embedding(EmbeddingT):
     """
     Represents an embedding.
@@ -32,6 +30,7 @@ class Embedding(EmbeddingT):
     - value: The value of the embedding.
     """
 
+    # TODO
     pass
 
 
