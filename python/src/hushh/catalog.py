@@ -26,10 +26,11 @@ class Category(CategoryT):
 
 class Product(ProductT):
 
-    def __init__(self, description: str, url: str, categories: Optional[list[Category]]):
+    def __init__(self, description: str, url: str, categories: Optional[list[Category]] = None):
         self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
+
         if categories is not None:
             self.categories = cast(list[CategoryT], categories)
         else:
@@ -39,14 +40,14 @@ class Product(ProductT):
 class Catalog(CatalogT):
     products: list[Product]
 
-    def __init__(self, description: str, products: Optional[list[Product]] = None):
+    def __init__(self, description: str, vibes: Optional[list[VibeT]] = None):
         self.id = str(uuid.uuid1())
         self.version = VERSION
         self.description = description
-        if products is not None:
-            self.products = products
+        if vibes is None:
+            self.vibes = vibes
         else:
-            self.products = []
+            self.vibes = []
 
 
 class Vibe(VibeT):

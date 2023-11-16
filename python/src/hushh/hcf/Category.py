@@ -5,7 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from hushh.hcf.Embedding import Embedding
+from hushh.hcf.Vibe import Vibe
 from typing import Optional
 np = import_numpy()
 
@@ -49,26 +49,26 @@ class Category(object):
         return None
 
     # Category
-    def Embeddings(self, j: int) -> Optional[Embedding]:
+    def Vibes(self, j: int) -> Optional[Vibe]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
             x = self._tab.Indirect(x)
-            obj = Embedding()
+            obj = Vibe()
             obj.Init(self._tab.Bytes, x)
             return obj
         return None
 
     # Category
-    def EmbeddingsLength(self) -> int:
+    def VibesLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Category
-    def EmbeddingsIsNone(self) -> bool:
+    def VibesIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
@@ -96,17 +96,17 @@ def CategoryAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     CategoryAddUrl(builder, url)
 
-def CategoryAddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(embeddings), 0)
+def CategoryAddVibes(builder: flatbuffers.Builder, vibes: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(vibes), 0)
 
-def AddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
-    CategoryAddEmbeddings(builder, embeddings)
+def AddVibes(builder: flatbuffers.Builder, vibes: int):
+    CategoryAddVibes(builder, vibes)
 
-def CategoryStartEmbeddingsVector(builder, numElems: int) -> int:
+def CategoryStartVibesVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
-def StartEmbeddingsVector(builder, numElems: int) -> int:
-    return CategoryStartEmbeddingsVector(builder, numElems)
+def StartVibesVector(builder, numElems: int) -> int:
+    return CategoryStartVibesVector(builder, numElems)
 
 def CategoryEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -114,7 +114,7 @@ def CategoryEnd(builder: flatbuffers.Builder) -> int:
 def End(builder: flatbuffers.Builder) -> int:
     return CategoryEnd(builder)
 
-import hushh.hcf.Embedding
+import hushh.hcf.Vibe
 try:
     from typing import List
 except:
@@ -127,7 +127,7 @@ class CategoryT(object):
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
-        self.embeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
+        self.vibes = None  # type: List[hushh.hcf.Vibe.VibeT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -153,14 +153,14 @@ class CategoryT(object):
         self.id = category.Id()
         self.description = category.Description()
         self.url = category.Url()
-        if not category.EmbeddingsIsNone():
-            self.embeddings = []
-            for i in range(category.EmbeddingsLength()):
-                if category.Embeddings(i) is None:
-                    self.embeddings.append(None)
+        if not category.VibesIsNone():
+            self.vibes = []
+            for i in range(category.VibesLength()):
+                if category.Vibes(i) is None:
+                    self.vibes.append(None)
                 else:
-                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(category.Embeddings(i))
-                    self.embeddings.append(embedding_)
+                    vibe_ = hushh.hcf.Vibe.VibeT.InitFromObj(category.Vibes(i))
+                    self.vibes.append(vibe_)
 
     # CategoryT
     def Pack(self, builder):
@@ -170,14 +170,14 @@ class CategoryT(object):
             description = builder.CreateString(self.description)
         if self.url is not None:
             url = builder.CreateString(self.url)
-        if self.embeddings is not None:
-            embeddingslist = []
-            for i in range(len(self.embeddings)):
-                embeddingslist.append(self.embeddings[i].Pack(builder))
-            CategoryStartEmbeddingsVector(builder, len(self.embeddings))
-            for i in reversed(range(len(self.embeddings))):
-                builder.PrependUOffsetTRelative(embeddingslist[i])
-            embeddings = builder.EndVector()
+        if self.vibes is not None:
+            vibeslist = []
+            for i in range(len(self.vibes)):
+                vibeslist.append(self.vibes[i].Pack(builder))
+            CategoryStartVibesVector(builder, len(self.vibes))
+            for i in reversed(range(len(self.vibes))):
+                builder.PrependUOffsetTRelative(vibeslist[i])
+            vibes = builder.EndVector()
         CategoryStart(builder)
         if self.id is not None:
             CategoryAddId(builder, id)
@@ -185,7 +185,7 @@ class CategoryT(object):
             CategoryAddDescription(builder, description)
         if self.url is not None:
             CategoryAddUrl(builder, url)
-        if self.embeddings is not None:
-            CategoryAddEmbeddings(builder, embeddings)
+        if self.vibes is not None:
+            CategoryAddVibes(builder, vibes)
         category = CategoryEnd(builder)
         return category

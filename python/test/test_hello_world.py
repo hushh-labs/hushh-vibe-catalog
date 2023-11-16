@@ -1,6 +1,6 @@
 import flatbuffers
 from hushh.hcf import Catalog as RawCatalog
-from hushh.catalog import Catalog
+from hushh.catalog import Catalog, Product
 builder = flatbuffers.Builder(0)
 
 def build_raw_catalog():
@@ -38,12 +38,12 @@ def test_catalog():
     assert rcat.Version() == b"1.2.0"
 
 def test_embeddings():
-    # for i in 0...10:
-    #     p = Product("")
-    # cat = Catalog("test2")
-    # cat.id = "foo"
-    # cat.version = "1.2.0"
-    # cat.
+    for i in range(0,10):
+        p = Product("desc","url")
+    cat = Catalog("test2")
+    cat.id = "foo"
+    cat.version = "1.2.0"
+    cat.
     pass
 
 

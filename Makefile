@@ -36,7 +36,7 @@ clean_environment : | clean
 	conda env create -f environment.yml --force
 
 ## Install Python dependencies
-requirements : test_environment
+requirements :
 	$(PYTHON_INTERPRETER) -m pip install -e ".[dev]"
 
 ## Delete all compiled Python files
@@ -65,10 +65,6 @@ serve:
 lint:
 	black src
 	flake8 src
-
-## Test python environment is setup correctly
-test_environment:
-	$(PYTHON_INTERPRETER) Pytests/test_environment.py
 
 flatbuffers:
 	# https://github.com/hushh-labs/flattools
