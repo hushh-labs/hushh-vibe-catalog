@@ -30,6 +30,7 @@ def test_catalog():
     cat = Catalog("test")
     cat.id = "foo"
     cat.version = "1.2.0"
+    cat.products = []
     builder = flatbuffers.Builder(0)
     cat_end =  cat.Pack(builder)
     builder.Finish(cat_end)
@@ -38,12 +39,12 @@ def test_catalog():
     assert rcat.Version() == b"1.2.0"
 
 def test_embeddings():
-    for i in range(0,10):
-        p = Product("desc","url")
-    cat = Catalog("test2")
-    cat.id = "foo"
-    cat.version = "1.2.0"
-    cat.
+    # for i in range(0,10):
+    #     p = Product("desc","url")
+    # cat = Catalog("test2")
+    # cat.id = "foo"
+    # cat.version = "1.2.0"
+    # cat.
     pass
 
 

@@ -15,13 +15,13 @@ class Embedding(EmbeddingT):
     pass
 
 class Category(CategoryT):
-    def __init__(self, description: str, url: str, embeddings: Optional[list[EmbeddingT]]):
+    def __init__(self, description: str, url: str, vibes: Optional[list[VibeT]]):
         self.description = description
         self.url = url
-        if embeddings is not None:
-            self.embeddings = embeddings
+        if vibes is not None:
+            self.vibes = vibes
         else:
-            self.embeddings = []
+            self.vibes = []
 
 
 class Product(ProductT):
@@ -40,14 +40,14 @@ class Product(ProductT):
 class Catalog(CatalogT):
     products: list[Product]
 
-    def __init__(self, description: str, vibes: Optional[list[VibeT]] = None):
+    def __init__(self, description: str, products: Optional[list[Product]] = None):
         self.id = str(uuid.uuid1())
         self.version = VERSION
         self.description = description
-        if vibes is None:
-            self.vibes = vibes
+        if products is not None:
+            self.products = products
         else:
-            self.vibes = []
+            self.products = []
 
 
 class Vibe(VibeT):
