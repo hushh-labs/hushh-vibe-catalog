@@ -1,0 +1,10 @@
+# Function reference
+
+## Some functions
+
+Functions to inspect docstrings.
+
+| | |
+| --- | --- |
+| [catalog](catalog.qmd#hushh.catalog) |  |
+| [hcf](hcf.qmd#hushh.hcf) |  |

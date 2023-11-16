@@ -10,3 +10,6 @@ DerivedData/
 .coverage
 *.pyc
 dist/
+
+/.quarto/
+objects.json

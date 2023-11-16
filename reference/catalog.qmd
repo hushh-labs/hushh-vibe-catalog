@@ -1,0 +1,74 @@
+# catalog { #hushh.catalog }
+
+`catalog`
+
+
+
+## Classes
+
+| Name | Description |
+| --- | --- |
+| [Catalog](#hushh.catalog.Catalog) | Represents a catalog of products. |
+| [Category](#hushh.catalog.Category) | Represents a category of products. |
+| [Embedding](#hushh.catalog.Embedding) | Represents an embedding. |
+| [Product](#hushh.catalog.Product) | Represents a product. |
+| [Vibe](#hushh.catalog.Vibe) | Represents a vibe. |
+
+### Catalog { #hushh.catalog.Catalog }
+
+`catalog.Catalog(self, description, products=None)`
+
+Represents a catalog of products.
+
+Attributes:
+- id: The unique identifier of the catalog.
+- version: The version of the catalog.
+- description: The description of the catalog.
+- products: The list of products in the catalog.
+
+### Category { #hushh.catalog.Category }
+
+`catalog.Category(self, description, url, vibes)`
+
+Represents a category of products.
+
+Attributes:
+- description: The description of the category.
+- url: The URL of the category.
+- vibes: The list of vibes associated with the category.
+
+### Embedding { #hushh.catalog.Embedding }
+
+`catalog.Embedding()`
+
+Represents an embedding.
+
+Attributes:
+- id: The unique identifier of the embedding.
+- description: The description of the embedding.
+- value: The value of the embedding.
+
+### Product { #hushh.catalog.Product }
+
+`catalog.Product(self, description, url, categories=None)`
+
+Represents a product.
+
+Attributes:
+- id: The unique identifier of the product.
+- description: The description of the product.
+- url: The URL of the product.
+- categories: The list of categories the product belongs to.
+
+### Vibe { #hushh.catalog.Vibe }
+
+`catalog.Vibe(self, description, image_base_64, url, embeddings)`
+
+Represents a vibe.
+
+Attributes:
+- id: The unique identifier of the vibe.
+- description: The description of the vibe.
+- image_base_64: The base64 encoded image of the vibe.
+- url: The URL of the vibe.
+- embeddings: The list of embeddings associated with the vibe.

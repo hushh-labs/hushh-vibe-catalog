@@ -1,0 +1,10 @@
+website:
+  sidebar:
+  - contents:
+    - reference/index.qmd
+    - contents:
+      - reference/catalog.qmd
+      - reference/hcf.qmd
+      section: Some functions
+    id: reference
+  - id: dummy-sidebar

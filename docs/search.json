@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "reference/hcf.html",
+    "href": "reference/hcf.html",
+    "title": "hcf",
+    "section": "",
+    "text": "hcf\nhcf"
+  },
+  {
+    "objectID": "reference/catalog.html",
+    "href": "reference/catalog.html",
+    "title": "catalog",
+    "section": "",
+    "text": "catalog\n\n\n\n\n\nName\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\nAttributes: - id: The unique identifier of the catalog. - version: The version of the catalog. - description: The description of the catalog. - products: The list of products in the catalog.\n\n\n\ncatalog.Category(self, description, url, vibes)\nRepresents a category of products.\nAttributes: - description: The description of the category. - url: The URL of the category. - vibes: The list of vibes associated with the category.\n\n\n\ncatalog.Embedding()\nRepresents an embedding.\nAttributes: - id: The unique identifier of the embedding. - description: The description of the embedding. - value: The value of the embedding.\n\n\n\ncatalog.Product(self, description, url, categories=None)\nRepresents a product.\nAttributes: - id: The unique identifier of the product. - description: The description of the product. - url: The URL of the product. - categories: The list of categories the product belongs to.\n\n\n\ncatalog.Vibe(self, description, image_base_64, url, embeddings)\nRepresents a vibe.\nAttributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - image_base_64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe."
+  },
+  {
+    "objectID": "reference/catalog.html#classes",
+    "href": "reference/catalog.html#classes",
+    "title": "catalog",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\nAttributes: - id: The unique identifier of the catalog. - version: The version of the catalog. - description: The description of the catalog. - products: The list of products in the catalog.\n\n\n\ncatalog.Category(self, description, url, vibes)\nRepresents a category of products.\nAttributes: - description: The description of the category. - url: The URL of the category. - vibes: The list of vibes associated with the category.\n\n\n\ncatalog.Embedding()\nRepresents an embedding.\nAttributes: - id: The unique identifier of the embedding. - description: The description of the embedding. - value: The value of the embedding.\n\n\n\ncatalog.Product(self, description, url, categories=None)\nRepresents a product.\nAttributes: - id: The unique identifier of the product. - description: The description of the product. - url: The URL of the product. - categories: The list of categories the product belongs to.\n\n\n\ncatalog.Vibe(self, description, image_base_64, url, embeddings)\nRepresents a vibe.\nAttributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - image_base_64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe."
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Function reference",
+    "section": "",
+    "text": "Functions to inspect docstrings.\n\n\n\ncatalog\n\n\n\nhcf"
+  },
+  {
+    "objectID": "reference/index.html#some-functions",
+    "href": "reference/index.html#some-functions",
+    "title": "Function reference",
+    "section": "",
+    "text": "Functions to inspect docstrings.\n\n\n\ncatalog\n\n\n\nhcf"
+  }
+]

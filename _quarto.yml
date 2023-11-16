@@ -1,12 +1,14 @@
 project:
   type: website
+  output-dir: docs
+
 
 execute:
   freeze: auto
 
 # tell quarto to read the generated sidebar
-metadata-files:
-  - _sidebar.yml
+# metadata-files:
+#   - _sidebar.yml
 
 quartodoc:
   # the name used to import the package you want to create reference docs for
@@ -21,4 +23,5 @@ quartodoc:
       contents:
         # the functions being documented in the package.
         # you can refer to anything: class methods, modules, etc..
-        - catalog.collect
+        - catalog
+        - hcf

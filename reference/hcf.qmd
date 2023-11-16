@@ -1,0 +1,4 @@
+# hcf { #hushh.hcf }
+
+`hcf`
+
