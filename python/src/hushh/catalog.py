@@ -6,16 +6,54 @@ from hushh.hcf.Vibe import VibeT
 
 # import numpy.typing as npt
 # import numpy as np
+"""
+This module provides classes for creating and managing a catalog of products, categories, and vibes.
+
+Classes:
+- Embedding: Represents an embedding.
+- Category: Represents a category of products with a description, URL, and vibes.
+- Product: Represents a product with a description, URL, and categories.
+- Catalog: Represents a catalog of products with a description and a list of products.
+- Vibe: Represents a vibe with a description, image, URL, and embeddings.
+"""
+
 from typing import Optional, cast
 import uuid
 from .version import VERSION
 
 
 class Embedding(EmbeddingT):
+    """
+    Represents an embedding.
+
+    Attributes:
+    - id: The unique identifier of the embedding.
+    - description: The description of the embedding.
+    - value: The value of the embedding.
+    """
+
     pass
 
+
 class Category(CategoryT):
+    """
+    Represents a category of products.
+
+    Attributes:
+    - description: The description of the category.
+    - url: The URL of the category.
+    - vibes: The list of vibes associated with the category.
+    """
+
     def __init__(self, description: str, url: str, vibes: Optional[list[VibeT]]):
+        """
+        Initialize a new Category instance.
+
+        Parameters:
+        - description: The description of the category.
+        - url: The URL of the category.
+        - vibes: The list of vibes associated with the category.
+        """
         self.description = description
         self.url = url
         if vibes is not None:
@@ -25,8 +63,25 @@ class Category(CategoryT):
 
 
 class Product(ProductT):
+    """
+    Represents a product.
+
+    Attributes:
+    - id: The unique identifier of the product.
+    - description: The description of the product.
+    - url: The URL of the product.
+    - categories: The list of categories the product belongs to.
+    """
 
     def __init__(self, description: str, url: str, categories: Optional[list[Category]] = None):
+        """
+        Initialize a new Product instance.
+
+        Parameters:
+        - description: The description of the product.
+        - url: The URL of the product.
+        - categories: The list of categories the product belongs to.
+        """
         self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
@@ -38,9 +93,26 @@ class Product(ProductT):
 
 
 class Catalog(CatalogT):
+    """
+    Represents a catalog of products.
+
+    Attributes:
+    - id: The unique identifier of the catalog.
+    - version: The version of the catalog.
+    - description: The description of the catalog.
+    - products: The list of products in the catalog.
+    """
+
     products: list[Product]
 
     def __init__(self, description: str, products: Optional[list[Product]] = None):
+        """
+        Initialize a new Catalog instance.
+
+        Parameters:
+        - description: The description of the catalog.
+        - products: The list of products in the catalog.
+        """
         self.id = str(uuid.uuid1())
         self.version = VERSION
         self.description = description
@@ -51,9 +123,28 @@ class Catalog(CatalogT):
 
 
 class Vibe(VibeT):
-    def __init__(self, description: str, image_base_64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
-        self.id = str(uuid.uuid1())
+    """
+    Represents a vibe.
 
+    Attributes:
+    - id: The unique identifier of the vibe.
+    - description: The description of the vibe.
+    - image_base_64: The base64 encoded image of the vibe.
+    - url: The URL of the vibe.
+    - embeddings: The list of embeddings associated with the vibe.
+    """
+
+    def __init__(self, description: str, image_base_64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
+        """
+        Initialize a new Vibe instance.
+
+        Parameters:
+        - description: The description of the vibe.
+        - image_base_64: The base64 encoded image of the vibe.
+        - url: The URL of the vibe.
+        - embeddings: The list of embeddings associated with the vibe.
+        """
+        self.id = str(uuid.uuid1())
         self.description = description
         self.image_base_64 = image_base_64
         self.url = url
