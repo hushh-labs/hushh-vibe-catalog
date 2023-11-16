@@ -4,6 +4,7 @@ Support clients for the hushh vibe-catalog file format
 
 # Schema
 ```flatbuffer
+
 namespace hushh.hcf;
 
 table Product {
@@ -11,14 +12,13 @@ table Product {
   description: string;
   url: string;
   categories: [Category];
-  vibes: [Vibe];
 }
 
 table Category {
   id: string;
   description: string;
   url: string;
-  embeddings: [Embedding];
+  vibes: [Vibe];
 }
 
 table Embedding {
