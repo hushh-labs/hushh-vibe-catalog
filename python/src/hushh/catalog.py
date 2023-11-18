@@ -8,8 +8,8 @@ from typing import Optional, cast
 import uuid
 from .version import VERSION
 
-# import numpy.typing as npt
-# import numpy as np
+import numpy.typing as npt
+import numpy as np
 """
 This module provides classes for creating and managing a catalog of products, categories, and vibes.
 
@@ -29,9 +29,11 @@ class Embedding(EmbeddingT):
     - description: The description of the embedding.
     - value: The value of the embedding.
     """
-
-    # TODO
-    pass
+    def __init__(self, v : Optional[list[float]]):
+        if v is not None:
+            self.v = v
+        else:
+            v = list()
 
 
 class Category(CategoryT):
@@ -44,7 +46,7 @@ class Category(CategoryT):
     - vibes: The list of vibes associated with the category.
     """
 
-    def __init__(self, description: str, url: str, vibes: Optional[list[VibeT]]):
+    def __init__(self, description: str, url: str, embeddings: list):
         """
         Initialize a new Category instance.
 
@@ -55,71 +57,11 @@ class Category(CategoryT):
         """
         self.description = description
         self.url = url
-        if vibes is not None:
-            self.vibes = vibes
+
+        if embeddings is not None:
+            self.embeddings = embeddings
         else:
-            self.vibes = []
-
-
-class Product(ProductT):
-    """
-    Represents a product.
-
-    Attributes:
-    - id: The unique identifier of the product.
-    - description: The description of the product.
-    - url: The URL of the product.
-    - categories: The list of categories the product belongs to.
-    """
-
-    def __init__(self, description: str, url: str, categories: Optional[list[Category]] = None):
-        """
-        Initialize a new Product instance.
-
-        Parameters:
-        - description: The description of the product.
-        - url: The URL of the product.
-        - categories: The list of categories the product belongs to.
-        """
-        self.id = str(uuid.uuid1())
-        self.description = description
-        self.url = url
-
-        if categories is not None:
-            self.categories = cast(list[CategoryT], categories)
-        else:
-            self.categories = []
-
-
-class Catalog(CatalogT):
-    """
-    Represents a catalog of products.
-
-    Attributes:
-    - id: The unique identifier of the catalog.
-    - version: The version of the catalog.
-    - description: The description of the catalog.
-    - products: The list of products in the catalog.
-    """
-
-    products: list[Product]
-
-    def __init__(self, description: str, products: Optional[list[Product]] = None):
-        """
-        Initialize a new Catalog instance.
-
-        Parameters:
-        - description: The description of the catalog.
-        - products: The list of products in the catalog.
-        """
-        self.id = str(uuid.uuid1())
-        self.version = VERSION
-        self.description = description
-        if products is not None:
-            self.products = products
-        else:
-            self.products = []
-
+            self.embeddings = []
 
 class Vibe(VibeT):
     """
@@ -151,4 +93,70 @@ class Vibe(VibeT):
             self.embeddings = embeddings
         else:
             self.embeddings = []
+
+
+class Product(ProductT):
+    """
+    Represents a product.
+
+    Attributes:
+    - id: The unique identifier of the product.
+    - description: The description of the product.
+    - url: The URL of the product.
+    - categories: The list of categories the product belongs to.
+    """
+
+    def __init__(self, description: str, url: str, categories: Optional[list[Category]] = None, vibes: Optional[list[Vibe]] = None):
+        """
+        Initialize a new Product instance.
+
+        Parameters:
+        - description: The description of the product.
+        - url: The URL of the product.
+        - categories: The list of categories the product belongs to.
+        """
+        self.id = str(uuid.uuid1())
+        self.description = description
+        self.url = url
+
+        if categories is not None:
+            self.categories = cast(list[CategoryT], categories)
+        else:
+            self.categories = []
+
+        if vibes is not None:
+            self.vibes = cast(list[VibeT], vibes)
+        else:
+            self.vibes = []
+
+
+class Catalog(CatalogT):
+    """
+    Represents a catalog of products.
+
+    Attributes:
+    - id: The unique identifier of the catalog.
+    - version: The version of the catalog.
+    - description: The description of the catalog.
+    - products: The list of products in the catalog.
+    """
+
+    products: list[Product]
+
+    def __init__(self, description: str, products: Optional[list[Product]] = None):
+        """
+        Initialize a new Catalog instance.
+
+        Parameters:
+        - description: The description of the catalog.
+        - products: The list of products in the catalog.
+        """
+        self.id = str(uuid.uuid1())
+        self.version = VERSION
+        self.description = description
+        if products is not None:
+            self.products = products
+        else:
+            self.products = []
+
 
