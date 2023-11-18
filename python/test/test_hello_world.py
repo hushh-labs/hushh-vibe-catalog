@@ -44,17 +44,28 @@ def test_catalog():
 
 
 def test_embeddings():
-    embedding = Embedding(np.array([1.0, 2.0, 3.0]))
+    embedding = Embedding([1.0, 2.0, 3.0])
 
 
-
+    categories = []
     for _ in range(0,3):
         c = Category("category a", "na", [embedding])
+        categories.append(c)
 
+    products = []
     for _ in range(0, 10):
-        p = Product("desc", "url")
-    # cat = Catalog("test2")
-    # cat.id = "foo"
-    # cat.version = "1.2.0"
-    # cat.
+        p = Product("desc", "url", categories = categories, vibes = [])
+        products.append(p)
+
+
+    catalog = Catalog("test_embeddings", products)
+    catalog.id = "foo"
+    builder = flatbuffers.Builder(0)
+    cat_end = catalog.Pack(builder)
+    builder.Finish(cat_end)
+    rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
+    assert rcat.Description() == b"test_embeddings"
+
+
+
     pass

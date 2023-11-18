@@ -12,7 +12,7 @@ table Category {
   id: string;
   description: string;
   url: string;
-  embedding: [Embedding];
+  embeddings: [Embedding];
 }
 
 table Embedding {

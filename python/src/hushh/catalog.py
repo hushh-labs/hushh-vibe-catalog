@@ -8,8 +8,6 @@ from typing import Optional, cast
 import uuid
 from .version import VERSION
 
-import numpy.typing as npt
-import numpy as np
 """
 This module provides classes for creating and managing a catalog of products, categories, and vibes.
 
@@ -33,7 +31,7 @@ class Embedding(EmbeddingT):
         if v is not None:
             self.v = v
         else:
-            v = list()
+            v = []
 
 
 class Category(CategoryT):
@@ -55,6 +53,7 @@ class Category(CategoryT):
         - url: The URL of the category.
         - vibes: The list of vibes associated with the category.
         """
+        self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
 
@@ -142,6 +141,7 @@ class Catalog(CatalogT):
     """
 
     products: list[Product]
+    id : str
 
     def __init__(self, description: str, products: Optional[list[Product]] = None):
         """
