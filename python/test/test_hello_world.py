@@ -1,7 +1,8 @@
 import flatbuffers
-from hushh.hcf import Catalog as RawCatalog
-from hushh.catalog import Catalog, Product, Category, Embedding
 import numpy as np
+
+from hushh.catalog import Catalog, Category, Embedding, Product
+from hushh.hcf import Catalog as RawCatalog
 
 builder = flatbuffers.Builder(0)
 
@@ -46,17 +47,15 @@ def test_catalog():
 def test_embeddings():
     embedding = Embedding([1.0, 2.0, 3.0])
 
-
     categories = []
-    for _ in range(0,3):
+    for _ in range(0, 3):
         c = Category("category a", "na", [embedding])
         categories.append(c)
 
     products = []
     for _ in range(0, 10):
-        p = Product("desc", "url", categories = categories, vibes = [])
+        p = Product("desc", "url", categories=categories, vibes=[])
         products.append(p)
-
 
     catalog = Catalog("test_embeddings", products)
     catalog.id = "foo"
@@ -65,7 +64,3 @@ def test_embeddings():
     builder.Finish(cat_end)
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
     assert rcat.Description() == b"test_embeddings"
-
-
-
-    pass
