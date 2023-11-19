@@ -69,24 +69,24 @@ class Vibe(VibeT):
     Attributes:
     - id: The unique identifier of the vibe.
     - description: The description of the vibe.
-    - image_base_64: The base64 encoded image of the vibe.
+    - imageBase64: The base64 encoded image of the vibe.
     - url: The URL of the vibe.
     - embeddings: The list of embeddings associated with the vibe.
     """
 
-    def __init__(self, description: str, image_base_64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
+    def __init__(self, description: str, imageBase64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
         """
         Initialize a new Vibe instance.
 
         Parameters:
         - description: The description of the vibe.
-        - image_base_64: The base64 encoded image of the vibe.
+        - imageBase64: The base64 encoded image of the vibe.
         - url: The URL of the vibe.
         - embeddings: The list of embeddings associated with the vibe.
         """
         self.id = str(uuid.uuid1())
         self.description = description
-        self.image_base_64 = image_base_64
+        self.imageBase64 = imageBase64
         self.url = url
         if embeddings is not None:
             self.embeddings = embeddings

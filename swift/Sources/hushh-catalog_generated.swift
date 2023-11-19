@@ -540,7 +540,7 @@ extension hushh_hcf_Vibe: Encodable {
   enum CodingKeys: String, CodingKey {
     case id = "id"
     case description = "description"
-    case imageBase64 = "image_base64"
+    case imageBase64 = "image_base_64"
     case url = "url"
     case embeddings = "embeddings"
   }

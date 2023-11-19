@@ -1,7 +1,6 @@
 import flatbuffers
-import numpy as np
 
-from hushh.catalog import Catalog, Category, Embedding, Product
+from hushh.catalog import Catalog, Category, Embedding, Product, Vibe
 from hushh.hcf import Catalog as RawCatalog
 
 builder = flatbuffers.Builder(0)
@@ -46,16 +45,20 @@ def test_catalog():
 
 def test_embeddings():
     embedding = Embedding([1.0, 2.0, 3.0])
+    inv_embedding = Embedding([3.0, 2.0, 1.0])
 
     categories = []
     for _ in range(0, 3):
         c = Category("category a", "na", [embedding])
         categories.append(c)
 
+    v = Vibe("test_vibe", "", "", embeddings = [embedding, inv_embedding])
+
     products = []
     for _ in range(0, 10):
-        p = Product("desc", "url", categories=categories, vibes=[])
+        p = Product("desc", "url", categories=categories, vibes=[v])
         products.append(p)
+
 
     catalog = Catalog("test_embeddings", products)
     catalog.id = "foo"
