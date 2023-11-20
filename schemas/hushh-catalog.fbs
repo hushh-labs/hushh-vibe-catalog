@@ -5,13 +5,14 @@ table Product {
   description: string;
   url: string;
   categories: [Category];
+  vibes: [Vibe];
 }
 
 table Category {
   id: string;
   description: string;
   url: string;
-  vibes: [Vibe];
+  embeddings: [Embedding];
 }
 
 table Embedding {
@@ -21,7 +22,7 @@ table Embedding {
 table Vibe {
   id: string;
   description: string;
-  image_base64: string;
+  imageBase64: string;
   url: string;
   embeddings: [Embedding];
 }

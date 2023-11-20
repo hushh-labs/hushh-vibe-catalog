@@ -8,8 +8,6 @@ from typing import Optional, cast
 import uuid
 from .version import VERSION
 
-# import numpy.typing as npt
-# import numpy as np
 """
 This module provides classes for creating and managing a catalog of products, categories, and vibes.
 
@@ -29,9 +27,11 @@ class Embedding(EmbeddingT):
     - description: The description of the embedding.
     - value: The value of the embedding.
     """
-
-    # TODO
-    pass
+    def __init__(self, v : Optional[list[float]]):
+        if v is not None:
+            self.v = v
+        else:
+            v = []
 
 
 class Category(CategoryT):
@@ -44,7 +44,7 @@ class Category(CategoryT):
     - vibes: The list of vibes associated with the category.
     """
 
-    def __init__(self, description: str, url: str, vibes: Optional[list[VibeT]]):
+    def __init__(self, description: str, url: str, embeddings: list):
         """
         Initialize a new Category instance.
 
@@ -53,12 +53,45 @@ class Category(CategoryT):
         - url: The URL of the category.
         - vibes: The list of vibes associated with the category.
         """
+        self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
-        if vibes is not None:
-            self.vibes = vibes
+
+        if embeddings is not None:
+            self.embeddings = embeddings
         else:
-            self.vibes = []
+            self.embeddings = []
+
+class Vibe(VibeT):
+    """
+    Represents a vibe.
+
+    Attributes:
+    - id: The unique identifier of the vibe.
+    - description: The description of the vibe.
+    - imageBase64: The base64 encoded image of the vibe.
+    - url: The URL of the vibe.
+    - embeddings: The list of embeddings associated with the vibe.
+    """
+
+    def __init__(self, description: str, imageBase64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
+        """
+        Initialize a new Vibe instance.
+
+        Parameters:
+        - description: The description of the vibe.
+        - imageBase64: The base64 encoded image of the vibe.
+        - url: The URL of the vibe.
+        - embeddings: The list of embeddings associated with the vibe.
+        """
+        self.id = str(uuid.uuid1())
+        self.description = description
+        self.imageBase64 = imageBase64
+        self.url = url
+        if embeddings is not None:
+            self.embeddings = embeddings
+        else:
+            self.embeddings = []
 
 
 class Product(ProductT):
@@ -72,7 +105,7 @@ class Product(ProductT):
     - categories: The list of categories the product belongs to.
     """
 
-    def __init__(self, description: str, url: str, categories: Optional[list[Category]] = None):
+    def __init__(self, description: str, url: str, categories: Optional[list[Category]] = None, vibes: Optional[list[Vibe]] = None):
         """
         Initialize a new Product instance.
 
@@ -90,6 +123,11 @@ class Product(ProductT):
         else:
             self.categories = []
 
+        if vibes is not None:
+            self.vibes = cast(list[VibeT], vibes)
+        else:
+            self.vibes = []
+
 
 class Catalog(CatalogT):
     """
@@ -103,6 +141,7 @@ class Catalog(CatalogT):
     """
 
     products: list[Product]
+    id : str
 
     def __init__(self, description: str, products: Optional[list[Product]] = None):
         """
@@ -120,35 +159,4 @@ class Catalog(CatalogT):
         else:
             self.products = []
 
-
-class Vibe(VibeT):
-    """
-    Represents a vibe.
-
-    Attributes:
-    - id: The unique identifier of the vibe.
-    - description: The description of the vibe.
-    - image_base_64: The base64 encoded image of the vibe.
-    - url: The URL of the vibe.
-    - embeddings: The list of embeddings associated with the vibe.
-    """
-
-    def __init__(self, description: str, image_base_64: Optional[str], url: str, embeddings: Optional[list[EmbeddingT]]):
-        """
-        Initialize a new Vibe instance.
-
-        Parameters:
-        - description: The description of the vibe.
-        - image_base_64: The base64 encoded image of the vibe.
-        - url: The URL of the vibe.
-        - embeddings: The list of embeddings associated with the vibe.
-        """
-        self.id = str(uuid.uuid1())
-        self.description = description
-        self.image_base_64 = image_base_64
-        self.url = url
-        if embeddings is not None:
-            self.embeddings = embeddings
-        else:
-            self.embeddings = []
 
