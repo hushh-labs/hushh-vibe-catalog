@@ -23,9 +23,7 @@ class Embedding(EmbeddingT):
     Represents an embedding.
 
     Attributes:
-    - id: The unique identifier of the embedding.
-    - description: The description of the embedding.
-    - value: The value of the embedding.
+    - v : the vector embedding
     """
     def __init__(self, v : Optional[list[float]]):
         if v is not None:
@@ -140,8 +138,6 @@ class Catalog(CatalogT):
     - products: The list of products in the catalog.
     """
 
-    products: list[Product]
-    id : str
 
     def __init__(self, description: str, products: Optional[list[Product]] = None):
         """
@@ -155,7 +151,7 @@ class Catalog(CatalogT):
         self.version = VERSION
         self.description = description
         if products is not None:
-            self.products = products
+            self.products = cast(list[ProductT], products)
         else:
             self.products = []
 
