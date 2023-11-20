@@ -118,27 +118,27 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="hushh.catalog.Category" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Category">Category</h3>
-<p><code>catalog.Category(self, description, url, vibes)</code></p>
+<p><code>catalog.Category(self, description, url, embeddings)</code></p>
 <p>Represents a category of products.</p>
 <p>Attributes: - description: The description of the category. - url: The URL of the category. - vibes: The list of vibes associated with the category.</p>
 </section>
 <section id="hushh.catalog.Embedding" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Embedding">Embedding</h3>
-<p><code>catalog.Embedding()</code></p>
+<p><code>catalog.Embedding(self, v)</code></p>
 <p>Represents an embedding.</p>
-<p>Attributes: - id: The unique identifier of the embedding. - description: The description of the embedding. - value: The value of the embedding.</p>
+<p>Attributes: - v : the vector embedding</p>
 </section>
 <section id="hushh.catalog.Product" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Product">Product</h3>
-<p><code>catalog.Product(self, description, url, categories=None)</code></p>
+<p><code>catalog.Product(self, description, url, categories=None, vibes=None)</code></p>
 <p>Represents a product.</p>
 <p>Attributes: - id: The unique identifier of the product. - description: The description of the product. - url: The URL of the product. - categories: The list of categories the product belongs to.</p>
 </section>
 <section id="hushh.catalog.Vibe" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Vibe">Vibe</h3>
-<p><code>catalog.Vibe(self, description, image_base_64, url, embeddings)</code></p>
+<p><code>catalog.Vibe(self, description, imageBase64, url, embeddings)</code></p>
 <p>Represents a vibe.</p>
-<p>Attributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - image_base_64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe.</p>
+<p>Attributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - imageBase64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe.</p>
 
 
 </section>

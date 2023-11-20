@@ -28,7 +28,7 @@ Attributes:
 
 ### Category { #hushh.catalog.Category }
 
-`catalog.Category(self, description, url, vibes)`
+`catalog.Category(self, description, url, embeddings)`
 
 Represents a category of products.
 
@@ -39,18 +39,16 @@ Attributes:
 
 ### Embedding { #hushh.catalog.Embedding }
 
-`catalog.Embedding()`
+`catalog.Embedding(self, v)`
 
 Represents an embedding.
 
 Attributes:
-- id: The unique identifier of the embedding.
-- description: The description of the embedding.
-- value: The value of the embedding.
+- v : the vector embedding
 
 ### Product { #hushh.catalog.Product }
 
-`catalog.Product(self, description, url, categories=None)`
+`catalog.Product(self, description, url, categories=None, vibes=None)`
 
 Represents a product.
 
@@ -62,13 +60,13 @@ Attributes:
 
 ### Vibe { #hushh.catalog.Vibe }
 
-`catalog.Vibe(self, description, image_base_64, url, embeddings)`
+`catalog.Vibe(self, description, imageBase64, url, embeddings)`
 
 Represents a vibe.
 
 Attributes:
 - id: The unique identifier of the vibe.
 - description: The description of the vibe.
-- image_base_64: The base64 encoded image of the vibe.
+- imageBase64: The base64 encoded image of the vibe.
 - url: The URL of the vibe.
 - embeddings: The list of embeddings associated with the vibe.
