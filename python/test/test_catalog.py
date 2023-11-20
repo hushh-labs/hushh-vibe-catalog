@@ -2,6 +2,7 @@ import flatbuffers
 
 from hushh.catalog import Catalog, Category, Embedding, Product, Vibe
 from hushh.hcf import Catalog as RawCatalog
+from typing import cast
 
 builder = flatbuffers.Builder(0)
 
@@ -65,5 +66,35 @@ def test_embeddings():
     builder = flatbuffers.Builder(0)
     cat_end = catalog.Pack(builder)
     builder.Finish(cat_end)
+
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
     assert rcat.Description() == b"test_embeddings"
+    assert(rcat.ProductsLength() == 10)
+
+    #product
+    prod = rcat.Products(0)
+    assert prod is not None
+    assert prod.Description() == b"desc"
+    assert prod.CategoriesLength() == 3
+
+    #category
+    cat = prod.Categories(0)
+    assert cat is not None
+    assert cat.Description() ==  b"category a"
+    assert cat.Url() ==  b"na"
+    assert cat.EmbeddingsLength() == 1
+
+    #embedding
+    emb = cat.Embeddings(0)
+    assert emb is not None
+    assert emb.VLength() == 3
+
+    # vector
+    v = emb.V(0)
+    assert v is not None
+
+
+
+
+
+
