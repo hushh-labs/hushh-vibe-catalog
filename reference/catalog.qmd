@@ -20,31 +20,40 @@
 
 Represents a catalog of products.
 
-Attributes:
-- id: The unique identifier of the catalog.
-- version: The version of the catalog.
-- description: The description of the catalog.
-- products: The list of products in the catalog.
+#### Attributes
+
+| Name        | Type                    | Description                           |
+|-------------|-------------------------|---------------------------------------|
+| id          | str                     | The unique identifier of the catalog. |
+| version     | str                     | The version of the catalog.           |
+| description | str                     | The description of the catalog.       |
+| products    | list\[Product\] or None | The list of products in the catalog.  |
 
 ### Category { #hushh.catalog.Category }
 
-`catalog.Category(self, description, url, embeddings)`
+`catalog.Category(self, description, url, embeddings=None)`
 
 Represents a category of products.
 
-Attributes:
-- description: The description of the category.
-- url: The URL of the category.
-- vibes: The list of vibes associated with the category.
+#### Attributes
+
+| Name        | Type                      | Description                                          |
+|-------------|---------------------------|------------------------------------------------------|
+| description | str                       | The description of the category.                     |
+| url         | str                       | The URL of the category.                             |
+| embeddings  | list\[Embedding\] or None | The list of embeddings associated with the category. |
 
 ### Embedding { #hushh.catalog.Embedding }
 
-`catalog.Embedding(self, v)`
+`catalog.Embedding(self, v=None)`
 
 Represents an embedding.
 
-Attributes:
-- v : the vector embedding
+#### Attributes
+
+| Name   | Type                  | Description           |
+|--------|-----------------------|-----------------------|
+| v      | list\[float\] or None | The vector embedding. |
 
 ### Product { #hushh.catalog.Product }
 
@@ -52,21 +61,28 @@ Attributes:
 
 Represents a product.
 
-Attributes:
-- id: The unique identifier of the product.
-- description: The description of the product.
-- url: The URL of the product.
-- categories: The list of categories the product belongs to.
+#### Attributes
+
+| Name        | Type                     | Description                                    |
+|-------------|--------------------------|------------------------------------------------|
+| id          | str                      | The unique identifier of the product.          |
+| description | str                      | The description of the product.                |
+| url         | str                      | The URL of the product.                        |
+| categories  | list\[Category\] or None | The list of categories the product belongs to. |
+| vibes       | list\[Vibe\] or None     | The list of vibes associated with the product. |
 
 ### Vibe { #hushh.catalog.Vibe }
 
-`catalog.Vibe(self, description, imageBase64, url, embeddings)`
+`catalog.Vibe(self, description, imageBase64, url, embeddings=None)`
 
 Represents a vibe.
 
-Attributes:
-- id: The unique identifier of the vibe.
-- description: The description of the vibe.
-- imageBase64: The base64 encoded image of the vibe.
-- url: The URL of the vibe.
-- embeddings: The list of embeddings associated with the vibe.
+#### Attributes
+
+| Name        | Type                      | Description                                      |
+|-------------|---------------------------|--------------------------------------------------|
+| id          | str                       | The unique identifier of the vibe.               |
+| description | str                       | The description of the vibe.                     |
+| imageBase64 | str or None               | The base64 encoded image of the vibe.            |
+| url         | str                       | The URL of the vibe.                             |
+| embeddings  | list\[Embedding\] or None | The list of embeddings associated with the vibe. |

@@ -3,8 +3,13 @@ website:
   - contents:
     - reference/index.qmd
     - contents:
-      - reference/catalog.qmd
       - reference/hcf.qmd
-      section: Some functions
+      - reference/hcf.Catalog.qmd
+      - reference/hcf.Product.qmd
+      - reference/hcf.Category.qmd
+      - reference/hcf.Embedding.qmd
+      - reference/hcf.Vibe.qmd
+      - reference/catalog.qmd
+      section: Catalog
     id: reference
   - id: dummy-sidebar

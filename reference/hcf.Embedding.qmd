@@ -1,0 +1,4 @@
+# hcf.Embedding { #hushh.hcf.Embedding }
+
+`hcf.Embedding`
+

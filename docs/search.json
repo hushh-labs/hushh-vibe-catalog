@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "reference/hcf.Catalog.html",
+    "href": "reference/hcf.Catalog.html",
+    "title": "hcf.Catalog",
+    "section": "",
+    "text": "hcf.Catalog\nhcf.Catalog"
+  },
+  {
     "objectID": "reference/hcf.html",
     "href": "reference/hcf.html",
     "title": "hcf",
@@ -7,31 +14,59 @@
     "text": "hcf\nhcf"
   },
   {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Function reference",
+    "section": "",
+    "text": "Catalog functions\n\n\n\nhcf\n\n\n\nhcf.Catalog\n\n\n\nhcf.Product\n\n\n\nhcf.Category\n\n\n\nhcf.Embedding\n\n\n\nhcf.Vibe\n\n\n\ncatalog"
+  },
+  {
+    "objectID": "reference/index.html#catalog",
+    "href": "reference/index.html#catalog",
+    "title": "Function reference",
+    "section": "",
+    "text": "Catalog functions\n\n\n\nhcf\n\n\n\nhcf.Catalog\n\n\n\nhcf.Product\n\n\n\nhcf.Category\n\n\n\nhcf.Embedding\n\n\n\nhcf.Vibe\n\n\n\ncatalog"
+  },
+  {
     "objectID": "reference/catalog.html",
     "href": "reference/catalog.html",
     "title": "catalog",
     "section": "",
-    "text": "catalog\n\n\n\n\n\nName\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\nAttributes: - id: The unique identifier of the catalog. - version: The version of the catalog. - description: The description of the catalog. - products: The list of products in the catalog.\n\n\n\ncatalog.Category(self, description, url, embeddings)\nRepresents a category of products.\nAttributes: - description: The description of the category. - url: The URL of the category. - vibes: The list of vibes associated with the category.\n\n\n\ncatalog.Embedding(self, v)\nRepresents an embedding.\nAttributes: - v : the vector embedding\n\n\n\ncatalog.Product(self, description, url, categories=None, vibes=None)\nRepresents a product.\nAttributes: - id: The unique identifier of the product. - description: The description of the product. - url: The URL of the product. - categories: The list of categories the product belongs to.\n\n\n\ncatalog.Vibe(self, description, imageBase64, url, embeddings)\nRepresents a vibe.\nAttributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - imageBase64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe."
+    "text": "catalog\n\n\n\n\n\nName\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the catalog.\n\n\nversion\nstr\nThe version of the catalog.\n\n\ndescription\nstr\nThe description of the catalog.\n\n\nproducts\nlist[Product] or None\nThe list of products in the catalog.\n\n\n\n\n\n\n\ncatalog.Category(self, description, url, embeddings=None)\nRepresents a category of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\ndescription\nstr\nThe description of the category.\n\n\nurl\nstr\nThe URL of the category.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the category.\n\n\n\n\n\n\n\ncatalog.Embedding(self, v=None)\nRepresents an embedding.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nv\nlist[float] or None\nThe vector embedding.\n\n\n\n\n\n\n\ncatalog.Product(self, description, url, categories=None, vibes=None)\nRepresents a product.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the product.\n\n\ndescription\nstr\nThe description of the product.\n\n\nurl\nstr\nThe URL of the product.\n\n\ncategories\nlist[Category] or None\nThe list of categories the product belongs to.\n\n\nvibes\nlist[Vibe] or None\nThe list of vibes associated with the product.\n\n\n\n\n\n\n\ncatalog.Vibe(self, description, imageBase64, url, embeddings=None)\nRepresents a vibe.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the vibe.\n\n\ndescription\nstr\nThe description of the vibe.\n\n\nimageBase64\nstr or None\nThe base64 encoded image of the vibe.\n\n\nurl\nstr\nThe URL of the vibe.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the vibe."
   },
   {
     "objectID": "reference/catalog.html#classes",
     "href": "reference/catalog.html#classes",
     "title": "catalog",
     "section": "",
-    "text": "Name\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\nAttributes: - id: The unique identifier of the catalog. - version: The version of the catalog. - description: The description of the catalog. - products: The list of products in the catalog.\n\n\n\ncatalog.Category(self, description, url, embeddings)\nRepresents a category of products.\nAttributes: - description: The description of the category. - url: The URL of the category. - vibes: The list of vibes associated with the category.\n\n\n\ncatalog.Embedding(self, v)\nRepresents an embedding.\nAttributes: - v : the vector embedding\n\n\n\ncatalog.Product(self, description, url, categories=None, vibes=None)\nRepresents a product.\nAttributes: - id: The unique identifier of the product. - description: The description of the product. - url: The URL of the product. - categories: The list of categories the product belongs to.\n\n\n\ncatalog.Vibe(self, description, imageBase64, url, embeddings)\nRepresents a vibe.\nAttributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - imageBase64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe."
+    "text": "Name\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the catalog.\n\n\nversion\nstr\nThe version of the catalog.\n\n\ndescription\nstr\nThe description of the catalog.\n\n\nproducts\nlist[Product] or None\nThe list of products in the catalog.\n\n\n\n\n\n\n\ncatalog.Category(self, description, url, embeddings=None)\nRepresents a category of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\ndescription\nstr\nThe description of the category.\n\n\nurl\nstr\nThe URL of the category.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the category.\n\n\n\n\n\n\n\ncatalog.Embedding(self, v=None)\nRepresents an embedding.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nv\nlist[float] or None\nThe vector embedding.\n\n\n\n\n\n\n\ncatalog.Product(self, description, url, categories=None, vibes=None)\nRepresents a product.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the product.\n\n\ndescription\nstr\nThe description of the product.\n\n\nurl\nstr\nThe URL of the product.\n\n\ncategories\nlist[Category] or None\nThe list of categories the product belongs to.\n\n\nvibes\nlist[Vibe] or None\nThe list of vibes associated with the product.\n\n\n\n\n\n\n\ncatalog.Vibe(self, description, imageBase64, url, embeddings=None)\nRepresents a vibe.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the vibe.\n\n\ndescription\nstr\nThe description of the vibe.\n\n\nimageBase64\nstr or None\nThe base64 encoded image of the vibe.\n\n\nurl\nstr\nThe URL of the vibe.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the vibe."
   },
   {
-    "objectID": "reference/index.html",
-    "href": "reference/index.html",
-    "title": "Function reference",
+    "objectID": "reference/hcf.Embedding.html",
+    "href": "reference/hcf.Embedding.html",
+    "title": "hcf.Embedding",
     "section": "",
-    "text": "Functions to inspect docstrings.\n\n\n\ncatalog\n\n\n\nhcf"
+    "text": "hcf.Embedding\nhcf.Embedding"
   },
   {
-    "objectID": "reference/index.html#some-functions",
-    "href": "reference/index.html#some-functions",
-    "title": "Function reference",
+    "objectID": "reference/hcf.Vibe.html",
+    "href": "reference/hcf.Vibe.html",
+    "title": "hcf.Vibe",
     "section": "",
-    "text": "Functions to inspect docstrings.\n\n\n\ncatalog\n\n\n\nhcf"
+    "text": "hcf.Vibe\nhcf.Vibe"
+  },
+  {
+    "objectID": "reference/hcf.Category.html",
+    "href": "reference/hcf.Category.html",
+    "title": "hcf.Category",
+    "section": "",
+    "text": "hcf.Category\nhcf.Category"
+  },
+  {
+    "objectID": "reference/hcf.Product.html",
+    "href": "reference/hcf.Product.html",
+    "title": "hcf.Product",
+    "section": "",
+    "text": "hcf.Product\nhcf.Product"
   }
 ]

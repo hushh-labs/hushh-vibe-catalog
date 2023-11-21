@@ -1,10 +1,15 @@
 # Function reference
 
-## Some functions
+## Catalog
 
-Functions to inspect docstrings.
+Catalog functions
 
 | | |
 | --- | --- |
-| [catalog](catalog.qmd#hushh.catalog) |  |
 | [hcf](hcf.qmd#hushh.hcf) |  |
+| [hcf.Catalog](hcf.Catalog.qmd#hushh.hcf.Catalog) |  |
+| [hcf.Product](hcf.Product.qmd#hushh.hcf.Product) |  |
+| [hcf.Category](hcf.Category.qmd#hushh.hcf.Category) |  |
+| [hcf.Embedding](hcf.Embedding.qmd#hushh.hcf.Embedding) |  |
+| [hcf.Vibe](hcf.Vibe.qmd#hushh.hcf.Vibe) |  |
+| [catalog](catalog.qmd#hushh.catalog) |  |

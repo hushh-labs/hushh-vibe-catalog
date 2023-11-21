@@ -18,10 +18,16 @@ quartodoc:
   sidebar: _sidebar.yml
 
   sections:
-    - title: Some functions
-      desc: Functions to inspect docstrings.
+    - title: Catalog
+      desc: Catalog functions
       contents:
         # the functions being documented in the package.
         # you can refer to anything: class methods, modules, etc..
-        - catalog
         - hcf
+        - hcf.Catalog
+        - hcf.Product
+        - hcf.Category
+        - hcf.Embedding
+        - hcf.Vibe
+        - catalog
+

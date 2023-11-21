@@ -114,33 +114,208 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="hushh.catalog.Catalog">Catalog</h3>
 <p><code>catalog.Catalog(self, description, products=None)</code></p>
 <p>Represents a catalog of products.</p>
-<p>Attributes: - id: The unique identifier of the catalog. - version: The version of the catalog. - description: The description of the catalog. - products: The list of products in the catalog.</p>
+<section id="attributes" class="level4">
+<h4 class="anchored" data-anchor-id="attributes">Attributes</h4>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 32%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>str</td>
+<td>The unique identifier of the catalog.</td>
+</tr>
+<tr class="even">
+<td>version</td>
+<td>str</td>
+<td>The version of the catalog.</td>
+</tr>
+<tr class="odd">
+<td>description</td>
+<td>str</td>
+<td>The description of the catalog.</td>
+</tr>
+<tr class="even">
+<td>products</td>
+<td>list[Product] or None</td>
+<td>The list of products in the catalog.</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="hushh.catalog.Category" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Category">Category</h3>
-<p><code>catalog.Category(self, description, url, embeddings)</code></p>
+<p><code>catalog.Category(self, description, url, embeddings=None)</code></p>
 <p>Represents a category of products.</p>
-<p>Attributes: - description: The description of the category. - url: The URL of the category. - vibes: The list of vibes associated with the category.</p>
+<section id="attributes-1" class="level4">
+<h4 class="anchored" data-anchor-id="attributes-1">Attributes</h4>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>description</td>
+<td>str</td>
+<td>The description of the category.</td>
+</tr>
+<tr class="even">
+<td>url</td>
+<td>str</td>
+<td>The URL of the category.</td>
+</tr>
+<tr class="odd">
+<td>embeddings</td>
+<td>list[Embedding] or None</td>
+<td>The list of embeddings associated with the category.</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="hushh.catalog.Embedding" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Embedding">Embedding</h3>
-<p><code>catalog.Embedding(self, v)</code></p>
+<p><code>catalog.Embedding(self, v=None)</code></p>
 <p>Represents an embedding.</p>
-<p>Attributes: - v : the vector embedding</p>
+<section id="attributes-2" class="level4">
+<h4 class="anchored" data-anchor-id="attributes-2">Attributes</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>v</td>
+<td>list[float] or None</td>
+<td>The vector embedding.</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="hushh.catalog.Product" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Product">Product</h3>
 <p><code>catalog.Product(self, description, url, categories=None, vibes=None)</code></p>
 <p>Represents a product.</p>
-<p>Attributes: - id: The unique identifier of the product. - description: The description of the product. - url: The URL of the product. - categories: The list of categories the product belongs to.</p>
+<section id="attributes-3" class="level4">
+<h4 class="anchored" data-anchor-id="attributes-3">Attributes</h4>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 29%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>str</td>
+<td>The unique identifier of the product.</td>
+</tr>
+<tr class="even">
+<td>description</td>
+<td>str</td>
+<td>The description of the product.</td>
+</tr>
+<tr class="odd">
+<td>url</td>
+<td>str</td>
+<td>The URL of the product.</td>
+</tr>
+<tr class="even">
+<td>categories</td>
+<td>list[Category] or None</td>
+<td>The list of categories the product belongs to.</td>
+</tr>
+<tr class="odd">
+<td>vibes</td>
+<td>list[Vibe] or None</td>
+<td>The list of vibes associated with the product.</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="hushh.catalog.Vibe" class="level3">
 <h3 class="anchored" data-anchor-id="hushh.catalog.Vibe">Vibe</h3>
-<p><code>catalog.Vibe(self, description, imageBase64, url, embeddings)</code></p>
+<p><code>catalog.Vibe(self, description, imageBase64, url, embeddings=None)</code></p>
 <p>Represents a vibe.</p>
-<p>Attributes: - id: The unique identifier of the vibe. - description: The description of the vibe. - imageBase64: The base64 encoded image of the vibe. - url: The URL of the vibe. - embeddings: The list of embeddings associated with the vibe.</p>
+<section id="attributes-4" class="level4">
+<h4 class="anchored" data-anchor-id="attributes-4">Attributes</h4>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 30%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>str</td>
+<td>The unique identifier of the vibe.</td>
+</tr>
+<tr class="even">
+<td>description</td>
+<td>str</td>
+<td>The description of the vibe.</td>
+</tr>
+<tr class="odd">
+<td>imageBase64</td>
+<td>str or None</td>
+<td>The base64 encoded image of the vibe.</td>
+</tr>
+<tr class="even">
+<td>url</td>
+<td>str</td>
+<td>The URL of the vibe.</td>
+</tr>
+<tr class="odd">
+<td>embeddings</td>
+<td>list[Embedding] or None</td>
+<td>The list of embeddings associated with the vibe.</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 </section>
 </section>
 </section>
