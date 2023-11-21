@@ -1,10 +1,12 @@
 import flatbuffers
+import numpy as np
+import numpy.typing as npt
 
 from hushh.catalog import Catalog, Category, Embedding, Product, Vibe
 from hushh.hcf import Catalog as RawCatalog
-from typing import cast
 
 builder = flatbuffers.Builder(0)
+
 
 def build_raw_catalog():
     """
@@ -52,13 +54,14 @@ def test_embeddings():
         c = Category("category a", "na", [embedding])
         categories.append(c)
 
-    v = Vibe("test_vibe", "test_base64", "test_url", embeddings = [embedding, inv_embedding])
+    v = Vibe(
+        "test_vibe", "test_base64", "test_url", embeddings=[embedding, inv_embedding]
+    )
 
     products = []
     for _ in range(0, 10):
         p = Product("desc", "url", categories=categories, vibes=[v])
         products.append(p)
-
 
     catalog = Catalog("test_embeddings", products)
     catalog.id = "foo"
@@ -68,36 +71,45 @@ def test_embeddings():
 
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
     assert rcat.Description() == b"test_embeddings"
-    assert(rcat.ProductsLength() == 10)
+    assert rcat.ProductsLength() == 10
 
-    #product
+    # product
     prod = rcat.Products(0)
     assert prod is not None
+    assert prod.Id() is not None
     assert prod.Description() == b"desc"
     assert prod.CategoriesLength() == 3
     assert prod.VibesLength() == 1
 
-    #category
+    # category
     cat = prod.Categories(0)
     assert cat is not None
-    assert cat.Description() ==  b"category a"
-    assert cat.Url() ==  b"na"
+    assert cat.Id() is not None
+    assert cat.Description() == b"category a"
+    assert cat.Url() == b"na"
     assert cat.EmbeddingsLength() == 1
 
-    #embedding
+    # embedding
     emb = cat.Embeddings(0)
     assert emb is not None
+    arr = emb.VAsNumpy()
+    assert isinstance(arr, np.ndarray)
+    assert arr is not None
+    assert len(arr) == 3
     assert emb.VLength() == 3
 
     # vector
     v = emb.V(0)
     assert v is not None
 
-    #vibe
+    # vibe
     vibe = prod.Vibes(0)
     assert vibe is not None
+    assert vibe.Id() is not None
+    assert vibe.Description() == b"test_vibe"
     assert vibe.Url() == b"test_url"
     assert vibe.ImageBase64() == b"test_base64"
     assert vibe.EmbeddingsLength() == 2
-    assert vibe.Id() is not None
 
+    emb_v = vibe.Embeddings(0)
+    assert emb_v is not None
