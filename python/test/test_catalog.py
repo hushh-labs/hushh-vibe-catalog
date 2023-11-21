@@ -6,7 +6,6 @@ from typing import cast
 
 builder = flatbuffers.Builder(0)
 
-
 def build_raw_catalog():
     """
     builds a simple catalog to test serialization
@@ -53,7 +52,7 @@ def test_embeddings():
         c = Category("category a", "na", [embedding])
         categories.append(c)
 
-    v = Vibe("test_vibe", "", "", embeddings = [embedding, inv_embedding])
+    v = Vibe("test_vibe", "test_base64", "test_url", embeddings = [embedding, inv_embedding])
 
     products = []
     for _ in range(0, 10):
@@ -76,6 +75,7 @@ def test_embeddings():
     assert prod is not None
     assert prod.Description() == b"desc"
     assert prod.CategoriesLength() == 3
+    assert prod.VibesLength() == 1
 
     #category
     cat = prod.Categories(0)
@@ -93,9 +93,11 @@ def test_embeddings():
     v = emb.V(0)
     assert v is not None
 
-
-
-
-
-
+    #vibe
+    vibe = prod.Vibes(0)
+    assert vibe is not None
+    assert vibe.Url() == b"test_url"
+    assert vibe.ImageBase64() == b"test_base64"
+    assert vibe.EmbeddingsLength() == 2
+    assert vibe.Id() is not None
 
