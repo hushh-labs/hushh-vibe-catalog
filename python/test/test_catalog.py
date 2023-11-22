@@ -70,6 +70,11 @@ def test_embeddings():
     builder.Finish(cat_end)
 
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
+
+    import pdb
+
+    pdb.set_trace()
+
     assert rcat.Description() == b"test_embeddings"
     assert rcat.ProductsLength() == 10
 
@@ -91,7 +96,11 @@ def test_embeddings():
 
     # embedding
     emb = cat.Embeddings(0)
+    import pdb
+
+    pdb.set_trace()
     assert emb is not None
+    f = emb.VAsNumpy()
     arr = emb.VAsNumpy()
     assert isinstance(arr, np.ndarray)
     assert arr is not None

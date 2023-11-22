@@ -1,13 +1,16 @@
-from typing import Optional, List, cast
 import uuid
-from .version import VERSION
+from typing import List, Optional, cast
+
 from hushh.hcf.Catalog import CatalogT
-from hushh.hcf.Product import ProductT
 from hushh.hcf.Category import CategoryT
-from hushh.hcf.Embedding import EmbeddingT
+from hushh.hcf.FlatTensorBatch import FlatTensorBatch
+from hushh.hcf.Product import ProductT
 from hushh.hcf.Vibe import VibeT
 
-class Embedding(EmbeddingT):
+from .version import VERSION
+
+
+class FlatTensorBatch(EmbeddingT):
     """
     Represents an embedding.
 
@@ -38,7 +41,9 @@ class Category(CategoryT):
         The list of embeddings associated with the category.
     """
 
-    def __init__(self, description: str, url: str, embeddings: Optional[List[Embedding]] = None):
+    def __init__(
+        self, description: str, url: str, embeddings: Optional[List[Embedding]] = None
+    ):
         self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
@@ -67,7 +72,13 @@ class Vibe(VibeT):
         The list of embeddings associated with the vibe.
     """
 
-    def __init__(self, description: str, imageBase64: Optional[str], url: str, embeddings: Optional[List[Embedding]] = None):
+    def __init__(
+        self,
+        description: str,
+        imageBase64: Optional[str],
+        url: str,
+        embeddings: Optional[List[Embedding]] = None,
+    ):
         self.id = str(uuid.uuid1())
         self.description = description
         self.imageBase64 = imageBase64
@@ -97,7 +108,13 @@ class Product(ProductT):
         The list of vibes associated with the product.
     """
 
-    def __init__(self, description: str, url: str, categories: Optional[List[Category]] = None, vibes: Optional[List[Vibe]] = None):
+    def __init__(
+        self,
+        description: str,
+        url: str,
+        categories: Optional[List[Category]] = None,
+        vibes: Optional[List[Vibe]] = None,
+    ):
         self.id = str(uuid.uuid1())
         self.description = description
         self.url = url

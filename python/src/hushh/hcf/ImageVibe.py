@@ -8,46 +8,46 @@ from typing import Any
 from typing import Optional
 np = import_numpy()
 
-class Category(object):
+class ImageVibe(object):
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
-        x = Category()
+        x = ImageVibe()
         x.Init(buf, n + offset)
         return x
 
     @classmethod
-    def GetRootAsCategory(cls, buf, offset=0):
+    def GetRootAsImageVibe(cls, buf, offset=0):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
-    # Category
+    # ImageVibe
     def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
 
-    # Category
+    # ImageVibe
     def Id(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Category
-    def Description(self) -> Optional[str]:
+    # ImageVibe
+    def Base64(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Category
-    def Url(self) -> Optional[str]:
+    # ImageVibe
+    def ImageUrl(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Category
+    # ImageVibe
     def ProductIdx(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
@@ -55,86 +55,86 @@ class Category(object):
             return self._tab.Get(flatbuffers.number_types.Int32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
         return 0
 
-    # Category
+    # ImageVibe
     def ProductIdxAsNumpy(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
         return 0
 
-    # Category
+    # ImageVibe
     def ProductIdxLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
-    # Category
+    # ImageVibe
     def ProductIdxIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
-def CategoryStart(builder: flatbuffers.Builder):
+def ImageVibeStart(builder: flatbuffers.Builder):
     builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
-    CategoryStart(builder)
+    ImageVibeStart(builder)
 
-def CategoryAddId(builder: flatbuffers.Builder, id: int):
+def ImageVibeAddId(builder: flatbuffers.Builder, id: int):
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
-    CategoryAddId(builder, id)
+    ImageVibeAddId(builder, id)
 
-def CategoryAddDescription(builder: flatbuffers.Builder, description: int):
-    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
+def ImageVibeAddBase64(builder: flatbuffers.Builder, base64: int):
+    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(base64), 0)
 
-def AddDescription(builder: flatbuffers.Builder, description: int):
-    CategoryAddDescription(builder, description)
+def AddBase64(builder: flatbuffers.Builder, base64: int):
+    ImageVibeAddBase64(builder, base64)
 
-def CategoryAddUrl(builder: flatbuffers.Builder, url: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
+def ImageVibeAddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(imageUrl), 0)
 
-def AddUrl(builder: flatbuffers.Builder, url: int):
-    CategoryAddUrl(builder, url)
+def AddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
+    ImageVibeAddImageUrl(builder, imageUrl)
 
-def CategoryAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+def ImageVibeAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
 def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
-    CategoryAddProductIdx(builder, productIdx)
+    ImageVibeAddProductIdx(builder, productIdx)
 
-def CategoryStartProductIdxVector(builder, numElems: int) -> int:
+def ImageVibeStartProductIdxVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdxVector(builder, numElems: int) -> int:
-    return CategoryStartProductIdxVector(builder, numElems)
+    return ImageVibeStartProductIdxVector(builder, numElems)
 
-def CategoryEnd(builder: flatbuffers.Builder) -> int:
+def ImageVibeEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
-    return CategoryEnd(builder)
+    return ImageVibeEnd(builder)
 
 try:
     from typing import List
 except:
     pass
 
-class CategoryT(object):
+class ImageVibeT(object):
 
-    # CategoryT
+    # ImageVibeT
     def __init__(self):
         self.id = None  # type: str
-        self.description = None  # type: str
-        self.url = None  # type: str
+        self.base64 = None  # type: str
+        self.imageUrl = None  # type: str
         self.productIdx = None  # type: List[int]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
-        category = Category()
-        category.Init(buf, pos)
-        return cls.InitFromObj(category)
+        imageVibe = ImageVibe()
+        imageVibe.Init(buf, pos)
+        return cls.InitFromObj(imageVibe)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
@@ -142,50 +142,50 @@ class CategoryT(object):
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
-    def InitFromObj(cls, category):
-        x = CategoryT()
-        x._UnPack(category)
+    def InitFromObj(cls, imageVibe):
+        x = ImageVibeT()
+        x._UnPack(imageVibe)
         return x
 
-    # CategoryT
-    def _UnPack(self, category):
-        if category is None:
+    # ImageVibeT
+    def _UnPack(self, imageVibe):
+        if imageVibe is None:
             return
-        self.id = category.Id()
-        self.description = category.Description()
-        self.url = category.Url()
-        if not category.ProductIdxIsNone():
+        self.id = imageVibe.Id()
+        self.base64 = imageVibe.Base64()
+        self.imageUrl = imageVibe.ImageUrl()
+        if not imageVibe.ProductIdxIsNone():
             if np is None:
                 self.productIdx = []
-                for i in range(category.ProductIdxLength()):
-                    self.productIdx.append(category.ProductIdx(i))
+                for i in range(imageVibe.ProductIdxLength()):
+                    self.productIdx.append(imageVibe.ProductIdx(i))
             else:
-                self.productIdx = category.ProductIdxAsNumpy()
+                self.productIdx = imageVibe.ProductIdxAsNumpy()
 
-    # CategoryT
+    # ImageVibeT
     def Pack(self, builder):
         if self.id is not None:
             id = builder.CreateString(self.id)
-        if self.description is not None:
-            description = builder.CreateString(self.description)
-        if self.url is not None:
-            url = builder.CreateString(self.url)
+        if self.base64 is not None:
+            base64 = builder.CreateString(self.base64)
+        if self.imageUrl is not None:
+            imageUrl = builder.CreateString(self.imageUrl)
         if self.productIdx is not None:
             if np is not None and type(self.productIdx) is np.ndarray:
                 productIdx = builder.CreateNumpyVector(self.productIdx)
             else:
-                CategoryStartProductIdxVector(builder, len(self.productIdx))
+                ImageVibeStartProductIdxVector(builder, len(self.productIdx))
                 for i in reversed(range(len(self.productIdx))):
                     builder.PrependInt32(self.productIdx[i])
                 productIdx = builder.EndVector()
-        CategoryStart(builder)
+        ImageVibeStart(builder)
         if self.id is not None:
-            CategoryAddId(builder, id)
-        if self.description is not None:
-            CategoryAddDescription(builder, description)
-        if self.url is not None:
-            CategoryAddUrl(builder, url)
+            ImageVibeAddId(builder, id)
+        if self.base64 is not None:
+            ImageVibeAddBase64(builder, base64)
+        if self.imageUrl is not None:
+            ImageVibeAddImageUrl(builder, imageUrl)
         if self.productIdx is not None:
-            CategoryAddProductIdx(builder, productIdx)
-        category = CategoryEnd(builder)
-        return category
+            ImageVibeAddProductIdx(builder, productIdx)
+        imageVibe = ImageVibeEnd(builder)
+        return imageVibe

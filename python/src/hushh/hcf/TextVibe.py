@@ -8,46 +8,46 @@ from typing import Any
 from typing import Optional
 np = import_numpy()
 
-class Category(object):
+class TextVibe(object):
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
-        x = Category()
+        x = TextVibe()
         x.Init(buf, n + offset)
         return x
 
     @classmethod
-    def GetRootAsCategory(cls, buf, offset=0):
+    def GetRootAsTextVibe(cls, buf, offset=0):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
-    # Category
+    # TextVibe
     def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
 
-    # Category
+    # TextVibe
     def Id(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Category
+    # TextVibe
     def Description(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Category
+    # TextVibe
     def Url(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Category
+    # TextVibe
     def ProductIdx(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
@@ -55,75 +55,75 @@ class Category(object):
             return self._tab.Get(flatbuffers.number_types.Int32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
         return 0
 
-    # Category
+    # TextVibe
     def ProductIdxAsNumpy(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
         return 0
 
-    # Category
+    # TextVibe
     def ProductIdxLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
-    # Category
+    # TextVibe
     def ProductIdxIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
-def CategoryStart(builder: flatbuffers.Builder):
+def TextVibeStart(builder: flatbuffers.Builder):
     builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
-    CategoryStart(builder)
+    TextVibeStart(builder)
 
-def CategoryAddId(builder: flatbuffers.Builder, id: int):
+def TextVibeAddId(builder: flatbuffers.Builder, id: int):
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
-    CategoryAddId(builder, id)
+    TextVibeAddId(builder, id)
 
-def CategoryAddDescription(builder: flatbuffers.Builder, description: int):
+def TextVibeAddDescription(builder: flatbuffers.Builder, description: int):
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
-    CategoryAddDescription(builder, description)
+    TextVibeAddDescription(builder, description)
 
-def CategoryAddUrl(builder: flatbuffers.Builder, url: int):
+def TextVibeAddUrl(builder: flatbuffers.Builder, url: int):
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
-    CategoryAddUrl(builder, url)
+    TextVibeAddUrl(builder, url)
 
-def CategoryAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+def TextVibeAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
 def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
-    CategoryAddProductIdx(builder, productIdx)
+    TextVibeAddProductIdx(builder, productIdx)
 
-def CategoryStartProductIdxVector(builder, numElems: int) -> int:
+def TextVibeStartProductIdxVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdxVector(builder, numElems: int) -> int:
-    return CategoryStartProductIdxVector(builder, numElems)
+    return TextVibeStartProductIdxVector(builder, numElems)
 
-def CategoryEnd(builder: flatbuffers.Builder) -> int:
+def TextVibeEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
-    return CategoryEnd(builder)
+    return TextVibeEnd(builder)
 
 try:
     from typing import List
 except:
     pass
 
-class CategoryT(object):
+class TextVibeT(object):
 
-    # CategoryT
+    # TextVibeT
     def __init__(self):
         self.id = None  # type: str
         self.description = None  # type: str
@@ -132,9 +132,9 @@ class CategoryT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
-        category = Category()
-        category.Init(buf, pos)
-        return cls.InitFromObj(category)
+        textVibe = TextVibe()
+        textVibe.Init(buf, pos)
+        return cls.InitFromObj(textVibe)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
@@ -142,27 +142,27 @@ class CategoryT(object):
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
-    def InitFromObj(cls, category):
-        x = CategoryT()
-        x._UnPack(category)
+    def InitFromObj(cls, textVibe):
+        x = TextVibeT()
+        x._UnPack(textVibe)
         return x
 
-    # CategoryT
-    def _UnPack(self, category):
-        if category is None:
+    # TextVibeT
+    def _UnPack(self, textVibe):
+        if textVibe is None:
             return
-        self.id = category.Id()
-        self.description = category.Description()
-        self.url = category.Url()
-        if not category.ProductIdxIsNone():
+        self.id = textVibe.Id()
+        self.description = textVibe.Description()
+        self.url = textVibe.Url()
+        if not textVibe.ProductIdxIsNone():
             if np is None:
                 self.productIdx = []
-                for i in range(category.ProductIdxLength()):
-                    self.productIdx.append(category.ProductIdx(i))
+                for i in range(textVibe.ProductIdxLength()):
+                    self.productIdx.append(textVibe.ProductIdx(i))
             else:
-                self.productIdx = category.ProductIdxAsNumpy()
+                self.productIdx = textVibe.ProductIdxAsNumpy()
 
-    # CategoryT
+    # TextVibeT
     def Pack(self, builder):
         if self.id is not None:
             id = builder.CreateString(self.id)
@@ -174,18 +174,18 @@ class CategoryT(object):
             if np is not None and type(self.productIdx) is np.ndarray:
                 productIdx = builder.CreateNumpyVector(self.productIdx)
             else:
-                CategoryStartProductIdxVector(builder, len(self.productIdx))
+                TextVibeStartProductIdxVector(builder, len(self.productIdx))
                 for i in reversed(range(len(self.productIdx))):
                     builder.PrependInt32(self.productIdx[i])
                 productIdx = builder.EndVector()
-        CategoryStart(builder)
+        TextVibeStart(builder)
         if self.id is not None:
-            CategoryAddId(builder, id)
+            TextVibeAddId(builder, id)
         if self.description is not None:
-            CategoryAddDescription(builder, description)
+            TextVibeAddDescription(builder, description)
         if self.url is not None:
-            CategoryAddUrl(builder, url)
+            TextVibeAddUrl(builder, url)
         if self.productIdx is not None:
-            CategoryAddProductIdx(builder, productIdx)
-        category = CategoryEnd(builder)
-        return category
+            TextVibeAddProductIdx(builder, productIdx)
+        textVibe = TextVibeEnd(builder)
+        return textVibe
