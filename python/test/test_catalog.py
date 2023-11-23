@@ -60,7 +60,7 @@ def test_embeddings():
 
     products = []
     for _ in range(0, 10):
-        p = Product("desc", "url", categories=categories, vibes=[v])
+        p = Product("desc", "url", "dummy_image", "dummy_url")
         products.append(p)
 
     catalog = Catalog("test_embeddings", products)
@@ -83,36 +83,19 @@ def test_embeddings():
     assert prod is not None
     assert prod.Id() is not None
     assert prod.Description() == b"desc"
-    assert prod.CategoriesLength() == 3
-    assert prod.VibesLength() == 1
+    assert prod.Base64() == b"dummy_image"
+    assert prod.Url() == b"dummy_url"
 
     # category
-    cat = prod.Categories(0)
+    cat = rcat.Categories(0)
     assert cat is not None
     assert cat.Id() is not None
     assert cat.Description() == b"category a"
     assert cat.Url() == b"na"
-    assert cat.EmbeddingsLength() == 1
 
     # embedding
-    emb = cat.Embeddings(0)
-    import pdb
-
-    pdb.set_trace()
-    assert emb is not None
-    f = emb.VAsNumpy()
-    arr = emb.VAsNumpy()
-    assert isinstance(arr, np.ndarray)
-    assert arr is not None
-    assert len(arr) == 3
-    assert emb.VLength() == 3
-
-    # vector
-    v = emb.V(0)
-    assert v is not None
 
     # vibe
-    vibe = prod.Vibes(0)
     assert vibe is not None
     assert vibe.Id() is not None
     assert vibe.Description() == b"test_vibe"

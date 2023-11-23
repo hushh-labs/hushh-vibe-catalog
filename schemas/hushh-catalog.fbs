@@ -38,15 +38,21 @@ table FlatEmbeddingBatch {
     flat_tensor:[float];
 }
 
+table ProductVibes {
+  products: [Product];
+  categories: Category;
+  text: [TextVibe];
+  image: [ImageVibe];
+  flat_batches: [FlatEmbeddingBatch];
+}
+
+union Vibes { ProductVibes }
+
 table Catalog {
   id : string;
   version: string;
   description: string;
-  products: [Product];
-  text_vibes: [TextVibe];
-  image_vibes: [ImageVibe];
-  categories: [Category];
-  flat_batches: [FlatEmbeddingBatch];
+  vibes: Vibes;
 }
 
 root_type Catalog;

@@ -31,6 +31,48 @@ extension hushh_hcf_VibeType: Encodable {
   }
 }
 
+public enum hushh_hcf_Vibes: UInt8, UnionEnum {
+  public typealias T = UInt8
+
+  public init?(value: T) {
+    self.init(rawValue: value)
+  }
+
+  public static var byteSize: Int { return MemoryLayout<UInt8>.size }
+  public var value: UInt8 { return self.rawValue }
+  case none_ = 0
+  case productvibes = 1
+
+  public static var max: hushh_hcf_Vibes { return .productvibes }
+  public static var min: hushh_hcf_Vibes { return .none_ }
+}
+
+extension hushh_hcf_Vibes: Encodable {
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    switch self {
+    case .none_: try container.encode("NONE")
+    case .productvibes: try container.encode("ProductVibes")
+    }
+  }
+}
+
+public struct hushh_hcf_VibesUnion {
+  public var type: hushh_hcf_Vibes
+  public var value: NativeObject?
+  public init(_ v: NativeObject?, type: hushh_hcf_Vibes) {
+    self.type = type
+    self.value = v
+  }
+  public func pack(builder: inout FlatBufferBuilder) -> Offset {
+    switch type {
+    case .productvibes:
+      var __obj = value as? hushh_hcf_ProductVibesT
+      return hushh_hcf_ProductVibes.pack(&builder, obj: &__obj)
+    default: return Offset()
+    }
+  }
+}
 public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
@@ -748,6 +790,215 @@ public class hushh_hcf_FlatEmbeddingBatchT: NativeObject {
   public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_FlatEmbeddingBatch.self) }
 
 }
+public struct hushh_hcf_ProductVibes: FlatBufferObject, Verifiable, ObjectAPIPacker {
+
+  static func validateVersion() { FlatBuffersVersion_23_5_26() }
+  public var __buffer: ByteBuffer! { return _accessor.bb }
+  private var _accessor: Table
+
+  private init(_ t: Table) { _accessor = t }
+  public init(_ bb: ByteBuffer, o: Int32) { _accessor = Table(bb: bb, position: o) }
+
+  private enum VTOFFSET: VOffset {
+    case products = 4
+    case categories = 6
+    case text = 8
+    case image = 10
+    case flatBatches = 12
+    var v: Int32 { Int32(self.rawValue) }
+    var p: VOffset { self.rawValue }
+  }
+
+  public var hasProducts: Bool { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? false : true }
+  public var productsCount: Int32 { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func products(at index: Int32) -> hushh_hcf_Product? { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? nil : hushh_hcf_Product(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public var hasCategories: Bool { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? false : true }
+  public var categoriesCount: Int32 { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func categories(at index: Int32) -> hushh_hcf_Category? { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? nil : hushh_hcf_Category(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public var hasText: Bool { let o = _accessor.offset(VTOFFSET.text.v); return o == 0 ? false : true }
+  public var textCount: Int32 { let o = _accessor.offset(VTOFFSET.text.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func text(at index: Int32) -> hushh_hcf_TextVibe? { let o = _accessor.offset(VTOFFSET.text.v); return o == 0 ? nil : hushh_hcf_TextVibe(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public var hasImage: Bool { let o = _accessor.offset(VTOFFSET.image.v); return o == 0 ? false : true }
+  public var imageCount: Int32 { let o = _accessor.offset(VTOFFSET.image.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func image(at index: Int32) -> hushh_hcf_ImageVibe? { let o = _accessor.offset(VTOFFSET.image.v); return o == 0 ? nil : hushh_hcf_ImageVibe(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public var hasFlatBatches: Bool { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? false : true }
+  public var flatBatchesCount: Int32 { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func flatBatches(at index: Int32) -> hushh_hcf_FlatEmbeddingBatch? { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? nil : hushh_hcf_FlatEmbeddingBatch(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public static func startProductVibes(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 5) }
+  public static func addVectorOf(products: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: products, at: VTOFFSET.products.p) }
+  public static func addVectorOf(categories: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: categories, at: VTOFFSET.categories.p) }
+  public static func addVectorOf(text: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: text, at: VTOFFSET.text.p) }
+  public static func addVectorOf(image: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: image, at: VTOFFSET.image.p) }
+  public static func addVectorOf(flatBatches: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: flatBatches, at: VTOFFSET.flatBatches.p) }
+  public static func endProductVibes(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
+  public static func createProductVibes(
+    _ fbb: inout FlatBufferBuilder,
+    productsVectorOffset products: Offset = Offset(),
+    categoriesVectorOffset categories: Offset = Offset(),
+    textVectorOffset text: Offset = Offset(),
+    imageVectorOffset image: Offset = Offset(),
+    flatBatchesVectorOffset flatBatches: Offset = Offset()
+  ) -> Offset {
+    let __start = hushh_hcf_ProductVibes.startProductVibes(&fbb)
+    hushh_hcf_ProductVibes.addVectorOf(products: products, &fbb)
+    hushh_hcf_ProductVibes.addVectorOf(categories: categories, &fbb)
+    hushh_hcf_ProductVibes.addVectorOf(text: text, &fbb)
+    hushh_hcf_ProductVibes.addVectorOf(image: image, &fbb)
+    hushh_hcf_ProductVibes.addVectorOf(flatBatches: flatBatches, &fbb)
+    return hushh_hcf_ProductVibes.endProductVibes(&fbb, start: __start)
+  }
+  
+
+  public mutating func unpack() -> hushh_hcf_ProductVibesT {
+    return hushh_hcf_ProductVibesT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductVibesT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_ProductVibesT) -> Offset {
+    var __products__: [Offset] = []
+    for var i in obj.products {
+      __products__.append(hushh_hcf_Product.pack(&builder, obj: &i))
+    }
+    let __products = builder.createVector(ofOffsets: __products__)
+    var __categories__: [Offset] = []
+    for var i in obj.categories {
+      __categories__.append(hushh_hcf_Category.pack(&builder, obj: &i))
+    }
+    let __categories = builder.createVector(ofOffsets: __categories__)
+    var __text__: [Offset] = []
+    for var i in obj.text {
+      __text__.append(hushh_hcf_TextVibe.pack(&builder, obj: &i))
+    }
+    let __text = builder.createVector(ofOffsets: __text__)
+    var __image__: [Offset] = []
+    for var i in obj.image {
+      __image__.append(hushh_hcf_ImageVibe.pack(&builder, obj: &i))
+    }
+    let __image = builder.createVector(ofOffsets: __image__)
+    var __flatBatches__: [Offset] = []
+    for var i in obj.flatBatches {
+      __flatBatches__.append(hushh_hcf_FlatEmbeddingBatch.pack(&builder, obj: &i))
+    }
+    let __flatBatches = builder.createVector(ofOffsets: __flatBatches__)
+    let __root = hushh_hcf_ProductVibes.startProductVibes(&builder)
+    hushh_hcf_ProductVibes.addVectorOf(products: __products, &builder)
+    hushh_hcf_ProductVibes.addVectorOf(categories: __categories, &builder)
+    hushh_hcf_ProductVibes.addVectorOf(text: __text, &builder)
+    hushh_hcf_ProductVibes.addVectorOf(image: __image, &builder)
+    hushh_hcf_ProductVibes.addVectorOf(flatBatches: __flatBatches, &builder)
+    return hushh_hcf_ProductVibes.endProductVibes(&builder, start: __root)
+  }
+
+  public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
+    var _v = try verifier.visitTable(at: position)
+    try _v.visit(field: VTOFFSET.products.p, fieldName: "products", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Product>, hushh_hcf_Product>>.self)
+    try _v.visit(field: VTOFFSET.categories.p, fieldName: "categories", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Category>, hushh_hcf_Category>>.self)
+    try _v.visit(field: VTOFFSET.text.p, fieldName: "text", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_TextVibe>, hushh_hcf_TextVibe>>.self)
+    try _v.visit(field: VTOFFSET.image.p, fieldName: "image", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_ImageVibe>, hushh_hcf_ImageVibe>>.self)
+    try _v.visit(field: VTOFFSET.flatBatches.p, fieldName: "flatBatches", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_FlatEmbeddingBatch>, hushh_hcf_FlatEmbeddingBatch>>.self)
+    _v.finish()
+  }
+}
+
+extension hushh_hcf_ProductVibes: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case products = "products"
+    case categories = "categories"
+    case text = "text"
+    case image = "image"
+    case flatBatches = "flat_batches"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    if productsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .products)
+      for index in 0..<productsCount {
+        guard let type = products(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if categoriesCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .categories)
+      for index in 0..<categoriesCount {
+        guard let type = categories(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if textCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .text)
+      for index in 0..<textCount {
+        guard let type = text(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if imageCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .image)
+      for index in 0..<imageCount {
+        guard let type = image(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+    if flatBatchesCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .flatBatches)
+      for index in 0..<flatBatchesCount {
+        guard let type = flatBatches(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
+  }
+}
+
+public class hushh_hcf_ProductVibesT: NativeObject {
+
+  public var products: [hushh_hcf_ProductT?]
+  public var categories: [hushh_hcf_CategoryT?]
+  public var text: [hushh_hcf_TextVibeT?]
+  public var image: [hushh_hcf_ImageVibeT?]
+  public var flatBatches: [hushh_hcf_FlatEmbeddingBatchT?]
+
+  public init(_ _t: inout hushh_hcf_ProductVibes) {
+    products = []
+    for index in 0..<_t.productsCount {
+        var __v_ = _t.products(at: index)
+        products.append(__v_?.unpack())
+    }
+    categories = []
+    for index in 0..<_t.categoriesCount {
+        var __v_ = _t.categories(at: index)
+        categories.append(__v_?.unpack())
+    }
+    text = []
+    for index in 0..<_t.textCount {
+        var __v_ = _t.text(at: index)
+        text.append(__v_?.unpack())
+    }
+    image = []
+    for index in 0..<_t.imageCount {
+        var __v_ = _t.image(at: index)
+        image.append(__v_?.unpack())
+    }
+    flatBatches = []
+    for index in 0..<_t.flatBatchesCount {
+        var __v_ = _t.flatBatches(at: index)
+        flatBatches.append(__v_?.unpack())
+    }
+  }
+
+  public init() {
+    products = []
+    categories = []
+    text = []
+    image = []
+    flatBatches = []
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_ProductVibes.self) }
+
+}
 public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
@@ -761,11 +1012,8 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     case id = 4
     case version = 6
     case description = 8
-    case products = 10
-    case textVibes = 12
-    case imageVibes = 14
-    case categories = 16
-    case flatBatches = 18
+    case vibesType = 10
+    case vibes = 12
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
@@ -776,51 +1024,29 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public var versionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.version.v) }
   public var description: String? { let o = _accessor.offset(VTOFFSET.description.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var descriptionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.description.v) }
-  public var hasProducts: Bool { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? false : true }
-  public var productsCount: Int32 { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func products(at index: Int32) -> hushh_hcf_Product? { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? nil : hushh_hcf_Product(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public var hasTextVibes: Bool { let o = _accessor.offset(VTOFFSET.textVibes.v); return o == 0 ? false : true }
-  public var textVibesCount: Int32 { let o = _accessor.offset(VTOFFSET.textVibes.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func textVibes(at index: Int32) -> hushh_hcf_TextVibe? { let o = _accessor.offset(VTOFFSET.textVibes.v); return o == 0 ? nil : hushh_hcf_TextVibe(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public var hasImageVibes: Bool { let o = _accessor.offset(VTOFFSET.imageVibes.v); return o == 0 ? false : true }
-  public var imageVibesCount: Int32 { let o = _accessor.offset(VTOFFSET.imageVibes.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func imageVibes(at index: Int32) -> hushh_hcf_ImageVibe? { let o = _accessor.offset(VTOFFSET.imageVibes.v); return o == 0 ? nil : hushh_hcf_ImageVibe(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public var hasCategories: Bool { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? false : true }
-  public var categoriesCount: Int32 { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func categories(at index: Int32) -> hushh_hcf_Category? { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? nil : hushh_hcf_Category(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public var hasFlatBatches: Bool { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? false : true }
-  public var flatBatchesCount: Int32 { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func flatBatches(at index: Int32) -> hushh_hcf_FlatEmbeddingBatch? { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? nil : hushh_hcf_FlatEmbeddingBatch(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 8) }
+  public var vibesType: hushh_hcf_Vibes { let o = _accessor.offset(VTOFFSET.vibesType.v); return o == 0 ? .none_ : hushh_hcf_Vibes(rawValue: _accessor.readBuffer(of: UInt8.self, at: o)) ?? .none_ }
+  public func vibes<T: FlatbuffersInitializable>(type: T.Type) -> T? { let o = _accessor.offset(VTOFFSET.vibes.v); return o == 0 ? nil : _accessor.union(o) }
+  public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 5) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(version: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: version, at: VTOFFSET.version.p) }
   public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
-  public static func addVectorOf(products: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: products, at: VTOFFSET.products.p) }
-  public static func addVectorOf(textVibes: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: textVibes, at: VTOFFSET.textVibes.p) }
-  public static func addVectorOf(imageVibes: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imageVibes, at: VTOFFSET.imageVibes.p) }
-  public static func addVectorOf(categories: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: categories, at: VTOFFSET.categories.p) }
-  public static func addVectorOf(flatBatches: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: flatBatches, at: VTOFFSET.flatBatches.p) }
+  public static func add(vibesType: hushh_hcf_Vibes, _ fbb: inout FlatBufferBuilder) { fbb.add(element: vibesType.rawValue, def: 0, at: VTOFFSET.vibesType.p) }
+  public static func add(vibes: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: vibes, at: VTOFFSET.vibes.p) }
   public static func endCatalog(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createCatalog(
     _ fbb: inout FlatBufferBuilder,
     idOffset id: Offset = Offset(),
     versionOffset version: Offset = Offset(),
     descriptionOffset description: Offset = Offset(),
-    productsVectorOffset products: Offset = Offset(),
-    textVibesVectorOffset textVibes: Offset = Offset(),
-    imageVibesVectorOffset imageVibes: Offset = Offset(),
-    categoriesVectorOffset categories: Offset = Offset(),
-    flatBatchesVectorOffset flatBatches: Offset = Offset()
+    vibesType: hushh_hcf_Vibes = .none_,
+    vibesOffset vibes: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Catalog.startCatalog(&fbb)
     hushh_hcf_Catalog.add(id: id, &fbb)
     hushh_hcf_Catalog.add(version: version, &fbb)
     hushh_hcf_Catalog.add(description: description, &fbb)
-    hushh_hcf_Catalog.addVectorOf(products: products, &fbb)
-    hushh_hcf_Catalog.addVectorOf(textVibes: textVibes, &fbb)
-    hushh_hcf_Catalog.addVectorOf(imageVibes: imageVibes, &fbb)
-    hushh_hcf_Catalog.addVectorOf(categories: categories, &fbb)
-    hushh_hcf_Catalog.addVectorOf(flatBatches: flatBatches, &fbb)
+    hushh_hcf_Catalog.add(vibesType: vibesType, &fbb)
+    hushh_hcf_Catalog.add(vibes: vibes, &fbb)
     return hushh_hcf_Catalog.endCatalog(&fbb, start: __start)
   }
   
@@ -855,40 +1081,16 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
       __description = Offset()
     }
 
-    var __products__: [Offset] = []
-    for var i in obj.products {
-      __products__.append(hushh_hcf_Product.pack(&builder, obj: &i))
-    }
-    let __products = builder.createVector(ofOffsets: __products__)
-    var __textVibes__: [Offset] = []
-    for var i in obj.textVibes {
-      __textVibes__.append(hushh_hcf_TextVibe.pack(&builder, obj: &i))
-    }
-    let __textVibes = builder.createVector(ofOffsets: __textVibes__)
-    var __imageVibes__: [Offset] = []
-    for var i in obj.imageVibes {
-      __imageVibes__.append(hushh_hcf_ImageVibe.pack(&builder, obj: &i))
-    }
-    let __imageVibes = builder.createVector(ofOffsets: __imageVibes__)
-    var __categories__: [Offset] = []
-    for var i in obj.categories {
-      __categories__.append(hushh_hcf_Category.pack(&builder, obj: &i))
-    }
-    let __categories = builder.createVector(ofOffsets: __categories__)
-    var __flatBatches__: [Offset] = []
-    for var i in obj.flatBatches {
-      __flatBatches__.append(hushh_hcf_FlatEmbeddingBatch.pack(&builder, obj: &i))
-    }
-    let __flatBatches = builder.createVector(ofOffsets: __flatBatches__)
+    let __vibes = obj.vibes?.pack(builder: &builder) ?? Offset()
     let __root = hushh_hcf_Catalog.startCatalog(&builder)
     hushh_hcf_Catalog.add(id: __id, &builder)
     hushh_hcf_Catalog.add(version: __version, &builder)
     hushh_hcf_Catalog.add(description: __description, &builder)
-    hushh_hcf_Catalog.addVectorOf(products: __products, &builder)
-    hushh_hcf_Catalog.addVectorOf(textVibes: __textVibes, &builder)
-    hushh_hcf_Catalog.addVectorOf(imageVibes: __imageVibes, &builder)
-    hushh_hcf_Catalog.addVectorOf(categories: __categories, &builder)
-    hushh_hcf_Catalog.addVectorOf(flatBatches: __flatBatches, &builder)
+    if let o = obj.vibes?.type {
+      hushh_hcf_Catalog.add(vibesType: o, &builder)
+      hushh_hcf_Catalog.add(vibes: __vibes, &builder)
+    }
+
     return hushh_hcf_Catalog.endCatalog(&builder, start: __root)
   }
 
@@ -897,11 +1099,14 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.version.p, fieldName: "version", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.products.p, fieldName: "products", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Product>, hushh_hcf_Product>>.self)
-    try _v.visit(field: VTOFFSET.textVibes.p, fieldName: "textVibes", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_TextVibe>, hushh_hcf_TextVibe>>.self)
-    try _v.visit(field: VTOFFSET.imageVibes.p, fieldName: "imageVibes", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_ImageVibe>, hushh_hcf_ImageVibe>>.self)
-    try _v.visit(field: VTOFFSET.categories.p, fieldName: "categories", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Category>, hushh_hcf_Category>>.self)
-    try _v.visit(field: VTOFFSET.flatBatches.p, fieldName: "flatBatches", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_FlatEmbeddingBatch>, hushh_hcf_FlatEmbeddingBatch>>.self)
+    try _v.visit(unionKey: VTOFFSET.vibesType.p, unionField: VTOFFSET.vibes.p, unionKeyName: "vibesType", fieldName: "vibes", required: false, completion: { (verifier, key: hushh_hcf_Vibes, pos) in
+      switch key {
+      case .none_:
+        break // NOTE - SWIFT doesnt support none
+      case .productvibes:
+        try ForwardOffset<hushh_hcf_ProductVibes>.verify(&verifier, at: pos, of: hushh_hcf_ProductVibes.self)
+      }
+    })
     _v.finish()
   }
 }
@@ -912,51 +1117,22 @@ extension hushh_hcf_Catalog: Encodable {
     case id = "id"
     case version = "version"
     case description = "description"
-    case products = "products"
-    case textVibes = "text_vibes"
-    case imageVibes = "image_vibes"
-    case categories = "categories"
-    case flatBatches = "flat_batches"
+    case vibesType = "vibes_type"
+    case vibes = "vibes"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
     try container.encodeIfPresent(version, forKey: .version)
     try container.encodeIfPresent(description, forKey: .description)
-    if productsCount > 0 {
-      var contentEncoder = container.nestedUnkeyedContainer(forKey: .products)
-      for index in 0..<productsCount {
-        guard let type = products(at: index) else { continue }
-        try contentEncoder.encode(type)
-      }
+    if vibesType != .none_ {
+      try container.encodeIfPresent(vibesType, forKey: .vibesType)
     }
-    if textVibesCount > 0 {
-      var contentEncoder = container.nestedUnkeyedContainer(forKey: .textVibes)
-      for index in 0..<textVibesCount {
-        guard let type = textVibes(at: index) else { continue }
-        try contentEncoder.encode(type)
-      }
-    }
-    if imageVibesCount > 0 {
-      var contentEncoder = container.nestedUnkeyedContainer(forKey: .imageVibes)
-      for index in 0..<imageVibesCount {
-        guard let type = imageVibes(at: index) else { continue }
-        try contentEncoder.encode(type)
-      }
-    }
-    if categoriesCount > 0 {
-      var contentEncoder = container.nestedUnkeyedContainer(forKey: .categories)
-      for index in 0..<categoriesCount {
-        guard let type = categories(at: index) else { continue }
-        try contentEncoder.encode(type)
-      }
-    }
-    if flatBatchesCount > 0 {
-      var contentEncoder = container.nestedUnkeyedContainer(forKey: .flatBatches)
-      for index in 0..<flatBatchesCount {
-        guard let type = flatBatches(at: index) else { continue }
-        try contentEncoder.encode(type)
-      }
+    switch vibesType {
+    case .productvibes:
+      let _v = vibes(type: hushh_hcf_ProductVibes.self)
+      try container.encodeIfPresent(_v, forKey: .vibes)
+    default: break;
     }
   }
 }
@@ -966,49 +1142,21 @@ public class hushh_hcf_CatalogT: NativeObject {
   public var id: String?
   public var version: String?
   public var description: String?
-  public var products: [hushh_hcf_ProductT?]
-  public var textVibes: [hushh_hcf_TextVibeT?]
-  public var imageVibes: [hushh_hcf_ImageVibeT?]
-  public var categories: [hushh_hcf_CategoryT?]
-  public var flatBatches: [hushh_hcf_FlatEmbeddingBatchT?]
+  public var vibes: hushh_hcf_VibesUnion?
 
   public init(_ _t: inout hushh_hcf_Catalog) {
     id = _t.id
     version = _t.version
     description = _t.description
-    products = []
-    for index in 0..<_t.productsCount {
-        var __v_ = _t.products(at: index)
-        products.append(__v_?.unpack())
-    }
-    textVibes = []
-    for index in 0..<_t.textVibesCount {
-        var __v_ = _t.textVibes(at: index)
-        textVibes.append(__v_?.unpack())
-    }
-    imageVibes = []
-    for index in 0..<_t.imageVibesCount {
-        var __v_ = _t.imageVibes(at: index)
-        imageVibes.append(__v_?.unpack())
-    }
-    categories = []
-    for index in 0..<_t.categoriesCount {
-        var __v_ = _t.categories(at: index)
-        categories.append(__v_?.unpack())
-    }
-    flatBatches = []
-    for index in 0..<_t.flatBatchesCount {
-        var __v_ = _t.flatBatches(at: index)
-        flatBatches.append(__v_?.unpack())
+    switch _t.vibesType {
+    case .productvibes:
+      var _v = _t.vibes(type: hushh_hcf_ProductVibes.self)
+      vibes = hushh_hcf_VibesUnion(_v?.unpack(), type: .productvibes)
+    default: break
     }
   }
 
   public init() {
-    products = []
-    textVibes = []
-    imageVibes = []
-    categories = []
-    flatBatches = []
   }
 
   public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Catalog.self) }
