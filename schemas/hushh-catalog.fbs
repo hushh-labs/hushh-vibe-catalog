@@ -4,7 +4,7 @@ table Product {
   id: string;
   description: string;
   base64: string;
-  image_url: string;
+  img_url: string;
   url: string;
 }
 
@@ -18,7 +18,7 @@ table TextVibe {
 table ImageVibe {
   id: string;
   base64: string;
-  image_url: string;
+  img_url: string;
   product_idx: [int];
 }
 
@@ -31,11 +31,11 @@ table Category {
 
 enum VibeType : byte { ProductText = 0, ProductImage, Text, Image, Category}
 
-table FlatTensorBatch {
+table FlatEmbeddingBatch {
     id: string;
-    tensor:[float];
     dim: int;
     type: VibeType;
+    flat_tensor:[float];
 }
 
 table Catalog {
@@ -46,7 +46,7 @@ table Catalog {
   text_vibes: [TextVibe];
   image_vibes: [ImageVibe];
   categories: [Category];
-  embedding_batches: [FlatTensorBatch];
+  flat_batches: [FlatEmbeddingBatch];
 }
 
 root_type Catalog;

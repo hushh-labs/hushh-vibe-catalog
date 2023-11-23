@@ -44,7 +44,7 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
     case id = 4
     case description = 6
     case base64 = 8
-    case imageUrl = 10
+    case imgUrl = 10
     case url = 12
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
@@ -56,15 +56,15 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public var descriptionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.description.v) }
   public var base64: String? { let o = _accessor.offset(VTOFFSET.base64.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var base64SegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.base64.v) }
-  public var imageUrl: String? { let o = _accessor.offset(VTOFFSET.imageUrl.v); return o == 0 ? nil : _accessor.string(at: o) }
-  public var imageUrlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.imageUrl.v) }
+  public var imgUrl: String? { let o = _accessor.offset(VTOFFSET.imgUrl.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var imgUrlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.imgUrl.v) }
   public var url: String? { let o = _accessor.offset(VTOFFSET.url.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var urlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.url.v) }
   public static func startProduct(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 5) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
   public static func add(base64: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: base64, at: VTOFFSET.base64.p) }
-  public static func add(imageUrl: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imageUrl, at: VTOFFSET.imageUrl.p) }
+  public static func add(imgUrl: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imgUrl, at: VTOFFSET.imgUrl.p) }
   public static func add(url: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: url, at: VTOFFSET.url.p) }
   public static func endProduct(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createProduct(
@@ -72,14 +72,14 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
     idOffset id: Offset = Offset(),
     descriptionOffset description: Offset = Offset(),
     base64Offset base64: Offset = Offset(),
-    imageUrlOffset imageUrl: Offset = Offset(),
+    imgUrlOffset imgUrl: Offset = Offset(),
     urlOffset url: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Product.startProduct(&fbb)
     hushh_hcf_Product.add(id: id, &fbb)
     hushh_hcf_Product.add(description: description, &fbb)
     hushh_hcf_Product.add(base64: base64, &fbb)
-    hushh_hcf_Product.add(imageUrl: imageUrl, &fbb)
+    hushh_hcf_Product.add(imgUrl: imgUrl, &fbb)
     hushh_hcf_Product.add(url: url, &fbb)
     return hushh_hcf_Product.endProduct(&fbb, start: __start)
   }
@@ -115,11 +115,11 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
       __base64 = Offset()
     }
 
-    let __imageUrl: Offset
-    if let s = obj.imageUrl {
-      __imageUrl = builder.create(string: s)
+    let __imgUrl: Offset
+    if let s = obj.imgUrl {
+      __imgUrl = builder.create(string: s)
     } else {
-      __imageUrl = Offset()
+      __imgUrl = Offset()
     }
 
     let __url: Offset
@@ -133,7 +133,7 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
     hushh_hcf_Product.add(id: __id, &builder)
     hushh_hcf_Product.add(description: __description, &builder)
     hushh_hcf_Product.add(base64: __base64, &builder)
-    hushh_hcf_Product.add(imageUrl: __imageUrl, &builder)
+    hushh_hcf_Product.add(imgUrl: __imgUrl, &builder)
     hushh_hcf_Product.add(url: __url, &builder)
     return hushh_hcf_Product.endProduct(&builder, start: __root)
   }
@@ -143,7 +143,7 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.base64.p, fieldName: "base64", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.imageUrl.p, fieldName: "imageUrl", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.imgUrl.p, fieldName: "imgUrl", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.url.p, fieldName: "url", required: false, type: ForwardOffset<String>.self)
     _v.finish()
   }
@@ -155,7 +155,7 @@ extension hushh_hcf_Product: Encodable {
     case id = "id"
     case description = "description"
     case base64 = "base64"
-    case imageUrl = "image_url"
+    case imgUrl = "img_url"
     case url = "url"
   }
   public func encode(to encoder: Encoder) throws {
@@ -163,7 +163,7 @@ extension hushh_hcf_Product: Encodable {
     try container.encodeIfPresent(id, forKey: .id)
     try container.encodeIfPresent(description, forKey: .description)
     try container.encodeIfPresent(base64, forKey: .base64)
-    try container.encodeIfPresent(imageUrl, forKey: .imageUrl)
+    try container.encodeIfPresent(imgUrl, forKey: .imgUrl)
     try container.encodeIfPresent(url, forKey: .url)
   }
 }
@@ -173,14 +173,14 @@ public class hushh_hcf_ProductT: NativeObject {
   public var id: String?
   public var description: String?
   public var base64: String?
-  public var imageUrl: String?
+  public var imgUrl: String?
   public var url: String?
 
   public init(_ _t: inout hushh_hcf_Product) {
     id = _t.id
     description = _t.description
     base64 = _t.base64
-    imageUrl = _t.imageUrl
+    imgUrl = _t.imgUrl
     url = _t.url
   }
 
@@ -344,7 +344,7 @@ public struct hushh_hcf_ImageVibe: FlatBufferObject, Verifiable, ObjectAPIPacker
   private enum VTOFFSET: VOffset {
     case id = 4
     case base64 = 6
-    case imageUrl = 8
+    case imgUrl = 8
     case productIdx = 10
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
@@ -354,8 +354,8 @@ public struct hushh_hcf_ImageVibe: FlatBufferObject, Verifiable, ObjectAPIPacker
   public var idSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.id.v) }
   public var base64: String? { let o = _accessor.offset(VTOFFSET.base64.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var base64SegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.base64.v) }
-  public var imageUrl: String? { let o = _accessor.offset(VTOFFSET.imageUrl.v); return o == 0 ? nil : _accessor.string(at: o) }
-  public var imageUrlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.imageUrl.v) }
+  public var imgUrl: String? { let o = _accessor.offset(VTOFFSET.imgUrl.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var imgUrlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.imgUrl.v) }
   public var hasProductIdx: Bool { let o = _accessor.offset(VTOFFSET.productIdx.v); return o == 0 ? false : true }
   public var productIdxCount: Int32 { let o = _accessor.offset(VTOFFSET.productIdx.v); return o == 0 ? 0 : _accessor.vector(count: o) }
   public func productIdx(at index: Int32) -> Int32 { let o = _accessor.offset(VTOFFSET.productIdx.v); return o == 0 ? 0 : _accessor.directRead(of: Int32.self, offset: _accessor.vector(at: o) + index * 4) }
@@ -363,20 +363,20 @@ public struct hushh_hcf_ImageVibe: FlatBufferObject, Verifiable, ObjectAPIPacker
   public static func startImageVibe(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(base64: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: base64, at: VTOFFSET.base64.p) }
-  public static func add(imageUrl: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imageUrl, at: VTOFFSET.imageUrl.p) }
+  public static func add(imgUrl: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imgUrl, at: VTOFFSET.imgUrl.p) }
   public static func addVectorOf(productIdx: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: productIdx, at: VTOFFSET.productIdx.p) }
   public static func endImageVibe(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createImageVibe(
     _ fbb: inout FlatBufferBuilder,
     idOffset id: Offset = Offset(),
     base64Offset base64: Offset = Offset(),
-    imageUrlOffset imageUrl: Offset = Offset(),
+    imgUrlOffset imgUrl: Offset = Offset(),
     productIdxVectorOffset productIdx: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_ImageVibe.startImageVibe(&fbb)
     hushh_hcf_ImageVibe.add(id: id, &fbb)
     hushh_hcf_ImageVibe.add(base64: base64, &fbb)
-    hushh_hcf_ImageVibe.add(imageUrl: imageUrl, &fbb)
+    hushh_hcf_ImageVibe.add(imgUrl: imgUrl, &fbb)
     hushh_hcf_ImageVibe.addVectorOf(productIdx: productIdx, &fbb)
     return hushh_hcf_ImageVibe.endImageVibe(&fbb, start: __start)
   }
@@ -405,18 +405,18 @@ public struct hushh_hcf_ImageVibe: FlatBufferObject, Verifiable, ObjectAPIPacker
       __base64 = Offset()
     }
 
-    let __imageUrl: Offset
-    if let s = obj.imageUrl {
-      __imageUrl = builder.create(string: s)
+    let __imgUrl: Offset
+    if let s = obj.imgUrl {
+      __imgUrl = builder.create(string: s)
     } else {
-      __imageUrl = Offset()
+      __imgUrl = Offset()
     }
 
     let __productIdx = builder.createVector(obj.productIdx)
     let __root = hushh_hcf_ImageVibe.startImageVibe(&builder)
     hushh_hcf_ImageVibe.add(id: __id, &builder)
     hushh_hcf_ImageVibe.add(base64: __base64, &builder)
-    hushh_hcf_ImageVibe.add(imageUrl: __imageUrl, &builder)
+    hushh_hcf_ImageVibe.add(imgUrl: __imgUrl, &builder)
     hushh_hcf_ImageVibe.addVectorOf(productIdx: __productIdx, &builder)
     return hushh_hcf_ImageVibe.endImageVibe(&builder, start: __root)
   }
@@ -425,7 +425,7 @@ public struct hushh_hcf_ImageVibe: FlatBufferObject, Verifiable, ObjectAPIPacker
     var _v = try verifier.visitTable(at: position)
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.base64.p, fieldName: "base64", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.imageUrl.p, fieldName: "imageUrl", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.imgUrl.p, fieldName: "imgUrl", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.productIdx.p, fieldName: "productIdx", required: false, type: ForwardOffset<Vector<Int32, Int32>>.self)
     _v.finish()
   }
@@ -436,14 +436,14 @@ extension hushh_hcf_ImageVibe: Encodable {
   enum CodingKeys: String, CodingKey {
     case id = "id"
     case base64 = "base64"
-    case imageUrl = "image_url"
+    case imgUrl = "img_url"
     case productIdx = "product_idx"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
     try container.encodeIfPresent(base64, forKey: .base64)
-    try container.encodeIfPresent(imageUrl, forKey: .imageUrl)
+    try container.encodeIfPresent(imgUrl, forKey: .imgUrl)
     if productIdxCount > 0 {
       try container.encodeIfPresent(productIdx, forKey: .productIdx)
     }
@@ -454,13 +454,13 @@ public class hushh_hcf_ImageVibeT: NativeObject {
 
   public var id: String?
   public var base64: String?
-  public var imageUrl: String?
+  public var imgUrl: String?
   public var productIdx: [Int32]
 
   public init(_ _t: inout hushh_hcf_ImageVibe) {
     id = _t.id
     base64 = _t.base64
-    imageUrl = _t.imageUrl
+    imgUrl = _t.imgUrl
     productIdx = []
     for index in 0..<_t.productIdxCount {
         productIdx.append(_t.productIdx(at: index))
@@ -616,7 +616,7 @@ public class hushh_hcf_CategoryT: NativeObject {
   public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Category.self) }
 
 }
-public struct hushh_hcf_FlatTensorBatch: FlatBufferObject, Verifiable, ObjectAPIPacker {
+public struct hushh_hcf_FlatEmbeddingBatch: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
   public var __buffer: ByteBuffer! { return _accessor.bb }
@@ -627,52 +627,52 @@ public struct hushh_hcf_FlatTensorBatch: FlatBufferObject, Verifiable, ObjectAPI
 
   private enum VTOFFSET: VOffset {
     case id = 4
-    case tensor = 6
-    case dim = 8
-    case type = 10
+    case dim = 6
+    case type = 8
+    case flatTensor = 10
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
 
   public var id: String? { let o = _accessor.offset(VTOFFSET.id.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var idSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.id.v) }
-  public var hasTensor: Bool { let o = _accessor.offset(VTOFFSET.tensor.v); return o == 0 ? false : true }
-  public var tensorCount: Int32 { let o = _accessor.offset(VTOFFSET.tensor.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func tensor(at index: Int32) -> Float32 { let o = _accessor.offset(VTOFFSET.tensor.v); return o == 0 ? 0 : _accessor.directRead(of: Float32.self, offset: _accessor.vector(at: o) + index * 4) }
-  public var tensor: [Float32] { return _accessor.getVector(at: VTOFFSET.tensor.v) ?? [] }
   public var dim: Int32 { let o = _accessor.offset(VTOFFSET.dim.v); return o == 0 ? 0 : _accessor.readBuffer(of: Int32.self, at: o) }
   public var type: hushh_hcf_VibeType { let o = _accessor.offset(VTOFFSET.type.v); return o == 0 ? .producttext : hushh_hcf_VibeType(rawValue: _accessor.readBuffer(of: Int8.self, at: o)) ?? .producttext }
-  public static func startFlatTensorBatch(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
+  public var hasFlatTensor: Bool { let o = _accessor.offset(VTOFFSET.flatTensor.v); return o == 0 ? false : true }
+  public var flatTensorCount: Int32 { let o = _accessor.offset(VTOFFSET.flatTensor.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func flatTensor(at index: Int32) -> Float32 { let o = _accessor.offset(VTOFFSET.flatTensor.v); return o == 0 ? 0 : _accessor.directRead(of: Float32.self, offset: _accessor.vector(at: o) + index * 4) }
+  public var flatTensor: [Float32] { return _accessor.getVector(at: VTOFFSET.flatTensor.v) ?? [] }
+  public static func startFlatEmbeddingBatch(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
-  public static func addVectorOf(tensor: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: tensor, at: VTOFFSET.tensor.p) }
   public static func add(dim: Int32, _ fbb: inout FlatBufferBuilder) { fbb.add(element: dim, def: 0, at: VTOFFSET.dim.p) }
   public static func add(type: hushh_hcf_VibeType, _ fbb: inout FlatBufferBuilder) { fbb.add(element: type.rawValue, def: 0, at: VTOFFSET.type.p) }
-  public static func endFlatTensorBatch(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
-  public static func createFlatTensorBatch(
+  public static func addVectorOf(flatTensor: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: flatTensor, at: VTOFFSET.flatTensor.p) }
+  public static func endFlatEmbeddingBatch(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
+  public static func createFlatEmbeddingBatch(
     _ fbb: inout FlatBufferBuilder,
     idOffset id: Offset = Offset(),
-    tensorVectorOffset tensor: Offset = Offset(),
     dim: Int32 = 0,
-    type: hushh_hcf_VibeType = .producttext
+    type: hushh_hcf_VibeType = .producttext,
+    flatTensorVectorOffset flatTensor: Offset = Offset()
   ) -> Offset {
-    let __start = hushh_hcf_FlatTensorBatch.startFlatTensorBatch(&fbb)
-    hushh_hcf_FlatTensorBatch.add(id: id, &fbb)
-    hushh_hcf_FlatTensorBatch.addVectorOf(tensor: tensor, &fbb)
-    hushh_hcf_FlatTensorBatch.add(dim: dim, &fbb)
-    hushh_hcf_FlatTensorBatch.add(type: type, &fbb)
-    return hushh_hcf_FlatTensorBatch.endFlatTensorBatch(&fbb, start: __start)
+    let __start = hushh_hcf_FlatEmbeddingBatch.startFlatEmbeddingBatch(&fbb)
+    hushh_hcf_FlatEmbeddingBatch.add(id: id, &fbb)
+    hushh_hcf_FlatEmbeddingBatch.add(dim: dim, &fbb)
+    hushh_hcf_FlatEmbeddingBatch.add(type: type, &fbb)
+    hushh_hcf_FlatEmbeddingBatch.addVectorOf(flatTensor: flatTensor, &fbb)
+    return hushh_hcf_FlatEmbeddingBatch.endFlatEmbeddingBatch(&fbb, start: __start)
   }
   
 
-  public mutating func unpack() -> hushh_hcf_FlatTensorBatchT {
-    return hushh_hcf_FlatTensorBatchT(&self)
+  public mutating func unpack() -> hushh_hcf_FlatEmbeddingBatchT {
+    return hushh_hcf_FlatEmbeddingBatchT(&self)
   }
-  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_FlatTensorBatchT?) -> Offset {
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_FlatEmbeddingBatchT?) -> Offset {
     guard var obj = obj else { return Offset() }
     return pack(&builder, obj: &obj)
   }
 
-  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_FlatTensorBatchT) -> Offset {
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_FlatEmbeddingBatchT) -> Offset {
     let __id: Offset
     if let s = obj.id {
       __id = builder.create(string: s)
@@ -680,72 +680,72 @@ public struct hushh_hcf_FlatTensorBatch: FlatBufferObject, Verifiable, ObjectAPI
       __id = Offset()
     }
 
-    let __tensor = builder.createVector(obj.tensor)
-    let __root = hushh_hcf_FlatTensorBatch.startFlatTensorBatch(&builder)
-    hushh_hcf_FlatTensorBatch.add(id: __id, &builder)
-    hushh_hcf_FlatTensorBatch.addVectorOf(tensor: __tensor, &builder)
-    hushh_hcf_FlatTensorBatch.add(dim: obj.dim, &builder)
-    hushh_hcf_FlatTensorBatch.add(type: obj.type, &builder)
-    return hushh_hcf_FlatTensorBatch.endFlatTensorBatch(&builder, start: __root)
+    let __flatTensor = builder.createVector(obj.flatTensor)
+    let __root = hushh_hcf_FlatEmbeddingBatch.startFlatEmbeddingBatch(&builder)
+    hushh_hcf_FlatEmbeddingBatch.add(id: __id, &builder)
+    hushh_hcf_FlatEmbeddingBatch.add(dim: obj.dim, &builder)
+    hushh_hcf_FlatEmbeddingBatch.add(type: obj.type, &builder)
+    hushh_hcf_FlatEmbeddingBatch.addVectorOf(flatTensor: __flatTensor, &builder)
+    return hushh_hcf_FlatEmbeddingBatch.endFlatEmbeddingBatch(&builder, start: __root)
   }
 
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.tensor.p, fieldName: "tensor", required: false, type: ForwardOffset<Vector<Float32, Float32>>.self)
     try _v.visit(field: VTOFFSET.dim.p, fieldName: "dim", required: false, type: Int32.self)
     try _v.visit(field: VTOFFSET.type.p, fieldName: "type", required: false, type: hushh_hcf_VibeType.self)
+    try _v.visit(field: VTOFFSET.flatTensor.p, fieldName: "flatTensor", required: false, type: ForwardOffset<Vector<Float32, Float32>>.self)
     _v.finish()
   }
 }
 
-extension hushh_hcf_FlatTensorBatch: Encodable {
+extension hushh_hcf_FlatEmbeddingBatch: Encodable {
 
   enum CodingKeys: String, CodingKey {
     case id = "id"
-    case tensor = "tensor"
     case dim = "dim"
     case type = "type"
+    case flatTensor = "flat_tensor"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
-    if tensorCount > 0 {
-      try container.encodeIfPresent(tensor, forKey: .tensor)
-    }
     if dim != 0 {
       try container.encodeIfPresent(dim, forKey: .dim)
     }
     if type != .producttext {
       try container.encodeIfPresent(type, forKey: .type)
     }
+    if flatTensorCount > 0 {
+      try container.encodeIfPresent(flatTensor, forKey: .flatTensor)
+    }
   }
 }
 
-public class hushh_hcf_FlatTensorBatchT: NativeObject {
+public class hushh_hcf_FlatEmbeddingBatchT: NativeObject {
 
   public var id: String?
-  public var tensor: [Float32]
   public var dim: Int32
   public var type: hushh_hcf_VibeType
+  public var flatTensor: [Float32]
 
-  public init(_ _t: inout hushh_hcf_FlatTensorBatch) {
+  public init(_ _t: inout hushh_hcf_FlatEmbeddingBatch) {
     id = _t.id
-    tensor = []
-    for index in 0..<_t.tensorCount {
-        tensor.append(_t.tensor(at: index))
-    }
     dim = _t.dim
     type = _t.type
+    flatTensor = []
+    for index in 0..<_t.flatTensorCount {
+        flatTensor.append(_t.flatTensor(at: index))
+    }
   }
 
   public init() {
-    tensor = []
     dim = 0
     type = .producttext
+    flatTensor = []
   }
 
-  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_FlatTensorBatch.self) }
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_FlatEmbeddingBatch.self) }
 
 }
 public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
@@ -765,7 +765,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     case textVibes = 12
     case imageVibes = 14
     case categories = 16
-    case embeddingBatches = 18
+    case flatBatches = 18
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
@@ -788,9 +788,9 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public var hasCategories: Bool { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? false : true }
   public var categoriesCount: Int32 { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? 0 : _accessor.vector(count: o) }
   public func categories(at index: Int32) -> hushh_hcf_Category? { let o = _accessor.offset(VTOFFSET.categories.v); return o == 0 ? nil : hushh_hcf_Category(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public var hasEmbeddingBatches: Bool { let o = _accessor.offset(VTOFFSET.embeddingBatches.v); return o == 0 ? false : true }
-  public var embeddingBatchesCount: Int32 { let o = _accessor.offset(VTOFFSET.embeddingBatches.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func embeddingBatches(at index: Int32) -> hushh_hcf_FlatTensorBatch? { let o = _accessor.offset(VTOFFSET.embeddingBatches.v); return o == 0 ? nil : hushh_hcf_FlatTensorBatch(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public var hasFlatBatches: Bool { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? false : true }
+  public var flatBatchesCount: Int32 { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func flatBatches(at index: Int32) -> hushh_hcf_FlatEmbeddingBatch? { let o = _accessor.offset(VTOFFSET.flatBatches.v); return o == 0 ? nil : hushh_hcf_FlatEmbeddingBatch(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
   public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 8) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(version: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: version, at: VTOFFSET.version.p) }
@@ -799,7 +799,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public static func addVectorOf(textVibes: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: textVibes, at: VTOFFSET.textVibes.p) }
   public static func addVectorOf(imageVibes: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imageVibes, at: VTOFFSET.imageVibes.p) }
   public static func addVectorOf(categories: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: categories, at: VTOFFSET.categories.p) }
-  public static func addVectorOf(embeddingBatches: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: embeddingBatches, at: VTOFFSET.embeddingBatches.p) }
+  public static func addVectorOf(flatBatches: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: flatBatches, at: VTOFFSET.flatBatches.p) }
   public static func endCatalog(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createCatalog(
     _ fbb: inout FlatBufferBuilder,
@@ -810,7 +810,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     textVibesVectorOffset textVibes: Offset = Offset(),
     imageVibesVectorOffset imageVibes: Offset = Offset(),
     categoriesVectorOffset categories: Offset = Offset(),
-    embeddingBatchesVectorOffset embeddingBatches: Offset = Offset()
+    flatBatchesVectorOffset flatBatches: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Catalog.startCatalog(&fbb)
     hushh_hcf_Catalog.add(id: id, &fbb)
@@ -820,7 +820,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     hushh_hcf_Catalog.addVectorOf(textVibes: textVibes, &fbb)
     hushh_hcf_Catalog.addVectorOf(imageVibes: imageVibes, &fbb)
     hushh_hcf_Catalog.addVectorOf(categories: categories, &fbb)
-    hushh_hcf_Catalog.addVectorOf(embeddingBatches: embeddingBatches, &fbb)
+    hushh_hcf_Catalog.addVectorOf(flatBatches: flatBatches, &fbb)
     return hushh_hcf_Catalog.endCatalog(&fbb, start: __start)
   }
   
@@ -875,11 +875,11 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
       __categories__.append(hushh_hcf_Category.pack(&builder, obj: &i))
     }
     let __categories = builder.createVector(ofOffsets: __categories__)
-    var __embeddingBatches__: [Offset] = []
-    for var i in obj.embeddingBatches {
-      __embeddingBatches__.append(hushh_hcf_FlatTensorBatch.pack(&builder, obj: &i))
+    var __flatBatches__: [Offset] = []
+    for var i in obj.flatBatches {
+      __flatBatches__.append(hushh_hcf_FlatEmbeddingBatch.pack(&builder, obj: &i))
     }
-    let __embeddingBatches = builder.createVector(ofOffsets: __embeddingBatches__)
+    let __flatBatches = builder.createVector(ofOffsets: __flatBatches__)
     let __root = hushh_hcf_Catalog.startCatalog(&builder)
     hushh_hcf_Catalog.add(id: __id, &builder)
     hushh_hcf_Catalog.add(version: __version, &builder)
@@ -888,7 +888,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     hushh_hcf_Catalog.addVectorOf(textVibes: __textVibes, &builder)
     hushh_hcf_Catalog.addVectorOf(imageVibes: __imageVibes, &builder)
     hushh_hcf_Catalog.addVectorOf(categories: __categories, &builder)
-    hushh_hcf_Catalog.addVectorOf(embeddingBatches: __embeddingBatches, &builder)
+    hushh_hcf_Catalog.addVectorOf(flatBatches: __flatBatches, &builder)
     return hushh_hcf_Catalog.endCatalog(&builder, start: __root)
   }
 
@@ -901,7 +901,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.textVibes.p, fieldName: "textVibes", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_TextVibe>, hushh_hcf_TextVibe>>.self)
     try _v.visit(field: VTOFFSET.imageVibes.p, fieldName: "imageVibes", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_ImageVibe>, hushh_hcf_ImageVibe>>.self)
     try _v.visit(field: VTOFFSET.categories.p, fieldName: "categories", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Category>, hushh_hcf_Category>>.self)
-    try _v.visit(field: VTOFFSET.embeddingBatches.p, fieldName: "embeddingBatches", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_FlatTensorBatch>, hushh_hcf_FlatTensorBatch>>.self)
+    try _v.visit(field: VTOFFSET.flatBatches.p, fieldName: "flatBatches", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_FlatEmbeddingBatch>, hushh_hcf_FlatEmbeddingBatch>>.self)
     _v.finish()
   }
 }
@@ -916,7 +916,7 @@ extension hushh_hcf_Catalog: Encodable {
     case textVibes = "text_vibes"
     case imageVibes = "image_vibes"
     case categories = "categories"
-    case embeddingBatches = "embedding_batches"
+    case flatBatches = "flat_batches"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
@@ -951,10 +951,10 @@ extension hushh_hcf_Catalog: Encodable {
         try contentEncoder.encode(type)
       }
     }
-    if embeddingBatchesCount > 0 {
-      var contentEncoder = container.nestedUnkeyedContainer(forKey: .embeddingBatches)
-      for index in 0..<embeddingBatchesCount {
-        guard let type = embeddingBatches(at: index) else { continue }
+    if flatBatchesCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .flatBatches)
+      for index in 0..<flatBatchesCount {
+        guard let type = flatBatches(at: index) else { continue }
         try contentEncoder.encode(type)
       }
     }
@@ -970,7 +970,7 @@ public class hushh_hcf_CatalogT: NativeObject {
   public var textVibes: [hushh_hcf_TextVibeT?]
   public var imageVibes: [hushh_hcf_ImageVibeT?]
   public var categories: [hushh_hcf_CategoryT?]
-  public var embeddingBatches: [hushh_hcf_FlatTensorBatchT?]
+  public var flatBatches: [hushh_hcf_FlatEmbeddingBatchT?]
 
   public init(_ _t: inout hushh_hcf_Catalog) {
     id = _t.id
@@ -996,10 +996,10 @@ public class hushh_hcf_CatalogT: NativeObject {
         var __v_ = _t.categories(at: index)
         categories.append(__v_?.unpack())
     }
-    embeddingBatches = []
-    for index in 0..<_t.embeddingBatchesCount {
-        var __v_ = _t.embeddingBatches(at: index)
-        embeddingBatches.append(__v_?.unpack())
+    flatBatches = []
+    for index in 0..<_t.flatBatchesCount {
+        var __v_ = _t.flatBatches(at: index)
+        flatBatches.append(__v_?.unpack())
     }
   }
 
@@ -1008,7 +1008,7 @@ public class hushh_hcf_CatalogT: NativeObject {
     textVibes = []
     imageVibes = []
     categories = []
-    embeddingBatches = []
+    flatBatches = []
   }
 
   public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Catalog.self) }

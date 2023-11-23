@@ -6,7 +6,7 @@ import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
 from hushh.hcf.Category import Category
-from hushh.hcf.FlatTensorBatch import FlatTensorBatch
+from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatch
 from hushh.hcf.ImageVibe import ImageVibe
 from hushh.hcf.Product import Product
 from hushh.hcf.TextVibe import TextVibe
@@ -149,26 +149,26 @@ class Catalog(object):
         return o == 0
 
     # Catalog
-    def EmbeddingBatches(self, j: int) -> Optional[FlatTensorBatch]:
+    def FlatBatches(self, j: int) -> Optional[FlatEmbeddingBatch]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
             x = self._tab.Indirect(x)
-            obj = FlatTensorBatch()
+            obj = FlatEmbeddingBatch()
             obj.Init(self._tab.Bytes, x)
             return obj
         return None
 
     # Catalog
-    def EmbeddingBatchesLength(self) -> int:
+    def FlatBatchesLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Catalog
-    def EmbeddingBatchesIsNone(self) -> bool:
+    def FlatBatchesIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
         return o == 0
 
@@ -244,17 +244,17 @@ def CatalogStartCategoriesVector(builder, numElems: int) -> int:
 def StartCategoriesVector(builder, numElems: int) -> int:
     return CatalogStartCategoriesVector(builder, numElems)
 
-def CatalogAddEmbeddingBatches(builder: flatbuffers.Builder, embeddingBatches: int):
-    builder.PrependUOffsetTRelativeSlot(7, flatbuffers.number_types.UOffsetTFlags.py_type(embeddingBatches), 0)
+def CatalogAddFlatBatches(builder: flatbuffers.Builder, flatBatches: int):
+    builder.PrependUOffsetTRelativeSlot(7, flatbuffers.number_types.UOffsetTFlags.py_type(flatBatches), 0)
 
-def AddEmbeddingBatches(builder: flatbuffers.Builder, embeddingBatches: int):
-    CatalogAddEmbeddingBatches(builder, embeddingBatches)
+def AddFlatBatches(builder: flatbuffers.Builder, flatBatches: int):
+    CatalogAddFlatBatches(builder, flatBatches)
 
-def CatalogStartEmbeddingBatchesVector(builder, numElems: int) -> int:
+def CatalogStartFlatBatchesVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
-def StartEmbeddingBatchesVector(builder, numElems: int) -> int:
-    return CatalogStartEmbeddingBatchesVector(builder, numElems)
+def StartFlatBatchesVector(builder, numElems: int) -> int:
+    return CatalogStartFlatBatchesVector(builder, numElems)
 
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -263,7 +263,7 @@ def End(builder: flatbuffers.Builder) -> int:
     return CatalogEnd(builder)
 
 import hushh.hcf.Category
-import hushh.hcf.FlatTensorBatch
+import hushh.hcf.FlatEmbeddingBatch
 import hushh.hcf.ImageVibe
 import hushh.hcf.Product
 import hushh.hcf.TextVibe
@@ -283,7 +283,7 @@ class CatalogT(object):
         self.textVibes = None  # type: List[hushh.hcf.TextVibe.TextVibeT]
         self.imageVibes = None  # type: List[hushh.hcf.ImageVibe.ImageVibeT]
         self.categories = None  # type: List[hushh.hcf.Category.CategoryT]
-        self.embeddingBatches = None  # type: List[hushh.hcf.FlatTensorBatch.FlatTensorBatchT]
+        self.flatBatches = None  # type: List[hushh.hcf.FlatEmbeddingBatch.FlatEmbeddingBatchT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -341,14 +341,14 @@ class CatalogT(object):
                 else:
                     category_ = hushh.hcf.Category.CategoryT.InitFromObj(catalog.Categories(i))
                     self.categories.append(category_)
-        if not catalog.EmbeddingBatchesIsNone():
-            self.embeddingBatches = []
-            for i in range(catalog.EmbeddingBatchesLength()):
-                if catalog.EmbeddingBatches(i) is None:
-                    self.embeddingBatches.append(None)
+        if not catalog.FlatBatchesIsNone():
+            self.flatBatches = []
+            for i in range(catalog.FlatBatchesLength()):
+                if catalog.FlatBatches(i) is None:
+                    self.flatBatches.append(None)
                 else:
-                    flatTensorBatch_ = hushh.hcf.FlatTensorBatch.FlatTensorBatchT.InitFromObj(catalog.EmbeddingBatches(i))
-                    self.embeddingBatches.append(flatTensorBatch_)
+                    flatEmbeddingBatch_ = hushh.hcf.FlatEmbeddingBatch.FlatEmbeddingBatchT.InitFromObj(catalog.FlatBatches(i))
+                    self.flatBatches.append(flatEmbeddingBatch_)
 
     # CatalogT
     def Pack(self, builder):
@@ -390,14 +390,14 @@ class CatalogT(object):
             for i in reversed(range(len(self.categories))):
                 builder.PrependUOffsetTRelative(categorieslist[i])
             categories = builder.EndVector()
-        if self.embeddingBatches is not None:
-            embeddingBatcheslist = []
-            for i in range(len(self.embeddingBatches)):
-                embeddingBatcheslist.append(self.embeddingBatches[i].Pack(builder))
-            CatalogStartEmbeddingBatchesVector(builder, len(self.embeddingBatches))
-            for i in reversed(range(len(self.embeddingBatches))):
-                builder.PrependUOffsetTRelative(embeddingBatcheslist[i])
-            embeddingBatches = builder.EndVector()
+        if self.flatBatches is not None:
+            flatBatcheslist = []
+            for i in range(len(self.flatBatches)):
+                flatBatcheslist.append(self.flatBatches[i].Pack(builder))
+            CatalogStartFlatBatchesVector(builder, len(self.flatBatches))
+            for i in reversed(range(len(self.flatBatches))):
+                builder.PrependUOffsetTRelative(flatBatcheslist[i])
+            flatBatches = builder.EndVector()
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
@@ -413,7 +413,7 @@ class CatalogT(object):
             CatalogAddImageVibes(builder, imageVibes)
         if self.categories is not None:
             CatalogAddCategories(builder, categories)
-        if self.embeddingBatches is not None:
-            CatalogAddEmbeddingBatches(builder, embeddingBatches)
+        if self.flatBatches is not None:
+            CatalogAddFlatBatches(builder, flatBatches)
         catalog = CatalogEnd(builder)
         return catalog

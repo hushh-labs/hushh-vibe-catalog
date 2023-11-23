@@ -41,7 +41,7 @@ class ImageVibe(object):
         return None
 
     # ImageVibe
-    def ImageUrl(self) -> Optional[str]:
+    def ImgUrl(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -92,11 +92,11 @@ def ImageVibeAddBase64(builder: flatbuffers.Builder, base64: int):
 def AddBase64(builder: flatbuffers.Builder, base64: int):
     ImageVibeAddBase64(builder, base64)
 
-def ImageVibeAddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(imageUrl), 0)
+def ImageVibeAddImgUrl(builder: flatbuffers.Builder, imgUrl: int):
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(imgUrl), 0)
 
-def AddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
-    ImageVibeAddImageUrl(builder, imageUrl)
+def AddImgUrl(builder: flatbuffers.Builder, imgUrl: int):
+    ImageVibeAddImgUrl(builder, imgUrl)
 
 def ImageVibeAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
@@ -127,7 +127,7 @@ class ImageVibeT(object):
     def __init__(self):
         self.id = None  # type: str
         self.base64 = None  # type: str
-        self.imageUrl = None  # type: str
+        self.imgUrl = None  # type: str
         self.productIdx = None  # type: List[int]
 
     @classmethod
@@ -153,7 +153,7 @@ class ImageVibeT(object):
             return
         self.id = imageVibe.Id()
         self.base64 = imageVibe.Base64()
-        self.imageUrl = imageVibe.ImageUrl()
+        self.imgUrl = imageVibe.ImgUrl()
         if not imageVibe.ProductIdxIsNone():
             if np is None:
                 self.productIdx = []
@@ -168,8 +168,8 @@ class ImageVibeT(object):
             id = builder.CreateString(self.id)
         if self.base64 is not None:
             base64 = builder.CreateString(self.base64)
-        if self.imageUrl is not None:
-            imageUrl = builder.CreateString(self.imageUrl)
+        if self.imgUrl is not None:
+            imgUrl = builder.CreateString(self.imgUrl)
         if self.productIdx is not None:
             if np is not None and type(self.productIdx) is np.ndarray:
                 productIdx = builder.CreateNumpyVector(self.productIdx)
@@ -183,8 +183,8 @@ class ImageVibeT(object):
             ImageVibeAddId(builder, id)
         if self.base64 is not None:
             ImageVibeAddBase64(builder, base64)
-        if self.imageUrl is not None:
-            ImageVibeAddImageUrl(builder, imageUrl)
+        if self.imgUrl is not None:
+            ImageVibeAddImgUrl(builder, imgUrl)
         if self.productIdx is not None:
             ImageVibeAddProductIdx(builder, productIdx)
         imageVibe = ImageVibeEnd(builder)
