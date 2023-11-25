@@ -12,12 +12,13 @@ from hushh.hcf.TextVibe import TextVibeT
 from .version import VERSION
 
 
-class FlatEmbeddingBatch(FlatEmbeddingBatchT):
-    def __init__(self, dim: int, type: int, flatTensor: Optional[List[float]] = None):
+class Product(ProductT):
+    def __init__(self, description: str, url: str, base64: str, imgUrl: str):
         self.id = str(uuid.uuid1())
-        self.dim = dim
-        self.type = type
-        self.flatTensor = flatTensor if flatTensor is not None else []
+        self.description = description
+        self.url = url
+        self.base64 = base64
+        self.imgUrl = imgUrl
 
 
 class Category(CategoryT):
@@ -48,13 +49,12 @@ class TextVibe(TextVibeT):
         self.productIdx = productIdx if productIdx is not None else []
 
 
-class Product(ProductT):
-    def __init__(self, description: str, url: str, base64: str, imgUrl: str):
+class FlatEmbeddingBatch(FlatEmbeddingBatchT):
+    def __init__(self, dim: int, type: int, flatTensor: Optional[List[float]] = None):
         self.id = str(uuid.uuid1())
-        self.description = description
-        self.url = url
-        self.base64 = base64
-        self.imgUrl = imgUrl
+        self.dim = dim
+        self.type = type
+        self.flatTensor = flatTensor if flatTensor is not None else []
 
 
 class ProductVibes(ProductVibesT):
@@ -102,3 +102,8 @@ class Catalog(CatalogT):
         self.id = str(uuid.uuid1())
         self.version = VERSION
         self.description = description
+        self.productVibes = ProductVibes()
+
+    def addProduct(self, p: Product):
+        self.productVibes.products.append(p)
+        pass

@@ -18,6 +18,21 @@ def test_product():
     assert p.imgUrl == "test_imgUrl"
 
 
+def build_catalog():
+    return Catalog("test_description")
+
+
+def test_catalog():
+    c = build_catalog()
+    assert c.description == "test_description"
+
+
+def test_catalog_product():
+    c = build_catalog()
+    p = build_product()
+    c.addProduct(p)
+
+
 # def build_raw_catalog():
 #     """
 #     builds a simple catalog to test serialization
