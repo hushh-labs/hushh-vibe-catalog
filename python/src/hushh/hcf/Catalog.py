@@ -5,7 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from flatbuffers.table import Table
+from hushh.hcf.ProductVibes import ProductVibes
 from typing import Optional
 np = import_numpy()
 
@@ -49,23 +49,17 @@ class Catalog(object):
         return None
 
     # Catalog
-    def VibesType(self):
+    def ProductVibes(self) -> Optional[ProductVibes]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
-            return self._tab.Get(flatbuffers.number_types.Uint8Flags, o + self._tab.Pos)
-        return 0
-
-    # Catalog
-    def Vibes(self) -> Optional[flatbuffers.table.Table]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            obj = Table(bytearray(), 0)
-            self._tab.Union(obj, o)
+            x = self._tab.Indirect(o + self._tab.Pos)
+            obj = ProductVibes()
+            obj.Init(self._tab.Bytes, x)
             return obj
         return None
 
 def CatalogStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
@@ -88,17 +82,11 @@ def CatalogAddDescription(builder: flatbuffers.Builder, description: int):
 def AddDescription(builder: flatbuffers.Builder, description: int):
     CatalogAddDescription(builder, description)
 
-def CatalogAddVibesType(builder: flatbuffers.Builder, vibesType: int):
-    builder.PrependUint8Slot(3, vibesType, 0)
+def CatalogAddProductVibes(builder: flatbuffers.Builder, productVibes: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productVibes), 0)
 
-def AddVibesType(builder: flatbuffers.Builder, vibesType: int):
-    CatalogAddVibesType(builder, vibesType)
-
-def CatalogAddVibes(builder: flatbuffers.Builder, vibes: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(vibes), 0)
-
-def AddVibes(builder: flatbuffers.Builder, vibes: int):
-    CatalogAddVibes(builder, vibes)
+def AddProductVibes(builder: flatbuffers.Builder, productVibes: int):
+    CatalogAddProductVibes(builder, productVibes)
 
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -107,9 +95,8 @@ def End(builder: flatbuffers.Builder) -> int:
     return CatalogEnd(builder)
 
 import hushh.hcf.ProductVibes
-import hushh.hcf.Vibes
 try:
-    from typing import Union
+    from typing import Optional
 except:
     pass
 
@@ -120,8 +107,7 @@ class CatalogT(object):
         self.id = None  # type: str
         self.version = None  # type: str
         self.description = None  # type: str
-        self.vibesType = 0  # type: int
-        self.vibes = None  # type: Union[None, hushh.hcf.ProductVibes.ProductVibesT]
+        self.productVibes = None  # type: Optional[hushh.hcf.ProductVibes.ProductVibesT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -147,8 +133,8 @@ class CatalogT(object):
         self.id = catalog.Id()
         self.version = catalog.Version()
         self.description = catalog.Description()
-        self.vibesType = catalog.VibesType()
-        self.vibes = hushh.hcf.Vibes.VibesCreator(self.vibesType, catalog.Vibes())
+        if catalog.ProductVibes() is not None:
+            self.productVibes = hushh.hcf.ProductVibes.ProductVibesT.InitFromObj(catalog.ProductVibes())
 
     # CatalogT
     def Pack(self, builder):
@@ -158,8 +144,8 @@ class CatalogT(object):
             version = builder.CreateString(self.version)
         if self.description is not None:
             description = builder.CreateString(self.description)
-        if self.vibes is not None:
-            vibes = self.vibes.Pack(builder)
+        if self.productVibes is not None:
+            productVibes = self.productVibes.Pack(builder)
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
@@ -167,8 +153,7 @@ class CatalogT(object):
             CatalogAddVersion(builder, version)
         if self.description is not None:
             CatalogAddDescription(builder, description)
-        CatalogAddVibesType(builder, self.vibesType)
-        if self.vibes is not None:
-            CatalogAddVibes(builder, vibes)
+        if self.productVibes is not None:
+            CatalogAddProductVibes(builder, productVibes)
         catalog = CatalogEnd(builder)
         return catalog

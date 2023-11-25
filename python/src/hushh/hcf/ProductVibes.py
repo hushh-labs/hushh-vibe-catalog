@@ -32,8 +32,15 @@ class ProductVibes(object):
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # ProductVibes
-    def Products(self, j: int) -> Optional[Product]:
+    def Id(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
+        if o != 0:
+            return self._tab.String(o + self._tab.Pos)
+        return None
+
+    # ProductVibes
+    def Products(self, j: int) -> Optional[Product]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -45,19 +52,19 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # ProductVibes
     def ProductsIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         return o == 0
 
     # ProductVibes
     def Categories(self, j: int) -> Optional[Category]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -69,19 +76,19 @@ class ProductVibes(object):
 
     # ProductVibes
     def CategoriesLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # ProductVibes
     def CategoriesIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         return o == 0
 
     # ProductVibes
     def Text(self, j: int) -> Optional[TextVibe]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -93,19 +100,19 @@ class ProductVibes(object):
 
     # ProductVibes
     def TextLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # ProductVibes
     def TextIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
     # ProductVibes
     def Image(self, j: int) -> Optional[ImageVibe]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -117,19 +124,19 @@ class ProductVibes(object):
 
     # ProductVibes
     def ImageLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # ProductVibes
     def ImageIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         return o == 0
 
     # ProductVibes
     def FlatBatches(self, j: int) -> Optional[FlatEmbeddingBatch]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
@@ -141,24 +148,30 @@ class ProductVibes(object):
 
     # ProductVibes
     def FlatBatchesLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # ProductVibes
     def FlatBatchesIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         return o == 0
 
 def ProductVibesStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(6)
 
 def Start(builder: flatbuffers.Builder):
     ProductVibesStart(builder)
 
+def ProductVibesAddId(builder: flatbuffers.Builder, id: int):
+    builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
+
+def AddId(builder: flatbuffers.Builder, id: int):
+    ProductVibesAddId(builder, id)
+
 def ProductVibesAddProducts(builder: flatbuffers.Builder, products: int):
-    builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
+    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
 
 def AddProducts(builder: flatbuffers.Builder, products: int):
     ProductVibesAddProducts(builder, products)
@@ -170,7 +183,7 @@ def StartProductsVector(builder, numElems: int) -> int:
     return ProductVibesStartProductsVector(builder, numElems)
 
 def ProductVibesAddCategories(builder: flatbuffers.Builder, categories: int):
-    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(categories), 0)
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(categories), 0)
 
 def AddCategories(builder: flatbuffers.Builder, categories: int):
     ProductVibesAddCategories(builder, categories)
@@ -182,7 +195,7 @@ def StartCategoriesVector(builder, numElems: int) -> int:
     return ProductVibesStartCategoriesVector(builder, numElems)
 
 def ProductVibesAddText(builder: flatbuffers.Builder, text: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(text), 0)
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(text), 0)
 
 def AddText(builder: flatbuffers.Builder, text: int):
     ProductVibesAddText(builder, text)
@@ -194,7 +207,7 @@ def StartTextVector(builder, numElems: int) -> int:
     return ProductVibesStartTextVector(builder, numElems)
 
 def ProductVibesAddImage(builder: flatbuffers.Builder, image: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(image), 0)
+    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(image), 0)
 
 def AddImage(builder: flatbuffers.Builder, image: int):
     ProductVibesAddImage(builder, image)
@@ -206,7 +219,7 @@ def StartImageVector(builder, numElems: int) -> int:
     return ProductVibesStartImageVector(builder, numElems)
 
 def ProductVibesAddFlatBatches(builder: flatbuffers.Builder, flatBatches: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(flatBatches), 0)
+    builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(flatBatches), 0)
 
 def AddFlatBatches(builder: flatbuffers.Builder, flatBatches: int):
     ProductVibesAddFlatBatches(builder, flatBatches)
@@ -237,6 +250,7 @@ class ProductVibesT(object):
 
     # ProductVibesT
     def __init__(self):
+        self.id = None  # type: str
         self.products = None  # type: List[hushh.hcf.Product.ProductT]
         self.categories = None  # type: List[hushh.hcf.Category.CategoryT]
         self.text = None  # type: List[hushh.hcf.TextVibe.TextVibeT]
@@ -264,6 +278,7 @@ class ProductVibesT(object):
     def _UnPack(self, productVibes):
         if productVibes is None:
             return
+        self.id = productVibes.Id()
         if not productVibes.ProductsIsNone():
             self.products = []
             for i in range(productVibes.ProductsLength()):
@@ -307,6 +322,8 @@ class ProductVibesT(object):
 
     # ProductVibesT
     def Pack(self, builder):
+        if self.id is not None:
+            id = builder.CreateString(self.id)
         if self.products is not None:
             productslist = []
             for i in range(len(self.products)):
@@ -348,6 +365,8 @@ class ProductVibesT(object):
                 builder.PrependUOffsetTRelative(flatBatcheslist[i])
             flatBatches = builder.EndVector()
         ProductVibesStart(builder)
+        if self.id is not None:
+            ProductVibesAddId(builder, id)
         if self.products is not None:
             ProductVibesAddProducts(builder, products)
         if self.categories is not None:

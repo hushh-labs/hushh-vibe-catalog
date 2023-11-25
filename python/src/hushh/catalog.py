@@ -6,6 +6,7 @@ from hushh.hcf.Category import CategoryT
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
 from hushh.hcf.ImageVibe import ImageVibeT
 from hushh.hcf.Product import ProductT
+from hushh.hcf.ProductVibes import ProductVibesT
 from hushh.hcf.TextVibe import TextVibeT
 
 from .version import VERSION
@@ -56,41 +57,48 @@ class Product(ProductT):
         self.imgUrl = imgUrl
 
 
-class Catalog(CatalogT):
+class ProductVibes(ProductVibesT):
     def __init__(
         self,
-        description: str,
         products: Optional[list[Product]] = None,
-        textVibes: Optional[list[TextVibe]] = None,
-        imageVibes: Optional[list[ImageVibe]] = None,
         categories: Optional[list[Category]] = None,
-        flatEmbeddingBatches: Optional[list[FlatEmbeddingBatch]] = None,
+        text: Optional[list[TextVibe]] = None,
+        image: Optional[list[ImageVibe]] = None,
+        flatBatches: Optional[list[FlatEmbeddingBatch]] = None,
     ):
         self.id = str(uuid.uuid1())
-        self.version = VERSION
-        self.description = description
-
-        if categories is not None:
-            self.categories = cast(List[CategoryT], categories)
-        else:
-            self.categories = []
-
-        if self.flatBatches is not None:
-            self.flatBatches = cast(List[FlatEmbeddingBatchT], flatEmbeddingBatches)
-        else:
-            self.flatBatches = []
 
         if products is not None:
             self.products = cast(List[ProductT], products)
         else:
             self.produts = []
 
-        if textVibes is not None:
-            self.textVibes = cast(List[TextVibeT], textVibes)
+        if categories is not None:
+            self.categories = cast(List[CategoryT], categories)
+        else:
+            self.categories = []
+
+        if text is not None:
+            self.textVibes = cast(List[TextVibeT], text)
         else:
             self.textVibes = []
 
-        if imageVibes is not None:
-            self.imageVibes = cast(List[ImageVibeT], textVibes)
+        if image is not None:
+            self.imageVibes = cast(List[ImageVibeT], image)
         else:
             self.imageVibes = []
+
+        if self.flatBatches is not None:
+            self.flatBatches = cast(List[FlatEmbeddingBatchT], flatBatches)
+        else:
+            self.flatBatches = []
+
+
+class Catalog(CatalogT):
+    def __init__(
+        self,
+        description: str,
+    ):
+        self.id = str(uuid.uuid1())
+        self.version = VERSION
+        self.description = description

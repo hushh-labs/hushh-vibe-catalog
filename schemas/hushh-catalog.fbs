@@ -39,20 +39,19 @@ table FlatEmbeddingBatch {
 }
 
 table ProductVibes {
+  id: string;
   products: [Product];
-  categories: Category;
+  categories: [Category];
   text: [TextVibe];
   image: [ImageVibe];
   flat_batches: [FlatEmbeddingBatch];
 }
 
-union Vibes { ProductVibes }
-
 table Catalog {
   id : string;
   version: string;
   description: string;
-  vibes: Vibes;
+  product_vibes: ProductVibes;
 }
 
 root_type Catalog;
