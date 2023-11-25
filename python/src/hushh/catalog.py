@@ -1,5 +1,5 @@
 import uuid
-from typing import List, Optional, cast
+from typing import Any, List, Optional, cast
 
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
@@ -94,16 +94,20 @@ class ProductVibes(ProductVibesT):
             self.flatBatches = []
 
 
+class ImageEncoder:
+    def encode(self, a: Any):
+        pass
+
+
 class Catalog(CatalogT):
-    def __init__(
-        self,
-        description: str,
-    ):
+    def __init__(self, description: str, imageEncoder: ImageEncoder):
         self.id = str(uuid.uuid1())
         self.version = VERSION
         self.description = description
         self.productVibes = ProductVibes()
+        self.imageEncoder = imageEncoder
 
     def addProduct(self, p: Product):
         self.productVibes.products.append(p)
+        self.imageEncoder.encode(p.base64)
         pass
