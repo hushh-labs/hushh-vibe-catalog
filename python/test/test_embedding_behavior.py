@@ -8,7 +8,6 @@
 # from hushh.catalog import Catalog, Category, Embedding, Product, Vibe
 # from hushh.hcf import Catalog as RawCatalog
 
-
 # def get_embeddings():
 #     with open("embed_images/cat-with-open-mouth.webp", "rb") as fh:
 #         cat = Image.open(fh)
@@ -50,7 +49,4 @@
 # def test_embeds():
 #     pass
 #     # embeds = get_embeddings()
-#     # import pdb
-
-#     # pdb.set_trace()
 #     # assert True

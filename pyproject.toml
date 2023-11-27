@@ -10,7 +10,8 @@ name = "hushh-vibe-catalog-reader"
 version = "0.0.2"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
-  "flatbuffers"
+  "flatbuffers",
+  "transformers"
 ]
 
 [project.optional-dependencies]

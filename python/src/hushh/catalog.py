@@ -1,6 +1,9 @@
 import uuid
-from typing import Any, List, Optional, cast
+from typing import List, Optional, cast
 
+from transformers import ProcessorMixin
+
+from hushh.error import ProductExistsError
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
@@ -60,54 +63,24 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT):
 class ProductVibes(ProductVibesT):
     def __init__(
         self,
-        products: Optional[list[Product]] = None,
-        categories: Optional[list[Category]] = None,
-        text: Optional[list[TextVibe]] = None,
-        image: Optional[list[ImageVibe]] = None,
-        flatBatches: Optional[list[FlatEmbeddingBatch]] = None,
     ):
         self.id = str(uuid.uuid1())
-
-        if products is not None:
-            self.products = cast(List[ProductT], products)
-        else:
-            self.produts = []
-
-        if categories is not None:
-            self.categories = cast(List[CategoryT], categories)
-        else:
-            self.categories = []
-
-        if text is not None:
-            self.textVibes = cast(List[TextVibeT], text)
-        else:
-            self.textVibes = []
-
-        if image is not None:
-            self.imageVibes = cast(List[ImageVibeT], image)
-        else:
-            self.imageVibes = []
-
-        if self.flatBatches is not None:
-            self.flatBatches = cast(List[FlatEmbeddingBatchT], flatBatches)
-        else:
-            self.flatBatches = []
-
-
-class ImageEncoder:
-    def encode(self, a: Any):
-        pass
+        self.products = []
+        self.categories = []
+        self.text = []
+        self.image = []
+        self.flatBatches = []
 
 
 class Catalog(CatalogT):
-    def __init__(self, description: str, imageEncoder: ImageEncoder):
+    productVibes: ProductVibes
+
+    def __init__(self, description: str, processor: ProcessorMixin):
         self.id = str(uuid.uuid1())
         self.version = VERSION
         self.description = description
         self.productVibes = ProductVibes()
-        self.imageEncoder = imageEncoder
+        self.processor = processor
 
     def addProduct(self, p: Product):
         self.productVibes.products.append(p)
-        self.imageEncoder.encode(p.base64)
-        pass
