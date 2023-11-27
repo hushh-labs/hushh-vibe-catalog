@@ -1,9 +1,8 @@
 import uuid
-from typing import List, Optional, cast
+from typing import Dict, List, Optional, cast
 
 from transformers import ProcessorMixin
 
-from hushh.error import ProductExistsError
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
@@ -25,11 +24,21 @@ class Product(ProductT):
 
 
 class Category(CategoryT):
-    def __init__(self, description: str, url: str, productIdx: Optional[list[int]]):
+    _products: Dict[str, bool] = {}
+
+    def __init__(self, description: str, url: str):
         self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
-        self.productIdx = productIdx if productIdx is not None else []
+
+        self.productIdx = []
+        self._products = {}
+
+    def addProduct(self, p: Product | str):
+        if isinstance(p, str):
+            self._products[p] = True
+        else:
+            self._products[p.id] = True
 
 
 class ImageVibe(ImageVibeT):
@@ -84,3 +93,13 @@ class Catalog(CatalogT):
 
     def addProduct(self, p: Product):
         self.productVibes.products.append(p)
+
+    def addProductCategory(self, c: Category):
+        self.productVibes.categories.append(c)
+        pass
+
+    def addProductTextVibe(self, t: TextVibe):
+        self.productVibes.text.append(t)
+
+    def addProductImageVibe(self, i: ImageVibe):
+        self.productVibes.image.append(i)

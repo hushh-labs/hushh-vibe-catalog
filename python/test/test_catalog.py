@@ -2,7 +2,6 @@ import flatbuffers
 from transformers import CLIPModel, CLIPProcessor
 
 from hushh.catalog import Catalog, Category, Product
-from hushh.error import ProductExistsError
 from hushh.hcf import Catalog as RawCatalog
 
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -32,13 +31,20 @@ def test_catalog():
     assert c.description == "test_description"
 
 
-def test_catalog_product():
+def build_category():
+    return Category()
+
+
+def test_catalog_product_category():
     c = build_catalog()
     p = build_product()
     c.addProduct(p)
     assert len(c.productVibes.products) == 1
-    builder = flatbuffers.Builder(0)
-    c.Pack(builder)
+    cgy = Category("test_category", "test_url")
+    cgy.addProduct(p)
+    assert p.id in cgy._products
+    assert cgy.description == "test_category"
+    assert cgy.url == "test_url"
 
 
 # def build_raw_catalog():
