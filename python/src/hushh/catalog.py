@@ -1,5 +1,5 @@
 import uuid
-from typing import Dict, List, Optional, cast
+from typing import Dict, List, Optional
 
 from transformers import ProcessorMixin
 
@@ -21,18 +21,20 @@ class Product(ProductT):
         self.url = url
         self.base64 = base64
         self.imgUrl = imgUrl
+        self.textVibes = []
+        self.imageVibes = []
 
 
-class VibeBase:
-    _products: Dict[str, bool] = {}
-    productIdx: list[int] = []
+class IdBase:
+    id: str
+    base = ""
+
+    def genId(self):
+        return self.base + "-" + str(uuid.uuid1())
 
 
-class Category(CategoryT, VibeBase):
-    def __init__(self, description: str, url: str):
-        self.id = str(uuid.uuid1())
-        self.description = description
-        self.url = url
+class VibeBase(IdBase):
+    _products: Dict[str, int] = {}
 
     def addProduct(self, p: Product | str):
         if isinstance(p, str):
@@ -41,8 +43,18 @@ class Category(CategoryT, VibeBase):
             self._products[p.id] = True
 
 
+class Category(CategoryT, VibeBase):
+    def __init__(self, description: str, url: str):
+        self.base = "CTG"
+        self.id = self.genId()
+        self.description = description
+        self.url = url
+        self.prodIx = []
+
+
 class ImageVibe(ImageVibeT, VibeBase):
     def __init__(self, description: str, base64: Optional[str]):
+        self.base = "IVB"
         self.id = str(uuid.uuid1())
         self.description = description
         self.base64 = base64 if base64 is not None else ""
@@ -50,52 +62,102 @@ class ImageVibe(ImageVibeT, VibeBase):
 
 class TextVibe(TextVibeT, VibeBase):
     def __init__(self, description: str, base64: Optional[str]):
-        self.id = str(uuid.uuid1())
+        self.base = "TVB"
+        self.id = self.genId()
         self.description = description
         self.base64 = base64
 
 
-class FlatEmbeddingBatch(FlatEmbeddingBatchT):
+class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
     def __init__(self, dim: int, type: int, flatTensor: Optional[List[float]] = None):
-        self.id = str(uuid.uuid1())
+        self.base = "FEB"
+        self.id = self.genId()
         self.dim = dim
         self.type = type
         self.flatTensor = flatTensor if flatTensor is not None else []
 
 
-class ProductVibes(ProductVibesT):
-    def __init__(
-        self,
-    ):
-        self.id = str(uuid.uuid1())
+class ProductVibes(ProductVibesT, VibeBase):
+    def __init__(self):
+        self.base = "PVB"
+        self.id = self.genId()
         self.products = []
         self.categories = []
+        self._categories = {}
         self.text = []
+        self._text = {}
         self.image = []
+        self._image = {}
         self.flatBatches = []
 
+    def addProduct(self, p: Product):
+        if p.id in self._products:
+            raise ValueError(f"Product {p.id} already exists")
+        self._products[p.id] = len(self.products)
+        self.products.append(p)
 
-class Catalog(CatalogT):
+    def addCategory(self, c: Category):
+        if c.id in self._categories:
+            raise ValueError(f"Category {c.id} already exists")
+        self._categories[c.id] = len(self.categories)
+        self.categories.append(c)
+
+    def addTextVibe(self, tv: TextVibe):
+        if tv.id in self._categories:
+            raise ValueError(f"TextVibe {tv.id} already exists")
+        self._text[tv.id] = len(self.text)
+        self.text.append(tv)
+
+    def linkProductCategory(self, p_id: str, c_id: str):
+        if p_id not in self._products:
+            raise ValueError(f"Product {p_id} does not exist in Catalog")
+        if c_id not in self._categories:
+            raise ValueError(f"Category {c_id} does not exist in Catalog")
+
+        c_idx = self._categories[c_id]
+        p_idx = self._products[p_id]
+        self.categories[c_idx].productIdx.append(p_idx)
+
+    def linkProductTextVibe(self, p_id: str, tv_id: str):
+        if p_id not in self._products:
+            raise ValueError(f"Product {p_id} does not exist in Catalog")
+        if tv_id not in self._text:
+            raise ValueError(f"TextVibe {tv_id} does not exist in Catalog")
+
+        p_idx = self._products[p_id]
+        tv_idx = self._text[tv_id]
+        self.text[tv_idx].productIdx.append(p_idx)
+
+    def linkImageTextVibe(self, p_id: str, iv_id: str):
+        if p_id not in self._products:
+            raise ValueError(f"Product {p_id} does not exist in Catalog")
+        if iv_id not in self._text:
+            raise ValueError(f"ImageVibe {iv_id} does not exist in Catalog")
+
+        p_idx = self._products[p_id]
+        iv_idx = self._text[iv_id]
+        self.text[iv_idx].productIdx.append(p_idx)
+
+
+class Catalog(CatalogT, IdBase):
     productVibes: ProductVibes
 
     def __init__(self, description: str, processor: ProcessorMixin):
-        self.id = str(uuid.uuid1())
+        self.base = "CLG"
+        self.id = self.genId()
         self.version = VERSION
         self.description = description
         self.productVibes = ProductVibes()
         self.processor = processor
 
     def addProduct(self, p: Product):
-        self.productVibes.products.append(p)
+        self.productVibes.addProduct(p)
 
     def addProductCategory(self, c: Category):
         self.productVibes.categories.append(c)
 
-    def addProductTextVibe(self, p: Product | str, t: TextVibe | str):
-        if p.id not in self.productVibes._products:
-            self.addProduct(p)
-
+    def addProductTextVibe(self, t: TextVibe):
         self.productVibes.text.append(t)
 
-    def addProductImageVibe(self, p: Product, i: ImageVibe | str):
+    def addProductImageVibe(self, i: ImageVibe):
         self.productVibes.image.append(i)

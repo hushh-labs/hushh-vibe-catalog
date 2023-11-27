@@ -1,7 +1,7 @@
 import flatbuffers
 from transformers import CLIPModel, CLIPProcessor
 
-from hushh.catalog import Catalog, Category, Product
+from hushh.catalog import Catalog, Category, ImageVibe, Product
 from hushh.hcf import Catalog as RawCatalog
 
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -45,6 +45,14 @@ def test_catalog_product_category():
     assert p.id in cgy._products
     assert cgy.description == "test_category"
     assert cgy.url == "test_url"
+
+
+def test_catalog_text_image():
+    c = build_catalog()
+    p = build_product()
+    c.addProduct(p)
+    iv = ImageVibe("test_description", "test_base64")
+    # c.addProductTextVibe()
 
 
 # def build_raw_catalog():
