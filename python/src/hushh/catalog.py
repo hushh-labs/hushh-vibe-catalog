@@ -23,16 +23,16 @@ class Product(ProductT):
         self.imgUrl = imgUrl
 
 
-class Category(CategoryT):
+class VibeBase:
     _products: Dict[str, bool] = {}
+    productIdx: list[int] = []
 
+
+class Category(CategoryT, VibeBase):
     def __init__(self, description: str, url: str):
         self.id = str(uuid.uuid1())
         self.description = description
         self.url = url
-
-        self.productIdx = []
-        self._products = {}
 
     def addProduct(self, p: Product | str):
         if isinstance(p, str):
@@ -41,24 +41,18 @@ class Category(CategoryT):
             self._products[p.id] = True
 
 
-class ImageVibe(ImageVibeT):
-    def __init__(
-        self, description: str, base64: Optional[str], productIdx: Optional[list[int]]
-    ):
+class ImageVibe(ImageVibeT, VibeBase):
+    def __init__(self, description: str, base64: Optional[str]):
         self.id = str(uuid.uuid1())
         self.description = description
         self.base64 = base64 if base64 is not None else ""
-        self.productIdx = productIdx if productIdx is not None else []
 
 
-class TextVibe(TextVibeT):
-    def __init__(
-        self, description: str, base64: Optional[str], productIdx: Optional[list[int]]
-    ):
+class TextVibe(TextVibeT, VibeBase):
+    def __init__(self, description: str, base64: Optional[str]):
         self.id = str(uuid.uuid1())
         self.description = description
         self.base64 = base64
-        self.productIdx = productIdx if productIdx is not None else []
 
 
 class FlatEmbeddingBatch(FlatEmbeddingBatchT):
@@ -96,10 +90,12 @@ class Catalog(CatalogT):
 
     def addProductCategory(self, c: Category):
         self.productVibes.categories.append(c)
-        pass
 
-    def addProductTextVibe(self, t: TextVibe):
+    def addProductTextVibe(self, p: Product | str, t: TextVibe | str):
+        if p.id not in self.productVibes._products:
+            self.addProduct(p)
+
         self.productVibes.text.append(t)
 
-    def addProductImageVibe(self, i: ImageVibe):
+    def addProductImageVibe(self, p: Product, i: ImageVibe | str):
         self.productVibes.image.append(i)
