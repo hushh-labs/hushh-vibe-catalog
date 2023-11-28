@@ -47,11 +47,12 @@ def test_catalog_product_category():
     assert cgy.url == "test_url"
 
 
-def test_catalog_text_image():
+def test_product_image_vibe_link():
     c = build_catalog()
     p = build_product()
     c.addProduct(p)
     iv = ImageVibe("test_description", "test_base64")
+    c.addProductImageVibe(iv)
     # c.addProductTextVibe()
 
 
