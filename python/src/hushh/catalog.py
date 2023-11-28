@@ -166,3 +166,4 @@ class Catalog(CatalogT, IdBase):
         self.addProductTextVibe = self.productVibes.addTextVibe
         self.addProductImageVibe = self.productVibes.addImageVibe
         self.linkProductTextVibe = self.productVibes.linkTextVibe
+        self.linkProductImageVibe = self.productVibes.linkImageVibe
