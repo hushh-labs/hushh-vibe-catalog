@@ -12,6 +12,7 @@ authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
   "flatbuffers",
   "transformers",
+  "torch",
   "Pillow"
 ]
 
