@@ -1,4 +1,5 @@
 import flatbuffers
+from PIL import Image
 from transformers import CLIPModel, CLIPProcessor
 
 from hushh.catalog import Catalog, Category, ImageVibe, Product, TextVibe
@@ -51,7 +52,8 @@ def test_product_image_vibe_link():
     c = build_catalog()
     p = build_product()
     c.addProduct(p)
-    iv = ImageVibe("test_description", "test_base64")
+    image = Image.new(mode="RGBA", size=(1920, 1080))
+    iv = ImageVibe(image, "test_base64")
     c.addProductImageVibe(iv)
     tv = TextVibe("test_description")
     c.addProductTextVibe(tv)
