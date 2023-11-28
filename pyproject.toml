@@ -31,3 +31,9 @@ ci = [
   "pytest-cov",
   "requests-mock"
 ]
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::UserWarning",
+    # note the use of single quote below to denote "raw" strings in TOML
+    "ignore:Pydantic V1 style `@validator` validators are deprecated.",
+]
