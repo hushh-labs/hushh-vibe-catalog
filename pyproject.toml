@@ -11,15 +11,14 @@ version = "0.0.2"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
   "flatbuffers",
-  "transformers"
+  "transformers",
+  "Pillow"
 ]
 
 [project.optional-dependencies]
 dev = [
   "torch",
-  "Pillow",
   "numpy",
-  "transformers",
   "quartodoc",
   "black",
   "pip-tools",
