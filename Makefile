@@ -1,5 +1,5 @@
 
-.PHONY: clean lint requirements test preflight
+.PHONY: clean lint requirements test preflight docs
 
 #################################################################################
 # GLOBALS                                                                       #

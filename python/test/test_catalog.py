@@ -1,7 +1,7 @@
 import flatbuffers
 from transformers import CLIPModel, CLIPProcessor
 
-from hushh.catalog import Catalog, Category, ImageVibe, Product
+from hushh.catalog import Catalog, Category, ImageVibe, Product, TextVibe
 from hushh.hcf import Catalog as RawCatalog
 
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -53,7 +53,10 @@ def test_product_image_vibe_link():
     c.addProduct(p)
     iv = ImageVibe("test_description", "test_base64")
     c.addProductImageVibe(iv)
-    # c.addProductTextVibe()
+    tv = TextVibe("test_description")
+    c.addProductTextVibe(tv)
+    assert len(c.productVibes.image) == 1
+    assert len(c.productVibes.text) == 1
 
 
 # def build_raw_catalog():

@@ -1,0 +1,4 @@
+# catalog.Catalog { #hushh.catalog.Catalog }
+
+`catalog.Catalog(self, description, processor)`
+

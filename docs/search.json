@@ -14,46 +14,39 @@
     "text": "hcf\nhcf"
   },
   {
+    "objectID": "reference/hcf.TextVibe.html",
+    "href": "reference/hcf.TextVibe.html",
+    "title": "hcf.TextVibe",
+    "section": "",
+    "text": "hcf.TextVibe\nhcf.TextVibe"
+  },
+  {
+    "objectID": "reference/catalog.Catalog.html",
+    "href": "reference/catalog.Catalog.html",
+    "title": "catalog.Catalog",
+    "section": "",
+    "text": "catalog.Catalog\ncatalog.Catalog(self, description, processor)"
+  },
+  {
+    "objectID": "reference/hcf.ImageVibe.html",
+    "href": "reference/hcf.ImageVibe.html",
+    "title": "hcf.ImageVibe",
+    "section": "",
+    "text": "hcf.ImageVibe\nhcf.ImageVibe"
+  },
+  {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
     "title": "Function reference",
     "section": "",
-    "text": "Catalog functions\n\n\n\nhcf\n\n\n\nhcf.Catalog\n\n\n\nhcf.Product\n\n\n\nhcf.Category\n\n\n\nhcf.Embedding\n\n\n\nhcf.Vibe\n\n\n\ncatalog"
+    "text": "Catalog functions\n\n\n\ncatalog.Catalog\n\n\n\nhcf\n\n\n\nhcf.Catalog\n\n\n\nhcf.Product\n\n\n\nhcf.Category\n\n\n\nhcf.TextVibe\n\n\n\nhcf.ImageVibe"
   },
   {
     "objectID": "reference/index.html#catalog",
     "href": "reference/index.html#catalog",
     "title": "Function reference",
     "section": "",
-    "text": "Catalog functions\n\n\n\nhcf\n\n\n\nhcf.Catalog\n\n\n\nhcf.Product\n\n\n\nhcf.Category\n\n\n\nhcf.Embedding\n\n\n\nhcf.Vibe\n\n\n\ncatalog"
-  },
-  {
-    "objectID": "reference/catalog.html",
-    "href": "reference/catalog.html",
-    "title": "catalog",
-    "section": "",
-    "text": "catalog\n\n\n\n\n\nName\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the catalog.\n\n\nversion\nstr\nThe version of the catalog.\n\n\ndescription\nstr\nThe description of the catalog.\n\n\nproducts\nlist[Product] or None\nThe list of products in the catalog.\n\n\n\n\n\n\n\ncatalog.Category(self, description, url, embeddings=None)\nRepresents a category of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\ndescription\nstr\nThe description of the category.\n\n\nurl\nstr\nThe URL of the category.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the category.\n\n\n\n\n\n\n\ncatalog.Embedding(self, v=None)\nRepresents an embedding.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nv\nlist[float] or None\nThe vector embedding.\n\n\n\n\n\n\n\ncatalog.Product(self, description, url, categories=None, vibes=None)\nRepresents a product.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the product.\n\n\ndescription\nstr\nThe description of the product.\n\n\nurl\nstr\nThe URL of the product.\n\n\ncategories\nlist[Category] or None\nThe list of categories the product belongs to.\n\n\nvibes\nlist[Vibe] or None\nThe list of vibes associated with the product.\n\n\n\n\n\n\n\ncatalog.Vibe(self, description, imageBase64, url, embeddings=None)\nRepresents a vibe.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the vibe.\n\n\ndescription\nstr\nThe description of the vibe.\n\n\nimageBase64\nstr or None\nThe base64 encoded image of the vibe.\n\n\nurl\nstr\nThe URL of the vibe.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the vibe."
-  },
-  {
-    "objectID": "reference/catalog.html#classes",
-    "href": "reference/catalog.html#classes",
-    "title": "catalog",
-    "section": "",
-    "text": "Name\nDescription\n\n\n\n\nCatalog\nRepresents a catalog of products.\n\n\nCategory\nRepresents a category of products.\n\n\nEmbedding\nRepresents an embedding.\n\n\nProduct\nRepresents a product.\n\n\nVibe\nRepresents a vibe.\n\n\n\n\n\ncatalog.Catalog(self, description, products=None)\nRepresents a catalog of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the catalog.\n\n\nversion\nstr\nThe version of the catalog.\n\n\ndescription\nstr\nThe description of the catalog.\n\n\nproducts\nlist[Product] or None\nThe list of products in the catalog.\n\n\n\n\n\n\n\ncatalog.Category(self, description, url, embeddings=None)\nRepresents a category of products.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\ndescription\nstr\nThe description of the category.\n\n\nurl\nstr\nThe URL of the category.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the category.\n\n\n\n\n\n\n\ncatalog.Embedding(self, v=None)\nRepresents an embedding.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nv\nlist[float] or None\nThe vector embedding.\n\n\n\n\n\n\n\ncatalog.Product(self, description, url, categories=None, vibes=None)\nRepresents a product.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the product.\n\n\ndescription\nstr\nThe description of the product.\n\n\nurl\nstr\nThe URL of the product.\n\n\ncategories\nlist[Category] or None\nThe list of categories the product belongs to.\n\n\nvibes\nlist[Vibe] or None\nThe list of vibes associated with the product.\n\n\n\n\n\n\n\ncatalog.Vibe(self, description, imageBase64, url, embeddings=None)\nRepresents a vibe.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nid\nstr\nThe unique identifier of the vibe.\n\n\ndescription\nstr\nThe description of the vibe.\n\n\nimageBase64\nstr or None\nThe base64 encoded image of the vibe.\n\n\nurl\nstr\nThe URL of the vibe.\n\n\nembeddings\nlist[Embedding] or None\nThe list of embeddings associated with the vibe."
-  },
-  {
-    "objectID": "reference/hcf.Embedding.html",
-    "href": "reference/hcf.Embedding.html",
-    "title": "hcf.Embedding",
-    "section": "",
-    "text": "hcf.Embedding\nhcf.Embedding"
-  },
-  {
-    "objectID": "reference/hcf.Vibe.html",
-    "href": "reference/hcf.Vibe.html",
-    "title": "hcf.Vibe",
-    "section": "",
-    "text": "hcf.Vibe\nhcf.Vibe"
+    "text": "Catalog functions\n\n\n\ncatalog.Catalog\n\n\n\nhcf\n\n\n\nhcf.Catalog\n\n\n\nhcf.Product\n\n\n\nhcf.Category\n\n\n\nhcf.TextVibe\n\n\n\nhcf.ImageVibe"
   },
   {
     "objectID": "reference/hcf.Category.html",
