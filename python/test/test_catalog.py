@@ -33,7 +33,7 @@ def test_catalog():
 
 
 def build_category():
-    return Category()
+    return Category("test_category", "test_url")
 
 
 def test_catalog_product_category():
@@ -41,7 +41,8 @@ def test_catalog_product_category():
     p = build_product()
     c.addProduct(p)
     assert len(c.productVibes.products) == 1
-    cgy = Category("test_category", "test_url")
+    cgy = build_category()
+
     cgy.addProduct(p)
     assert p.id in cgy._products
     assert cgy.description == "test_category"
@@ -52,13 +53,18 @@ def test_product_image_vibe_link():
     c = build_catalog()
     p = build_product()
     c.addProduct(p)
-    image = Image.new(mode="RGBA", size=(1920, 1080))
+    image = Image.new(mode="RGB", size=(10, 10))
     iv = ImageVibe(image, "test_base64")
     c.addProductImageVibe(iv)
+    print(iv.base64)
     tv = TextVibe("test_description")
     c.addProductTextVibe(tv)
     assert len(c.productVibes.image) == 1
     assert len(c.productVibes.text) == 1
+
+    base64_payload = "/9j/4AAQSk"
+
+    assert c.productVibes.image[0].base64[:10] == base64_payload
 
 
 # def build_raw_catalog():

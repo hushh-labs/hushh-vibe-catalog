@@ -1,7 +1,9 @@
+import base64
 import uuid
+from io import BytesIO
 from typing import Dict, List, Optional
 
-from PIL import Image
+from PIL.Image import Image
 from transformers import ProcessorMixin
 
 from hushh.hcf.Catalog import CatalogT
@@ -54,10 +56,16 @@ class Category(CategoryT, VibeBase):
 
 
 class ImageVibe(ImageVibeT, VibeBase):
-    def __init__(self, image: Image, description: str):
+    def __init__(self, image: Image | str, description: str):
         self.base = "IVB"
         self.id = str(uuid.uuid1())
         self.description = description
+        if isinstance(image, Image):
+            buffered = BytesIO()
+            image.save(buffered, format="JPEG")
+            img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+            self.base64 = img_str
+
         # self.base64 = base64 if base64 is not None else ""
         self.productIdx = []
 
