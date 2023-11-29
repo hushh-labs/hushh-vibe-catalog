@@ -49,7 +49,7 @@ def test_catalog_product_category():
     assert cgy.url == "test_url"
 
 
-def test_product_image_vibe_link():
+def test_product_image_text_vibe_link():
     c = build_catalog()
     p = build_product()
     c.addProduct(p)
@@ -63,8 +63,8 @@ def test_product_image_vibe_link():
     assert len(c.productVibes.text) == 1
 
     base64_payload = "/9j/4AAQSk"
-
     assert c.productVibes.image[0].base64[:10] == base64_payload
+    assert c.productVibes.text[0].text == "test_description"
 
 
 # def build_raw_catalog():
