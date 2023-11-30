@@ -2,21 +2,18 @@
 
 # namespace: hcf
 
-from typing import Any, Optional
-
 import flatbuffers
 from flatbuffers.compat import import_numpy
-
+from typing import Any
 from hushh.hcf.Category import Category
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatch
 from hushh.hcf.Product import Product
 from hushh.hcf.Vibe import Vibe
-
+from typing import Optional
 np = import_numpy()
 
-
 class ProductVibes(object):
-    __slots__ = ["_tab"]
+    __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
@@ -29,7 +26,6 @@ class ProductVibes(object):
     def GetRootAsProductVibes(cls, buf, offset=0):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
-
     # ProductVibes
     def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
@@ -137,126 +133,90 @@ class ProductVibes(object):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         return o == 0
 
-
 def ProductVibesStart(builder: flatbuffers.Builder):
     builder.StartObject(5)
-
 
 def Start(builder: flatbuffers.Builder):
     ProductVibesStart(builder)
 
-
 def ProductVibesAddId(builder: flatbuffers.Builder, id: int):
-    builder.PrependUOffsetTRelativeSlot(
-        0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0
-    )
-
+    builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
     ProductVibesAddId(builder, id)
 
-
 def ProductVibesAddProducts(builder: flatbuffers.Builder, products: int):
-    builder.PrependUOffsetTRelativeSlot(
-        1, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0
-    )
-
+    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
 
 def AddProducts(builder: flatbuffers.Builder, products: int):
     ProductVibesAddProducts(builder, products)
 
-
 def ProductVibesStartProductsVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
-
 
 def StartProductsVector(builder, numElems: int) -> int:
     return ProductVibesStartProductsVector(builder, numElems)
 
-
 def ProductVibesAddCategories(builder: flatbuffers.Builder, categories: int):
-    builder.PrependUOffsetTRelativeSlot(
-        2, flatbuffers.number_types.UOffsetTFlags.py_type(categories), 0
-    )
-
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(categories), 0)
 
 def AddCategories(builder: flatbuffers.Builder, categories: int):
     ProductVibesAddCategories(builder, categories)
 
-
 def ProductVibesStartCategoriesVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
-
 
 def StartCategoriesVector(builder, numElems: int) -> int:
     return ProductVibesStartCategoriesVector(builder, numElems)
 
-
 def ProductVibesAddVibes(builder: flatbuffers.Builder, vibes: int):
-    builder.PrependUOffsetTRelativeSlot(
-        3, flatbuffers.number_types.UOffsetTFlags.py_type(vibes), 0
-    )
-
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(vibes), 0)
 
 def AddVibes(builder: flatbuffers.Builder, vibes: int):
     ProductVibesAddVibes(builder, vibes)
 
-
 def ProductVibesStartVibesVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
-
 
 def StartVibesVector(builder, numElems: int) -> int:
     return ProductVibesStartVibesVector(builder, numElems)
 
-
 def ProductVibesAddFlatBatches(builder: flatbuffers.Builder, flatBatches: int):
-    builder.PrependUOffsetTRelativeSlot(
-        4, flatbuffers.number_types.UOffsetTFlags.py_type(flatBatches), 0
-    )
-
+    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(flatBatches), 0)
 
 def AddFlatBatches(builder: flatbuffers.Builder, flatBatches: int):
     ProductVibesAddFlatBatches(builder, flatBatches)
 
-
 def ProductVibesStartFlatBatchesVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
-
 
 def StartFlatBatchesVector(builder, numElems: int) -> int:
     return ProductVibesStartFlatBatchesVector(builder, numElems)
 
-
 def ProductVibesEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
-
 def End(builder: flatbuffers.Builder) -> int:
     return ProductVibesEnd(builder)
-
 
 import hushh.hcf.Category
 import hushh.hcf.FlatEmbeddingBatch
 import hushh.hcf.Product
 import hushh.hcf.Vibe
-
 try:
     from typing import List
 except:
     pass
 
-
 class ProductVibesT(object):
+
     # ProductVibesT
     def __init__(self):
         self.id = None  # type: str
         self.products = None  # type: List[hushh.hcf.Product.ProductT]
         self.categories = None  # type: List[hushh.hcf.Category.CategoryT]
         self.vibes = None  # type: List[hushh.hcf.Vibe.VibeT]
-        self.flatBatches = (
-            None
-        )  # type: List[hushh.hcf.FlatEmbeddingBatch.FlatEmbeddingBatchT]
+        self.flatBatches = None  # type: List[hushh.hcf.FlatEmbeddingBatch.FlatEmbeddingBatchT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -267,7 +227,7 @@ class ProductVibesT(object):
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
-        return cls.InitFromBuf(buf, pos + n)
+        return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, productVibes):
@@ -286,9 +246,7 @@ class ProductVibesT(object):
                 if productVibes.Products(i) is None:
                     self.products.append(None)
                 else:
-                    product_ = hushh.hcf.Product.ProductT.InitFromObj(
-                        productVibes.Products(i)
-                    )
+                    product_ = hushh.hcf.Product.ProductT.InitFromObj(productVibes.Products(i))
                     self.products.append(product_)
         if not productVibes.CategoriesIsNone():
             self.categories = []
@@ -296,9 +254,7 @@ class ProductVibesT(object):
                 if productVibes.Categories(i) is None:
                     self.categories.append(None)
                 else:
-                    category_ = hushh.hcf.Category.CategoryT.InitFromObj(
-                        productVibes.Categories(i)
-                    )
+                    category_ = hushh.hcf.Category.CategoryT.InitFromObj(productVibes.Categories(i))
                     self.categories.append(category_)
         if not productVibes.VibesIsNone():
             self.vibes = []
@@ -314,11 +270,7 @@ class ProductVibesT(object):
                 if productVibes.FlatBatches(i) is None:
                     self.flatBatches.append(None)
                 else:
-                    flatEmbeddingBatch_ = (
-                        hushh.hcf.FlatEmbeddingBatch.FlatEmbeddingBatchT.InitFromObj(
-                            productVibes.FlatBatches(i)
-                        )
-                    )
+                    flatEmbeddingBatch_ = hushh.hcf.FlatEmbeddingBatch.FlatEmbeddingBatchT.InitFromObj(productVibes.FlatBatches(i))
                     self.flatBatches.append(flatEmbeddingBatch_)
 
     # ProductVibesT
