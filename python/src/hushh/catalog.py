@@ -1,7 +1,7 @@
 import base64
 import uuid
 from io import BytesIO
-from typing import Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Union
 
 from PIL.Image import Image as ImageT
 from transformers import ProcessorMixin
@@ -14,6 +14,8 @@ from hushh.hcf.ProductVibes import ProductVibesT
 from hushh.hcf.Vibe import VibeT
 
 from .version import VERSION
+
+Processor = Union[ProcessorMixin, Callable]
 
 
 class IdBase:
@@ -98,7 +100,7 @@ class ProductVibes(ProductVibesT, VibeBase):
 class Catalog(CatalogT, IdBase):
     productVibes: ProductVibes
 
-    def __init__(self, description: str, processor: ProcessorMixin):
+    def __init__(self, description: str, processor: Processor):
         self.base = "CLG"
         self.id = self.genId()
         self.version = VERSION
@@ -107,7 +109,6 @@ class Catalog(CatalogT, IdBase):
         self.productVibes = ProductVibes()
 
     def renderProductFlatBatch(self):
-        processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
         images = []
         texts = []
 
@@ -117,7 +118,7 @@ class Catalog(CatalogT, IdBase):
             text = p.description
             texts.append(text)
 
-        inputs = processor(
+        inputs = self.processor(
             text=texts,
             images=images,
             return_tensors="pt",
