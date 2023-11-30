@@ -12,7 +12,7 @@ builder = flatbuffers.Builder(0)
 
 
 def build_product():
-    return Product("test_product", "test_url", "test_base64", "test_imgUrl")
+    return Product("test_product", "test_url", "test_base64", "test_imageUrl")
 
 
 def test_product():
@@ -20,7 +20,7 @@ def test_product():
     assert p.description == "test_product"
     assert p.url == "test_url"
     assert p.base64 == "test_base64"
-    assert p.imgUrl == "test_imgUrl"
+    assert p.imageUrl == "test_imageUrl"
 
 
 def build_catalog():
@@ -49,18 +49,18 @@ def test_catalog_product_category():
     assert cgy.url == "test_url"
 
 
-def test_product_image_text_vibe_link():
+def test_product_vibe_link():
     c = build_catalog()
     p = build_product()
     c.addProduct(p)
     image = Image.new(mode="RGB", size=(10, 10))
-    iv = Vibe(image, "test_base64")
-    c.addProductImageVibe(iv)
+    v = Vibe(image, "test_description")
+    c.addProductVibe(v)
     assert len(c.productVibes.vibes) == 1
 
     base64_payload = "/9j/4AAQSk"
-    assert c.productVibes.image[0].base64[:10] == base64_payload
-    assert c.productVibes.text[0].text == "test_description"
+    assert c.productVibes.vibes[0].base64[:10] == base64_payload
+    assert c.productVibes.vibes[0].description == "test_description"
 
 
 def test_catalog_pack():
@@ -68,8 +68,8 @@ def test_catalog_pack():
     p = build_product()
     c.addProduct(p)
     image = Image.new(mode="RGB", size=(10, 10))
-    iv = ImageVibe(image, "test_base64")
-    c.addProductImageVibe(iv)
+    v = Vibe(image, "test_description")
+    c.addProductVibe(v)
     pass
 
 

@@ -3,7 +3,6 @@ import uuid
 from io import BytesIO
 from typing import Dict, List, Optional
 
-from PIL import Image
 from PIL.Image import Image as ImageT
 from transformers import ProcessorMixin
 
@@ -60,11 +59,13 @@ class Vibe(VibeT, VibeBase):
         self.base = "IVB"
         self.id = self.genId()
         self.description = description
-        if isinstance(image, Image):
+        if isinstance(image, ImageT):
             buffered = BytesIO()
             image.save(buffered, format="JPEG")
             img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
             self.base64 = img_str
+        else:
+            self.base64 = image
 
         # self.base64 = base64 if base64 is not None else ""
         self.productIdx = []
@@ -109,20 +110,19 @@ class Catalog(CatalogT, IdBase):
         processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
         images = []
         texts = []
+
         for p in self.productVibes.products:
             image = PIL.Image.open(BytesIO(base64.b64decode(p.base64)))
             images.append(image)
             text = p.description
             texts.append(text)
+
         inputs = processor(
             text=texts,
             images=images,
             return_tensors="pt",
             padding=True,
         )
-        import pdb
-
-        pdb.set_trace()
 
     def addProduct(self, p: Product):
         if p.id in self.productVibes._products:
@@ -137,9 +137,9 @@ class Catalog(CatalogT, IdBase):
         self.productVibes.categories.append(c)
 
     def addProductVibe(self, v: Vibe):
-        if iv.id in self.productVibes._image:
+        if v.id in self.productVibes._vibes:
             raise ValueError(f"Vibe {v.id} already exists")
-        self.productVibes._vibe[v.id] = len(self.productVibes.vibe)
+        self.productVibes._vibes[v.id] = len(self.productVibes.vibes)
         self.productVibes.vibes.append(v)
 
     def linkProductCategory(self, p_id: str, c_id: str):
