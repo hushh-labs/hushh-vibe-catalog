@@ -3,29 +3,18 @@ import uuid
 from io import BytesIO
 from typing import Dict, List, Optional
 
-from PIL.Image import Image
+from PIL import Image
+from PIL.Image import Image as ImageT
 from transformers import ProcessorMixin
 
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
-from hushh.hcf.ImageVibe import ImageVibeT
 from hushh.hcf.Product import ProductT
 from hushh.hcf.ProductVibes import ProductVibesT
-from hushh.hcf.TextVibe import TextVibeT
+from hushh.hcf.Vibe import VibeT
 
 from .version import VERSION
-
-
-class Product(ProductT):
-    def __init__(self, description: str, url: str, base64: str, imgUrl: str):
-        self.id = str(uuid.uuid1())
-        self.description = description
-        self.url = url
-        self.base64 = base64
-        self.imgUrl = imgUrl
-        self.textVibes = []
-        self.imageVibes = []
 
 
 class IdBase:
@@ -34,6 +23,17 @@ class IdBase:
 
     def genId(self):
         return self.base + "-" + str(uuid.uuid1())
+
+
+class Product(ProductT, IdBase):
+    def __init__(self, description: str, url: str, base64: str, imageUrl: str):
+        self.id = self.genId()
+        self.description = description
+        self.url = url
+        self.base64 = base64
+        self.imageUrl = imageUrl
+        self.textVibes = []
+        self.imageVibes = []
 
 
 class VibeBase(IdBase):
@@ -55,10 +55,10 @@ class Category(CategoryT, VibeBase):
         self.productIx = []
 
 
-class ImageVibe(ImageVibeT, VibeBase):
-    def __init__(self, image: Image | str, description: str):
+class Vibe(VibeT, VibeBase):
+    def __init__(self, image: ImageT | str, description: str):
         self.base = "IVB"
-        self.id = str(uuid.uuid1())
+        self.id = self.genId()
         self.description = description
         if isinstance(image, Image):
             buffered = BytesIO()
@@ -67,15 +67,6 @@ class ImageVibe(ImageVibeT, VibeBase):
             self.base64 = img_str
 
         # self.base64 = base64 if base64 is not None else ""
-        self.productIdx = []
-
-
-class TextVibe(TextVibeT, VibeBase):
-    def __init__(self, text: str, description: Optional[str] = None):
-        self.base = "TVB"
-        self.id = self.genId()
-        self.description = description
-        self.text = text
         self.productIdx = []
 
 
@@ -97,11 +88,8 @@ class ProductVibes(ProductVibesT, VibeBase):
         self.categories = []
         self._categories = {}
 
-        self.text = []
-        self._text = {}
-
-        self.image = []
-        self._image = {}
+        self.vibes = []
+        self._vibes = {}
 
         self.flatBatches = []
 
@@ -114,8 +102,27 @@ class Catalog(CatalogT, IdBase):
         self.id = self.genId()
         self.version = VERSION
         self.description = description
-        self.productVibes = ProductVibes()
         self.processor = processor
+        self.productVibes = ProductVibes()
+
+    def renderProductFlatBatch(self):
+        processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+        images = []
+        texts = []
+        for p in self.productVibes.products:
+            image = PIL.Image.open(BytesIO(base64.b64decode(p.base64)))
+            images.append(image)
+            text = p.description
+            texts.append(text)
+        inputs = processor(
+            text=texts,
+            images=images,
+            return_tensors="pt",
+            padding=True,
+        )
+        import pdb
+
+        pdb.set_trace()
 
     def addProduct(self, p: Product):
         if p.id in self.productVibes._products:
@@ -129,17 +136,11 @@ class Catalog(CatalogT, IdBase):
         self.productVibes._categories[c.id] = len(self.productVibes.categories)
         self.productVibes.categories.append(c)
 
-    def addProductImageVibe(self, iv: ImageVibe):
+    def addProductVibe(self, v: Vibe):
         if iv.id in self.productVibes._image:
-            raise ValueError(f"ImageVibe {iv.id} already exists")
-        self.productVibes._image[iv.id] = len(self.productVibes.text)
-        self.productVibes.image.append(iv)
-
-    def addProductTextVibe(self, tv: TextVibe):
-        if tv.id in self.productVibes._text:
-            raise ValueError(f"TextVibe {tv.id} already exists")
-        self.productVibes._text[tv.id] = len(self.productVibes.text)
-        self.productVibes.text.append(tv)
+            raise ValueError(f"Vibe {v.id} already exists")
+        self.productVibes._vibe[v.id] = len(self.productVibes.vibe)
+        self.productVibes.vibes.append(v)
 
     def linkProductCategory(self, p_id: str, c_id: str):
         if p_id not in self.productVibes._products:
@@ -151,22 +152,10 @@ class Catalog(CatalogT, IdBase):
         p_idx = self.productVibes._products[p_id]
         self.productVibes.categories[c_idx].productIdx.append(p_idx)
 
-    def linkProductTextVibe(self, p_id: str, tv_id: str):
-        if p_id not in self.productVibes._products:
-            raise ValueError(f"Product {p_id} does not exist in Catalog")
-        if tv_id not in self.productVibes._text:
-            raise ValueError(f"TextVibe {tv_id} does not exist in Catalog")
+    def linkProductVibe(self, p_id: str, v_id: str):
+        if v_id not in self.productVibes._vibes:
+            raise ValueError(f"Vibe {v_id} does not exist in Catalog")
 
         p_idx = self.productVibes._products[p_id]
-        tv_idx = self.productVibes._text[tv_id]
-        self.productVibes.text[tv_idx].productIdx.append(p_idx)
-
-    def linkProductImageVibe(self, p_id: str, iv_id: str):
-        if p_id not in self.productVibes._products:
-            raise ValueError(f"Product {p_id} does not exist in Catalog")
-        if iv_id not in self.productVibes._text:
-            raise ValueError(f"ImageVibe {iv_id} does not exist in Catalog")
-
-        p_idx = self.productVibes._products[p_id]
-        iv_idx = self.productVibes._text[iv_id]
-        self.productVibes.text[iv_idx].productIdx.append(p_idx)
+        v_idx = self.productVibes._vibes[v_id]
+        self.productVibes.vibes[v_idx].productIdx.append(p_idx)

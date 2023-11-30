@@ -4,21 +4,15 @@ table Product {
   id: string;
   description: string;
   base64: string;
-  img_url: string;
+  image_url: string;
   url: string;
 }
 
-table TextVibe {
-  id: string;
-  description: string;
-  url: string;
-  product_idx: [int];
-}
-
-table ImageVibe {
+table Vibe {
   id: string;
   base64: string;
-  img_url: string;
+  description: string;
+  image_url: string;
   product_idx: [int];
 }
 
@@ -42,8 +36,7 @@ table ProductVibes {
   id: string;
   products: [Product];
   categories: [Category];
-  text: [TextVibe];
-  image: [ImageVibe];
+  vibes: [Vibe];
   flat_batches: [FlatEmbeddingBatch];
 }
 
