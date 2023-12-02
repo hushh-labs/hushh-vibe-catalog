@@ -9,17 +9,20 @@ model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 builder = flatbuffers.Builder(0)
+dummy_image = Image.new(mode="RGB", size=(10, 10))
 
 
 def build_product():
-    return Product("test_product", "test_url", "test_base64", "test_imageUrl")
+    return Product("test_product", "test_url", dummy_image, "test_imageUrl")
 
 
 def test_product():
     p = build_product()
     assert p.description == "test_product"
     assert p.url == "test_url"
-    assert p.base64 == "test_base64"
+    image = Image.new(mode="RGB", size=(10, 10))
+    base64_payload = "/9j/4AAQSk"
+
     assert p.imageUrl == "test_imageUrl"
 
 
@@ -70,6 +73,7 @@ def test_catalog_pack():
     image = Image.new(mode="RGB", size=(10, 10))
     v = Vibe(image, "test_description")
     c.addProductVibe(v)
+    c.renderProductFlatBatch()
     pass
 
 

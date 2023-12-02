@@ -2,7 +2,7 @@
 
 # namespace: hcf
 
-class VibeType(object):
+class VibeMode(object):
     ProductText = 0
     ProductImage = 1
     Text = 2

@@ -3,8 +3,9 @@ import uuid
 from io import BytesIO
 from typing import Callable, Dict, List, Optional, Union
 
+from PIL import Image
 from PIL.Image import Image as ImageT
-from transformers import ProcessorMixin
+from transformers import CLIPModel, ProcessorMixin
 
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
@@ -12,6 +13,7 @@ from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
 from hushh.hcf.Product import ProductT
 from hushh.hcf.ProductVibes import ProductVibesT
 from hushh.hcf.Vibe import VibeT
+from hushh.hcf.VibeMode import VibeMode
 
 from .version import VERSION
 
@@ -27,11 +29,18 @@ class IdBase:
 
 
 class Product(ProductT, IdBase):
-    def __init__(self, description: str, url: str, base64: str, imageUrl: str):
+    def __init__(self, description: str, url: str, image: ImageT | str, imageUrl: str):
         self.id = self.genId()
         self.description = description
         self.url = url
-        self.base64 = base64
+        if isinstance(image, ImageT):
+            buffered = BytesIO()
+            image.save(buffered, format="JPEG")
+            img_str = base64.b64encode(buffered.getvalue())
+            self.base64 = img_str.decode("utf-8")
+        else:
+            self.base64 = image
+
         self.imageUrl = imageUrl
         self.textVibes = []
         self.imageVibes = []
@@ -112,8 +121,10 @@ class Catalog(CatalogT, IdBase):
         images = []
         texts = []
 
+        model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+
         for p in self.productVibes.products:
-            image = PIL.Image.open(BytesIO(base64.b64decode(p.base64)))
+            image = Image.open(BytesIO(base64.b64decode(p.base64)))
             images.append(image)
             text = p.description
             texts.append(text)
@@ -124,6 +135,33 @@ class Catalog(CatalogT, IdBase):
             return_tensors="pt",
             padding=True,
         )
+
+        image_features = model.get_image_features(
+            pixel_values=inputs.pixel_values,
+        )
+
+        embedding_dim = image_features.shape[1]
+        image_batch = FlatEmbeddingBatch(
+            dim=embedding_dim,
+            flatTensor=image_features.flatten().tolist(),
+            type=VibeMode.ProductImage,
+        )
+        self.productVibes.flatBatches.append(image_batch)
+
+        text_features = model.get_text_features(
+            input_ids=inputs.input_ids,
+        )
+        embedding_dim = text_features.shape[1]
+        text_batch = FlatEmbeddingBatch(
+            dim=embedding_dim,
+            flatTensor=text_features.flatten().tolist(),
+            type=VibeMode.ProductText,
+        )
+        self.productVibes.flatBatches.append(text_batch)
+
+    def Pack(self, builder):
+        self.renderProductFlatBatch()
+        super().Pack(builder)
 
     def addProduct(self, p: Product):
         if p.id in self.productVibes._products:

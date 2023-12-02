@@ -23,12 +23,12 @@ table Category {
   product_idx: [int];
 }
 
-enum VibeType : byte { ProductText = 0, ProductImage, Text, Image, Category}
+enum VibeMode : byte { ProductText = 0, ProductImage, Text, Image, Category}
 
 table FlatEmbeddingBatch {
     id: string;
     dim: int;
-    type: VibeType;
+    type: VibeMode;
     flat_tensor:[float];
 }
 
