@@ -12,34 +12,48 @@ namespace hushh.hcf;
 table Product {
   id: string;
   description: string;
+  base64: string;
+  image_url: string;
   url: string;
-  categories: [Category];
+}
+
+table Vibe {
+  id: string;
+  base64: string;
+  description: string;
+  image_url: string;
+  product_idx: [int];
 }
 
 table Category {
   id: string;
   description: string;
   url: string;
-  vibes: [Vibe];
+  product_idx: [int];
 }
 
-table Embedding {
-    v:[float];
+enum VibeMode : byte { ProductText = 0, ProductImage, Text, Image, Category}
+
+table FlatEmbeddingBatch {
+    id: string;
+    dim: int;
+    type: VibeMode;
+    flat_tensor:[float];
 }
 
-table Vibe {
+table ProductVibes {
   id: string;
-  description: string;
-  image_base64: string;
-  url: string;
-  embeddings: [Embedding];
+  products: [Product];
+  categories: [Category];
+  vibes: [Vibe];
+  flat_batches: [FlatEmbeddingBatch];
 }
 
 table Catalog {
   id : string;
   version: string;
   description: string;
-  products: [Product];
+  product_vibes: ProductVibes;
 }
 
 root_type Catalog;
