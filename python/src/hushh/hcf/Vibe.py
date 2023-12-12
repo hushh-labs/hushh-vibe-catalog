@@ -48,15 +48,8 @@ class Vibe(object):
         return None
 
     # Vibe
-    def ImageUrl(self) -> Optional[str]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            return self._tab.String(o + self._tab.Pos)
-        return None
-
-    # Vibe
     def ProductIdx(self, j: int):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             a = self._tab.Vector(o)
             return self._tab.Get(flatbuffers.number_types.Int32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
@@ -64,25 +57,25 @@ class Vibe(object):
 
     # Vibe
     def ProductIdxAsNumpy(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
         return 0
 
     # Vibe
     def ProductIdxLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Vibe
     def ProductIdxIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
 def VibeStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
     VibeStart(builder)
@@ -105,14 +98,8 @@ def VibeAddDescription(builder: flatbuffers.Builder, description: int):
 def AddDescription(builder: flatbuffers.Builder, description: int):
     VibeAddDescription(builder, description)
 
-def VibeAddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(imageUrl), 0)
-
-def AddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
-    VibeAddImageUrl(builder, imageUrl)
-
 def VibeAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
 def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
     VibeAddProductIdx(builder, productIdx)
@@ -141,7 +128,6 @@ class VibeT(object):
         self.id = None  # type: str
         self.base64 = None  # type: str
         self.description = None  # type: str
-        self.imageUrl = None  # type: str
         self.productIdx = None  # type: List[int]
 
     @classmethod
@@ -168,7 +154,6 @@ class VibeT(object):
         self.id = vibe.Id()
         self.base64 = vibe.Base64()
         self.description = vibe.Description()
-        self.imageUrl = vibe.ImageUrl()
         if not vibe.ProductIdxIsNone():
             if np is None:
                 self.productIdx = []
@@ -185,8 +170,6 @@ class VibeT(object):
             base64 = builder.CreateString(self.base64)
         if self.description is not None:
             description = builder.CreateString(self.description)
-        if self.imageUrl is not None:
-            imageUrl = builder.CreateString(self.imageUrl)
         if self.productIdx is not None:
             if np is not None and type(self.productIdx) is np.ndarray:
                 productIdx = builder.CreateNumpyVector(self.productIdx)
@@ -202,8 +185,6 @@ class VibeT(object):
             VibeAddBase64(builder, base64)
         if self.description is not None:
             VibeAddDescription(builder, description)
-        if self.imageUrl is not None:
-            VibeAddImageUrl(builder, imageUrl)
         if self.productIdx is not None:
             VibeAddProductIdx(builder, productIdx)
         vibe = VibeEnd(builder)

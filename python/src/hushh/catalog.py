@@ -30,10 +30,13 @@ class IdBase:
 
 
 class Product(ProductT, IdBase):
+    image: ImageT
+
     def __init__(self, description: str, url: str, image: ImageT | str):
         self.id = self.genId()
         self.description = description
         self.url = url
+
         if isinstance(image, ImageT):
             self.image = image
         else:
@@ -129,10 +132,8 @@ class Catalog(CatalogT, IdBase):
         model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 
         for p in self.productVibes.products:
-            image = Image.open(BytesIO(base64.b64decode(p.base64)))
-            images.append(image)
-            text = p.description
-            texts.append(text)
+            images.append(p.image)
+            texts.append(p.description)
 
         if not texts and not images:
             raise NoEmbeddableContent()
@@ -172,7 +173,7 @@ class Catalog(CatalogT, IdBase):
 
     def Pack(self, builder):
         self.renderProductFlatBatch()
-        super().Pack(builder)
+        return super().Pack(builder)
 
     def addProduct(self, p: Product):
         if p.id in self.productVibes._products:

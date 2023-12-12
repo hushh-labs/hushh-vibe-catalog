@@ -41,28 +41,14 @@ class Product(object):
         return None
 
     # Product
-    def Base64(self) -> Optional[str]:
+    def Url(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Product
-    def ImageUrl(self) -> Optional[str]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            return self._tab.String(o + self._tab.Pos)
-        return None
-
-    # Product
-    def Url(self) -> Optional[str]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            return self._tab.String(o + self._tab.Pos)
-        return None
-
 def ProductStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(3)
 
 def Start(builder: flatbuffers.Builder):
     ProductStart(builder)
@@ -79,20 +65,8 @@ def ProductAddDescription(builder: flatbuffers.Builder, description: int):
 def AddDescription(builder: flatbuffers.Builder, description: int):
     ProductAddDescription(builder, description)
 
-def ProductAddBase64(builder: flatbuffers.Builder, base64: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(base64), 0)
-
-def AddBase64(builder: flatbuffers.Builder, base64: int):
-    ProductAddBase64(builder, base64)
-
-def ProductAddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(imageUrl), 0)
-
-def AddImageUrl(builder: flatbuffers.Builder, imageUrl: int):
-    ProductAddImageUrl(builder, imageUrl)
-
 def ProductAddUrl(builder: flatbuffers.Builder, url: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
     ProductAddUrl(builder, url)
@@ -110,8 +84,6 @@ class ProductT(object):
     def __init__(self):
         self.id = None  # type: str
         self.description = None  # type: str
-        self.base64 = None  # type: str
-        self.imageUrl = None  # type: str
         self.url = None  # type: str
 
     @classmethod
@@ -137,8 +109,6 @@ class ProductT(object):
             return
         self.id = product.Id()
         self.description = product.Description()
-        self.base64 = product.Base64()
-        self.imageUrl = product.ImageUrl()
         self.url = product.Url()
 
     # ProductT
@@ -147,10 +117,6 @@ class ProductT(object):
             id = builder.CreateString(self.id)
         if self.description is not None:
             description = builder.CreateString(self.description)
-        if self.base64 is not None:
-            base64 = builder.CreateString(self.base64)
-        if self.imageUrl is not None:
-            imageUrl = builder.CreateString(self.imageUrl)
         if self.url is not None:
             url = builder.CreateString(self.url)
         ProductStart(builder)
@@ -158,10 +124,6 @@ class ProductT(object):
             ProductAddId(builder, id)
         if self.description is not None:
             ProductAddDescription(builder, description)
-        if self.base64 is not None:
-            ProductAddBase64(builder, base64)
-        if self.imageUrl is not None:
-            ProductAddImageUrl(builder, imageUrl)
         if self.url is not None:
             ProductAddUrl(builder, url)
         product = ProductEnd(builder)
