@@ -5,8 +5,9 @@ from typing import Callable, Dict, List, Optional, Union
 
 from PIL import Image
 from PIL.Image import Image as ImageT
-from transformers import CLIPModel, ProcessorMixin
+from transformers import CLIPModel, CLIPProcessor, ProcessorMixin
 
+from hushh.errors import NoEmbeddableContent, UncallableProcessor
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
@@ -17,7 +18,7 @@ from hushh.hcf.VibeMode import VibeMode
 
 from .version import VERSION
 
-Processor = Union[ProcessorMixin, Callable]
+Processor = ProcessorMixin
 
 
 class IdBase:
@@ -29,19 +30,15 @@ class IdBase:
 
 
 class Product(ProductT, IdBase):
-    def __init__(self, description: str, url: str, image: ImageT | str, imageUrl: str):
+    def __init__(self, description: str, url: str, image: ImageT | str):
         self.id = self.genId()
         self.description = description
         self.url = url
         if isinstance(image, ImageT):
-            buffered = BytesIO()
-            image.save(buffered, format="JPEG")
-            img_str = base64.b64encode(buffered.getvalue())
-            self.base64 = img_str.decode("utf-8")
+            self.image = image
         else:
-            self.base64 = image
+            self.image = Image.open(BytesIO(base64.b64decode(image)))
 
-        self.imageUrl = imageUrl
         self.textVibes = []
         self.imageVibes = []
 
@@ -108,13 +105,21 @@ class ProductVibes(ProductVibesT, VibeBase):
 
 class Catalog(CatalogT, IdBase):
     productVibes: ProductVibes
+    processor: Processor
 
-    def __init__(self, description: str, processor: Processor):
+    def __init__(self, description: str, processor: Processor = None):
         self.base = "CLG"
         self.id = self.genId()
         self.version = VERSION
         self.description = description
-        self.processor = processor
+
+        if processor is not None:
+            self.processor = processor
+        else:
+            self.processor = CLIPProcessor.from_pretrained(
+                "openai/clip-vit-base-patch32"
+            )
+
         self.productVibes = ProductVibes()
 
     def renderProductFlatBatch(self):
@@ -129,12 +134,18 @@ class Catalog(CatalogT, IdBase):
             text = p.description
             texts.append(text)
 
-        inputs = self.processor(
-            text=texts,
-            images=images,
-            return_tensors="pt",
-            padding=True,
-        )
+        if not texts and not images:
+            raise NoEmbeddableContent()
+
+        if callable(self.processor):
+            inputs = self.processor(
+                text=texts,
+                images=images,
+                return_tensors="pt",
+                padding=True,
+            )
+        else:
+            raise UncallableProcessor()
 
         image_features = model.get_image_features(
             pixel_values=inputs.pixel_values,

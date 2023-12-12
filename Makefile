@@ -1,5 +1,5 @@
 
-.PHONY: clean lint requirements test preflight docs
+.PHONY: clean lint dev test preflight docs
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -35,8 +35,8 @@ environment :
 clean_environment : | clean
 	conda env create -f environment.yml --force
 
-## Install Python dependencies
-requirements :
+## Install Python dev dependencies
+dev :
 	$(PYTHON_INTERPRETER) -m pip install -e ".[dev]"
 
 ## Delete all compiled Python files
