@@ -70,15 +70,12 @@ class Vibe(VibeT, VibeBase):
         self.base = "IVB"
         self.id = self.genId()
         self.description = description
-        if isinstance(image, ImageT):
-            buffered = BytesIO()
-            image.save(buffered, format="JPEG")
-            img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
-            self.base64 = img_str
-        else:
-            self.base64 = image
 
-        # self.base64 = base64 if base64 is not None else ""
+        if not isinstance(image, ImageT):
+            self.image = Image.open(BytesIO(base64.b64decode(image)))
+        else:
+            self.image = image
+
         self.productIdx = []
 
 

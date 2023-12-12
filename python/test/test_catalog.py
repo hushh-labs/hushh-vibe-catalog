@@ -58,13 +58,10 @@ def test_embeddings():
     embedding = [1.0, 2.0, 3.0]
     inv_embedding = [3.0, 2.0, 1.0]
 
-    return
     categories = []
     for _ in range(0, 3):
         c = Category("category a", "test_url")
         categories.append(c)
-
-    v = Vibe("test_vibe", "test_base64")
 
     catalog = Catalog("test_embeddings")
     catalog.id = "foo"
@@ -79,31 +76,3 @@ def test_embeddings():
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
 
     assert rcat.Description() == b"test_embeddings"
-    assert rcat.ProductsLength() == 10
-
-    # product
-    prod = rcat.Products(0)
-    assert prod is not None
-    assert prod.Id() is not None
-    assert prod.Description() == b"desc"
-    assert prod.Url() == b"dummy_url"
-
-    # category
-    cat = rcat.Categories(0)
-    assert cat is not None
-    assert cat.Id() is not None
-    assert cat.Description() == b"category a"
-    assert cat.Url() == b"na"
-
-    # embedding
-
-    # vibe
-    assert vibe is not None
-    assert vibe.Id() is not None
-    assert vibe.Description() == b"test_vibe"
-    assert vibe.Url() == b"test_url"
-    assert vibe.ImageBase64() == b"test_base64"
-    assert vibe.EmbeddingsLength() == 2
-
-    emb_v = vibe.Embeddings(0)
-    assert emb_v is not None

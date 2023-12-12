@@ -163,39 +163,33 @@ public struct hushh_hcf_Vibe: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   private enum VTOFFSET: VOffset {
     case id = 4
-    case base64 = 6
-    case description = 8
-    case productIdx = 10
+    case description = 6
+    case productIdx = 8
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
 
   public var id: String? { let o = _accessor.offset(VTOFFSET.id.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var idSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.id.v) }
-  public var base64: String? { let o = _accessor.offset(VTOFFSET.base64.v); return o == 0 ? nil : _accessor.string(at: o) }
-  public var base64SegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.base64.v) }
   public var description: String? { let o = _accessor.offset(VTOFFSET.description.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var descriptionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.description.v) }
   public var hasProductIdx: Bool { let o = _accessor.offset(VTOFFSET.productIdx.v); return o == 0 ? false : true }
   public var productIdxCount: Int32 { let o = _accessor.offset(VTOFFSET.productIdx.v); return o == 0 ? 0 : _accessor.vector(count: o) }
   public func productIdx(at index: Int32) -> Int32 { let o = _accessor.offset(VTOFFSET.productIdx.v); return o == 0 ? 0 : _accessor.directRead(of: Int32.self, offset: _accessor.vector(at: o) + index * 4) }
   public var productIdx: [Int32] { return _accessor.getVector(at: VTOFFSET.productIdx.v) ?? [] }
-  public static func startVibe(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
+  public static func startVibe(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 3) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
-  public static func add(base64: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: base64, at: VTOFFSET.base64.p) }
   public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
   public static func addVectorOf(productIdx: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: productIdx, at: VTOFFSET.productIdx.p) }
   public static func endVibe(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createVibe(
     _ fbb: inout FlatBufferBuilder,
     idOffset id: Offset = Offset(),
-    base64Offset base64: Offset = Offset(),
     descriptionOffset description: Offset = Offset(),
     productIdxVectorOffset productIdx: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Vibe.startVibe(&fbb)
     hushh_hcf_Vibe.add(id: id, &fbb)
-    hushh_hcf_Vibe.add(base64: base64, &fbb)
     hushh_hcf_Vibe.add(description: description, &fbb)
     hushh_hcf_Vibe.addVectorOf(productIdx: productIdx, &fbb)
     return hushh_hcf_Vibe.endVibe(&fbb, start: __start)
@@ -218,13 +212,6 @@ public struct hushh_hcf_Vibe: FlatBufferObject, Verifiable, ObjectAPIPacker {
       __id = Offset()
     }
 
-    let __base64: Offset
-    if let s = obj.base64 {
-      __base64 = builder.create(string: s)
-    } else {
-      __base64 = Offset()
-    }
-
     let __description: Offset
     if let s = obj.description {
       __description = builder.create(string: s)
@@ -235,7 +222,6 @@ public struct hushh_hcf_Vibe: FlatBufferObject, Verifiable, ObjectAPIPacker {
     let __productIdx = builder.createVector(obj.productIdx)
     let __root = hushh_hcf_Vibe.startVibe(&builder)
     hushh_hcf_Vibe.add(id: __id, &builder)
-    hushh_hcf_Vibe.add(base64: __base64, &builder)
     hushh_hcf_Vibe.add(description: __description, &builder)
     hushh_hcf_Vibe.addVectorOf(productIdx: __productIdx, &builder)
     return hushh_hcf_Vibe.endVibe(&builder, start: __root)
@@ -244,7 +230,6 @@ public struct hushh_hcf_Vibe: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.base64.p, fieldName: "base64", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.productIdx.p, fieldName: "productIdx", required: false, type: ForwardOffset<Vector<Int32, Int32>>.self)
     _v.finish()
@@ -255,14 +240,12 @@ extension hushh_hcf_Vibe: Encodable {
 
   enum CodingKeys: String, CodingKey {
     case id = "id"
-    case base64 = "base64"
     case description = "description"
     case productIdx = "product_idx"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
-    try container.encodeIfPresent(base64, forKey: .base64)
     try container.encodeIfPresent(description, forKey: .description)
     if productIdxCount > 0 {
       try container.encodeIfPresent(productIdx, forKey: .productIdx)
@@ -273,13 +256,11 @@ extension hushh_hcf_Vibe: Encodable {
 public class hushh_hcf_VibeT: NativeObject {
 
   public var id: String?
-  public var base64: String?
   public var description: String?
   public var productIdx: [Int32]
 
   public init(_ _t: inout hushh_hcf_Vibe) {
     id = _t.id
-    base64 = _t.base64
     description = _t.description
     productIdx = []
     for index in 0..<_t.productIdxCount {
