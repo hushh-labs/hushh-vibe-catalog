@@ -12,16 +12,12 @@ namespace hushh.hcf;
 table Product {
   id: string;
   description: string;
-  base64: string;
-  image_url: string;
   url: string;
 }
 
 table Vibe {
   id: string;
-  base64: string;
   description: string;
-  image_url: string;
   product_idx: [int];
 }
 
@@ -36,7 +32,7 @@ enum VibeMode : byte { ProductText = 0, ProductImage, Text, Image, Category}
 
 table FlatEmbeddingBatch {
     id: string;
-    dim: int;
+    shape:[int];
     type: VibeMode;
     flat_tensor:[float];
 }
