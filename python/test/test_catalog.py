@@ -81,3 +81,29 @@ def test_embeddings():
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
 
     assert rcat.Description() == b"test_embeddings"
+
+
+def test_image_catalog():
+    cat = Image.open("assets/cat.jpg")
+    dog = Image.open("assets/dog.jpg")
+    bird = Image.open("assets/bird.jpg")
+
+    catalog = Catalog("image_test")
+
+    cat_product = Product("cat", "test_url", cat)
+    dog_product = Product("dog", "test_url", dog)
+    bird_product = Product("bird", "test_url", bird)
+
+    catalog.addProduct(cat_product)
+    catalog.addProduct(dog_product)
+    catalog.addProduct(bird_product)
+
+    builder = flatbuffers.Builder(0)
+    cat_end = catalog.Pack(builder)
+    builder.Finish(cat_end)
+
+    rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
+    vibes = rcat.ProductVibes()
+    assert vibes is not None
+
+    assert vibes.FlatBatchesLength() > 0
