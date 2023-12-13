@@ -36,7 +36,7 @@ def test_raw_catalog():
     assert cat.Version() == b"1.2.0"
 
 
-def test_catalog():
+def test_catalog_type_with_products():
     cat = Catalog("test")
     cat.id = "foo"
     cat.version = "1.2.0"
@@ -52,6 +52,11 @@ def test_catalog():
     rcat = RawCatalog.Catalog.GetRootAsCatalog(builder.Output())
     assert rcat.Id() == b"foo"
     assert rcat.Version() == b"1.2.0"
+    pvibes = rcat.ProductVibes()
+    assert pvibes is not None
+
+    # There are two flatbatches... one for text and one for images.
+    assert pvibes.FlatBatchesLength() == 2
 
 
 def test_embeddings():
