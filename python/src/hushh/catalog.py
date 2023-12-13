@@ -49,7 +49,7 @@ class Product(ProductT, IdBase):
 class VibeBase(IdBase):
     _products: Dict[str, int] = {}
 
-    def addProduct(self, p: Product | str):
+    def addProductTarget(self, p: Product | str):
         if isinstance(p, str):
             self._products[p] = True
         else:

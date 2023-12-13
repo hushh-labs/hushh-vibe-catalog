@@ -1,7 +1,7 @@
 import flatbuffers
 from PIL import Image
 
-from hushh.catalog import Catalog, Category, Product, Vibe
+from hushh.catalog import Catalog, Category, Product
 from hushh.hcf import Catalog as RawCatalog
 
 builder = flatbuffers.Builder(0)
