@@ -114,7 +114,7 @@ def test_image_catalog():
     assert vibes.FlatBatchesLength() > 0
     batch = vibes.FlatBatches(0)
     assert batch is not None
-    # assert batch.Shape() == 512
+    assert np.array_equal(batch.ShapeAsNumpy(), [3, 512])
     if batch.Type() == VibeMode.VibeMode.ProductImage:
         pass
     elif batch.Type() == VibeMode.VibeMode.ProductText:
