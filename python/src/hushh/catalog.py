@@ -1,7 +1,8 @@
 import base64
 import uuid
+from collections.abc import Iterable
 from io import BytesIO
-from typing import Callable, Dict, List, Optional, Union
+from typing import Callable, Dict, List, Optional
 
 from PIL import Image
 from PIL.Image import Image as ImageT
@@ -80,10 +81,15 @@ class Vibe(VibeT, VibeBase):
 
 
 class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
-    def __init__(self, dim: int, type: int, flatTensor: Optional[List[float]] = None):
+    def __init__(
+        self,
+        shape: Iterable[int],
+        type: int,
+        flatTensor: Optional[List[float]] = None,
+    ):
         self.base = "FEB"
         self.id = self.genId()
-        self.dim = dim
+        self.shape = shape
         self.type = type
         self.flatTensor = flatTensor if flatTensor is not None else []
 
@@ -149,9 +155,8 @@ class Catalog(CatalogT, IdBase):
             pixel_values=inputs.pixel_values,
         )
 
-        embedding_dim = image_features.shape[1]
         image_batch = FlatEmbeddingBatch(
-            dim=embedding_dim,
+            shape=image_features.shape,
             flatTensor=image_features.flatten().tolist(),
             type=VibeMode.ProductImage,
         )
@@ -160,9 +165,8 @@ class Catalog(CatalogT, IdBase):
         text_features = model.get_text_features(
             input_ids=inputs.input_ids,
         )
-        embedding_dim = text_features.shape[1]
         text_batch = FlatEmbeddingBatch(
-            dim=embedding_dim,
+            shape=text_features.shape,
             flatTensor=text_features.flatten().tolist(),
             type=VibeMode.ProductText,
         )

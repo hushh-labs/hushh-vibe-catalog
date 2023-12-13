@@ -428,7 +428,7 @@ public struct hushh_hcf_FlatEmbeddingBatch: FlatBufferObject, Verifiable, Object
 
   private enum VTOFFSET: VOffset {
     case id = 4
-    case dim = 6
+    case shape = 6
     case type = 8
     case flatTensor = 10
     var v: Int32 { Int32(self.rawValue) }
@@ -437,7 +437,10 @@ public struct hushh_hcf_FlatEmbeddingBatch: FlatBufferObject, Verifiable, Object
 
   public var id: String? { let o = _accessor.offset(VTOFFSET.id.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var idSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.id.v) }
-  public var dim: Int32 { let o = _accessor.offset(VTOFFSET.dim.v); return o == 0 ? 0 : _accessor.readBuffer(of: Int32.self, at: o) }
+  public var hasShape: Bool { let o = _accessor.offset(VTOFFSET.shape.v); return o == 0 ? false : true }
+  public var shapeCount: Int32 { let o = _accessor.offset(VTOFFSET.shape.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func shape(at index: Int32) -> Int32 { let o = _accessor.offset(VTOFFSET.shape.v); return o == 0 ? 0 : _accessor.directRead(of: Int32.self, offset: _accessor.vector(at: o) + index * 4) }
+  public var shape: [Int32] { return _accessor.getVector(at: VTOFFSET.shape.v) ?? [] }
   public var type: hushh_hcf_VibeMode { let o = _accessor.offset(VTOFFSET.type.v); return o == 0 ? .producttext : hushh_hcf_VibeMode(rawValue: _accessor.readBuffer(of: Int8.self, at: o)) ?? .producttext }
   public var hasFlatTensor: Bool { let o = _accessor.offset(VTOFFSET.flatTensor.v); return o == 0 ? false : true }
   public var flatTensorCount: Int32 { let o = _accessor.offset(VTOFFSET.flatTensor.v); return o == 0 ? 0 : _accessor.vector(count: o) }
@@ -445,20 +448,20 @@ public struct hushh_hcf_FlatEmbeddingBatch: FlatBufferObject, Verifiable, Object
   public var flatTensor: [Float32] { return _accessor.getVector(at: VTOFFSET.flatTensor.v) ?? [] }
   public static func startFlatEmbeddingBatch(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
-  public static func add(dim: Int32, _ fbb: inout FlatBufferBuilder) { fbb.add(element: dim, def: 0, at: VTOFFSET.dim.p) }
+  public static func addVectorOf(shape: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: shape, at: VTOFFSET.shape.p) }
   public static func add(type: hushh_hcf_VibeMode, _ fbb: inout FlatBufferBuilder) { fbb.add(element: type.rawValue, def: 0, at: VTOFFSET.type.p) }
   public static func addVectorOf(flatTensor: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: flatTensor, at: VTOFFSET.flatTensor.p) }
   public static func endFlatEmbeddingBatch(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createFlatEmbeddingBatch(
     _ fbb: inout FlatBufferBuilder,
     idOffset id: Offset = Offset(),
-    dim: Int32 = 0,
+    shapeVectorOffset shape: Offset = Offset(),
     type: hushh_hcf_VibeMode = .producttext,
     flatTensorVectorOffset flatTensor: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_FlatEmbeddingBatch.startFlatEmbeddingBatch(&fbb)
     hushh_hcf_FlatEmbeddingBatch.add(id: id, &fbb)
-    hushh_hcf_FlatEmbeddingBatch.add(dim: dim, &fbb)
+    hushh_hcf_FlatEmbeddingBatch.addVectorOf(shape: shape, &fbb)
     hushh_hcf_FlatEmbeddingBatch.add(type: type, &fbb)
     hushh_hcf_FlatEmbeddingBatch.addVectorOf(flatTensor: flatTensor, &fbb)
     return hushh_hcf_FlatEmbeddingBatch.endFlatEmbeddingBatch(&fbb, start: __start)
@@ -481,10 +484,11 @@ public struct hushh_hcf_FlatEmbeddingBatch: FlatBufferObject, Verifiable, Object
       __id = Offset()
     }
 
+    let __shape = builder.createVector(obj.shape)
     let __flatTensor = builder.createVector(obj.flatTensor)
     let __root = hushh_hcf_FlatEmbeddingBatch.startFlatEmbeddingBatch(&builder)
     hushh_hcf_FlatEmbeddingBatch.add(id: __id, &builder)
-    hushh_hcf_FlatEmbeddingBatch.add(dim: obj.dim, &builder)
+    hushh_hcf_FlatEmbeddingBatch.addVectorOf(shape: __shape, &builder)
     hushh_hcf_FlatEmbeddingBatch.add(type: obj.type, &builder)
     hushh_hcf_FlatEmbeddingBatch.addVectorOf(flatTensor: __flatTensor, &builder)
     return hushh_hcf_FlatEmbeddingBatch.endFlatEmbeddingBatch(&builder, start: __root)
@@ -493,7 +497,7 @@ public struct hushh_hcf_FlatEmbeddingBatch: FlatBufferObject, Verifiable, Object
   public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
     var _v = try verifier.visitTable(at: position)
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
-    try _v.visit(field: VTOFFSET.dim.p, fieldName: "dim", required: false, type: Int32.self)
+    try _v.visit(field: VTOFFSET.shape.p, fieldName: "shape", required: false, type: ForwardOffset<Vector<Int32, Int32>>.self)
     try _v.visit(field: VTOFFSET.type.p, fieldName: "type", required: false, type: hushh_hcf_VibeMode.self)
     try _v.visit(field: VTOFFSET.flatTensor.p, fieldName: "flatTensor", required: false, type: ForwardOffset<Vector<Float32, Float32>>.self)
     _v.finish()
@@ -504,15 +508,15 @@ extension hushh_hcf_FlatEmbeddingBatch: Encodable {
 
   enum CodingKeys: String, CodingKey {
     case id = "id"
-    case dim = "dim"
+    case shape = "shape"
     case type = "type"
     case flatTensor = "flat_tensor"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
-    if dim != 0 {
-      try container.encodeIfPresent(dim, forKey: .dim)
+    if shapeCount > 0 {
+      try container.encodeIfPresent(shape, forKey: .shape)
     }
     if type != .producttext {
       try container.encodeIfPresent(type, forKey: .type)
@@ -526,13 +530,16 @@ extension hushh_hcf_FlatEmbeddingBatch: Encodable {
 public class hushh_hcf_FlatEmbeddingBatchT: NativeObject {
 
   public var id: String?
-  public var dim: Int32
+  public var shape: [Int32]
   public var type: hushh_hcf_VibeMode
   public var flatTensor: [Float32]
 
   public init(_ _t: inout hushh_hcf_FlatEmbeddingBatch) {
     id = _t.id
-    dim = _t.dim
+    shape = []
+    for index in 0..<_t.shapeCount {
+        shape.append(_t.shape(at: index))
+    }
     type = _t.type
     flatTensor = []
     for index in 0..<_t.flatTensorCount {
@@ -541,7 +548,7 @@ public class hushh_hcf_FlatEmbeddingBatchT: NativeObject {
   }
 
   public init() {
-    dim = 0
+    shape = []
     type = .producttext
     flatTensor = []
   }

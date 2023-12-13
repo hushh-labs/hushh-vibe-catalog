@@ -1,8 +1,13 @@
+from typing import Literal
+
 import flatbuffers
+import numpy as np
 from PIL import Image
+from transformers import CLIPModel, CLIPProcessor
 
 from hushh.catalog import Catalog, Category, Product
 from hushh.hcf import Catalog as RawCatalog
+from hushh.hcf import VibeMode
 
 builder = flatbuffers.Builder(0)
 
@@ -107,3 +112,27 @@ def test_image_catalog():
     assert vibes is not None
 
     assert vibes.FlatBatchesLength() > 0
+    batch = vibes.FlatBatches(0)
+    assert batch is not None
+    # assert batch.Shape() == 512
+    if batch.Type() == VibeMode.VibeMode.ProductImage:
+        pass
+    elif batch.Type() == VibeMode.VibeMode.ProductText:
+        pass
+    else:
+        assert False, "batch type should have been product text/image"
+
+    tensor = batch.FlatTensorAsNumpy()
+    tensor.shape = (-1, 512)
+
+    model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+    processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+
+    inputs = processor(images=[cat, dog, bird], return_tensors="pt", padding=True)
+
+    image_features = model.get_image_features(pixel_values=inputs.pixel_values)
+    assert image_features.shape[0] == 3
+    assert image_features.shape[1] == 512
+    image_features[0]
+
+    assert tensor is not None
