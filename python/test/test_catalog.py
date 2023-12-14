@@ -112,16 +112,16 @@ def test_image_catalog():
     assert vibes is not None
 
     assert vibes.FlatBatchesLength() > 0
-    batch = vibes.FlatBatches(0)
-    assert batch is not None
-    assert np.array_equal(batch.ShapeAsNumpy(), [3, 512])
-    if batch.Type() == VibeMode.VibeMode.ProductImage:
-        pass
-    elif batch.Type() == VibeMode.VibeMode.ProductText:
-        pass
-    else:
-        assert False, "batch type should have been product text/image"
 
+    batch = vibes.FlatBatches(0)
+    for b in range(0, vibes.FlatBatchesLength()):
+        batch = vibes.FlatBatches(b)
+        assert batch is not None
+        assert np.array_equal(batch.ShapeAsNumpy(), [3, 512])
+        if batch.Type() == VibeMode.VibeMode.ProductImage:
+            break
+
+    assert batch is not None
     tensor = batch.FlatTensorAsNumpy()
     tensor.shape = (-1, 512)
 
@@ -133,6 +133,5 @@ def test_image_catalog():
     image_features = model.get_image_features(pixel_values=inputs.pixel_values)
     assert image_features.shape[0] == 3
     assert image_features.shape[1] == 512
-    image_features[0]
 
-    assert tensor is not None
+    assert np.array_equal(image_features[0].detach().numpy(), tensor[0])
