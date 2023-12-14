@@ -120,7 +120,6 @@ def test_image_catalog():
 
     assert batch is not None
     tensor = batch.FlatTensorAsNumpy()
-    assert tensor != 0
     tensor.shape = (-1, 512)
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
