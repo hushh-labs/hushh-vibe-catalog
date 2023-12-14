@@ -65,9 +65,6 @@ def test_catalog_type_with_products():
 
 
 def test_embeddings():
-    embedding = [1.0, 2.0, 3.0]
-    inv_embedding = [3.0, 2.0, 1.0]
-
     categories = []
     for _ in range(0, 3):
         c = Category("category a", "test_url")
@@ -123,6 +120,7 @@ def test_image_catalog():
 
     assert batch is not None
     tensor = batch.FlatTensorAsNumpy()
+    assert tensor != 0
     tensor.shape = (-1, 512)
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -130,6 +128,7 @@ def test_image_catalog():
 
     inputs = processor(images=[cat, dog, bird], return_tensors="pt", padding=True)
 
+    assert isinstance(model, CLIPModel)
     image_features = model.get_image_features(pixel_values=inputs.pixel_values)
     assert image_features.shape[0] == 3
     assert image_features.shape[1] == 512
