@@ -10,13 +10,16 @@ name = "hushh-vibe-catalog-reader"
 version = "0.0.2"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
-  "flatbuffers"
+  "flatbuffers",
+  "transformers",
+  "torch",
+  "Pillow"
 ]
 
 [project.optional-dependencies]
 dev = [
+  "torch",
   "numpy",
-  "transformers",
   "quartodoc",
   "black",
   "pip-tools",
@@ -28,8 +31,9 @@ ci = [
   "pytest-cov",
   "requests-mock"
 ]
-
-[tool.pyright]
-executionEnvironments = [
-  { root = "python/src" }
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::UserWarning",
+    # note the use of single quote below to denote "raw" strings in TOML
+    "ignore:Pydantic V1 style `@validator` validators are deprecated.",
 ]

@@ -5,7 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from hushh.hcf.Product import Product
+from hushh.hcf.ProductVibes import ProductVibes
 from typing import Optional
 np = import_numpy()
 
@@ -49,28 +49,14 @@ class Catalog(object):
         return None
 
     # Catalog
-    def Products(self, j: int) -> Optional[Product]:
+    def ProductVibes(self) -> Optional[ProductVibes]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Product()
+            x = self._tab.Indirect(o + self._tab.Pos)
+            obj = ProductVibes()
             obj.Init(self._tab.Bytes, x)
             return obj
         return None
-
-    # Catalog
-    def ProductsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Catalog
-    def ProductsIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        return o == 0
 
 def CatalogStart(builder: flatbuffers.Builder):
     builder.StartObject(4)
@@ -96,17 +82,11 @@ def CatalogAddDescription(builder: flatbuffers.Builder, description: int):
 def AddDescription(builder: flatbuffers.Builder, description: int):
     CatalogAddDescription(builder, description)
 
-def CatalogAddProducts(builder: flatbuffers.Builder, products: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
+def CatalogAddProductVibes(builder: flatbuffers.Builder, productVibes: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productVibes), 0)
 
-def AddProducts(builder: flatbuffers.Builder, products: int):
-    CatalogAddProducts(builder, products)
-
-def CatalogStartProductsVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartProductsVector(builder, numElems: int) -> int:
-    return CatalogStartProductsVector(builder, numElems)
+def AddProductVibes(builder: flatbuffers.Builder, productVibes: int):
+    CatalogAddProductVibes(builder, productVibes)
 
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -114,9 +94,9 @@ def CatalogEnd(builder: flatbuffers.Builder) -> int:
 def End(builder: flatbuffers.Builder) -> int:
     return CatalogEnd(builder)
 
-import hushh.hcf.Product
+import hushh.hcf.ProductVibes
 try:
-    from typing import List
+    from typing import Optional
 except:
     pass
 
@@ -127,7 +107,7 @@ class CatalogT(object):
         self.id = None  # type: str
         self.version = None  # type: str
         self.description = None  # type: str
-        self.products = None  # type: List[hushh.hcf.Product.ProductT]
+        self.productVibes = None  # type: Optional[hushh.hcf.ProductVibes.ProductVibesT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -153,14 +133,8 @@ class CatalogT(object):
         self.id = catalog.Id()
         self.version = catalog.Version()
         self.description = catalog.Description()
-        if not catalog.ProductsIsNone():
-            self.products = []
-            for i in range(catalog.ProductsLength()):
-                if catalog.Products(i) is None:
-                    self.products.append(None)
-                else:
-                    product_ = hushh.hcf.Product.ProductT.InitFromObj(catalog.Products(i))
-                    self.products.append(product_)
+        if catalog.ProductVibes() is not None:
+            self.productVibes = hushh.hcf.ProductVibes.ProductVibesT.InitFromObj(catalog.ProductVibes())
 
     # CatalogT
     def Pack(self, builder):
@@ -170,14 +144,8 @@ class CatalogT(object):
             version = builder.CreateString(self.version)
         if self.description is not None:
             description = builder.CreateString(self.description)
-        if self.products is not None:
-            productslist = []
-            for i in range(len(self.products)):
-                productslist.append(self.products[i].Pack(builder))
-            CatalogStartProductsVector(builder, len(self.products))
-            for i in reversed(range(len(self.products))):
-                builder.PrependUOffsetTRelative(productslist[i])
-            products = builder.EndVector()
+        if self.productVibes is not None:
+            productVibes = self.productVibes.Pack(builder)
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
@@ -185,7 +153,7 @@ class CatalogT(object):
             CatalogAddVersion(builder, version)
         if self.description is not None:
             CatalogAddDescription(builder, description)
-        if self.products is not None:
-            CatalogAddProducts(builder, products)
+        if self.productVibes is not None:
+            CatalogAddProductVibes(builder, productVibes)
         catalog = CatalogEnd(builder)
         return catalog

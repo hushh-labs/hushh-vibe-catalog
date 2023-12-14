@@ -5,7 +5,6 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from hushh.hcf.Embedding import Embedding
 from typing import Optional
 np = import_numpy()
 
@@ -49,26 +48,29 @@ class Category(object):
         return None
 
     # Category
-    def Embeddings(self, j: int) -> Optional[Embedding]:
+    def ProductIdx(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Embedding()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
+            a = self._tab.Vector(o)
+            return self._tab.Get(flatbuffers.number_types.Int32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
+        return 0
 
     # Category
-    def EmbeddingsLength(self) -> int:
+    def ProductIdxAsNumpy(self):
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        if o != 0:
+            return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
+        return 0
+
+    # Category
+    def ProductIdxLength(self) -> int:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Category
-    def EmbeddingsIsNone(self) -> bool:
+    def ProductIdxIsNone(self) -> bool:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
@@ -96,17 +98,17 @@ def CategoryAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     CategoryAddUrl(builder, url)
 
-def CategoryAddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(embeddings), 0)
+def CategoryAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
-def AddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
-    CategoryAddEmbeddings(builder, embeddings)
+def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    CategoryAddProductIdx(builder, productIdx)
 
-def CategoryStartEmbeddingsVector(builder, numElems: int) -> int:
+def CategoryStartProductIdxVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
-def StartEmbeddingsVector(builder, numElems: int) -> int:
-    return CategoryStartEmbeddingsVector(builder, numElems)
+def StartProductIdxVector(builder, numElems: int) -> int:
+    return CategoryStartProductIdxVector(builder, numElems)
 
 def CategoryEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -114,7 +116,6 @@ def CategoryEnd(builder: flatbuffers.Builder) -> int:
 def End(builder: flatbuffers.Builder) -> int:
     return CategoryEnd(builder)
 
-import hushh.hcf.Embedding
 try:
     from typing import List
 except:
@@ -127,7 +128,7 @@ class CategoryT(object):
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
-        self.embeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
+        self.productIdx = None  # type: List[int]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -153,14 +154,13 @@ class CategoryT(object):
         self.id = category.Id()
         self.description = category.Description()
         self.url = category.Url()
-        if not category.EmbeddingsIsNone():
-            self.embeddings = []
-            for i in range(category.EmbeddingsLength()):
-                if category.Embeddings(i) is None:
-                    self.embeddings.append(None)
-                else:
-                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(category.Embeddings(i))
-                    self.embeddings.append(embedding_)
+        if not category.ProductIdxIsNone():
+            if np is None:
+                self.productIdx = []
+                for i in range(category.ProductIdxLength()):
+                    self.productIdx.append(category.ProductIdx(i))
+            else:
+                self.productIdx = category.ProductIdxAsNumpy()
 
     # CategoryT
     def Pack(self, builder):
@@ -170,14 +170,14 @@ class CategoryT(object):
             description = builder.CreateString(self.description)
         if self.url is not None:
             url = builder.CreateString(self.url)
-        if self.embeddings is not None:
-            embeddingslist = []
-            for i in range(len(self.embeddings)):
-                embeddingslist.append(self.embeddings[i].Pack(builder))
-            CategoryStartEmbeddingsVector(builder, len(self.embeddings))
-            for i in reversed(range(len(self.embeddings))):
-                builder.PrependUOffsetTRelative(embeddingslist[i])
-            embeddings = builder.EndVector()
+        if self.productIdx is not None:
+            if np is not None and type(self.productIdx) is np.ndarray:
+                productIdx = builder.CreateNumpyVector(self.productIdx)
+            else:
+                CategoryStartProductIdxVector(builder, len(self.productIdx))
+                for i in reversed(range(len(self.productIdx))):
+                    builder.PrependInt32(self.productIdx[i])
+                productIdx = builder.EndVector()
         CategoryStart(builder)
         if self.id is not None:
             CategoryAddId(builder, id)
@@ -185,7 +185,7 @@ class CategoryT(object):
             CategoryAddDescription(builder, description)
         if self.url is not None:
             CategoryAddUrl(builder, url)
-        if self.embeddings is not None:
-            CategoryAddEmbeddings(builder, embeddings)
+        if self.productIdx is not None:
+            CategoryAddProductIdx(builder, productIdx)
         category = CategoryEnd(builder)
         return category

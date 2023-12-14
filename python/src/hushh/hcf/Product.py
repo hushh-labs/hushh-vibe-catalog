@@ -5,8 +5,6 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from hushh.hcf.Category import Category
-from hushh.hcf.Vibe import Vibe
 from typing import Optional
 np = import_numpy()
 
@@ -49,56 +47,8 @@ class Product(object):
             return self._tab.String(o + self._tab.Pos)
         return None
 
-    # Product
-    def Categories(self, j: int) -> Optional[Category]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Category()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Product
-    def CategoriesLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Product
-    def CategoriesIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
-        return o == 0
-
-    # Product
-    def Vibes(self, j: int) -> Optional[Vibe]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Vibe()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Product
-    def VibesLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            return self._tab.VectorLen(o)
-        return 0
-
-    # Product
-    def VibesIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        return o == 0
-
 def ProductStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(3)
 
 def Start(builder: flatbuffers.Builder):
     ProductStart(builder)
@@ -121,42 +71,12 @@ def ProductAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     ProductAddUrl(builder, url)
 
-def ProductAddCategories(builder: flatbuffers.Builder, categories: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(categories), 0)
-
-def AddCategories(builder: flatbuffers.Builder, categories: int):
-    ProductAddCategories(builder, categories)
-
-def ProductStartCategoriesVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartCategoriesVector(builder, numElems: int) -> int:
-    return ProductStartCategoriesVector(builder, numElems)
-
-def ProductAddVibes(builder: flatbuffers.Builder, vibes: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(vibes), 0)
-
-def AddVibes(builder: flatbuffers.Builder, vibes: int):
-    ProductAddVibes(builder, vibes)
-
-def ProductStartVibesVector(builder, numElems: int) -> int:
-    return builder.StartVector(4, numElems, 4)
-
-def StartVibesVector(builder, numElems: int) -> int:
-    return ProductStartVibesVector(builder, numElems)
-
 def ProductEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
     return ProductEnd(builder)
 
-import hushh.hcf.Category
-import hushh.hcf.Vibe
-try:
-    from typing import List
-except:
-    pass
 
 class ProductT(object):
 
@@ -165,8 +85,6 @@ class ProductT(object):
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
-        self.categories = None  # type: List[hushh.hcf.Category.CategoryT]
-        self.vibes = None  # type: List[hushh.hcf.Vibe.VibeT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -192,22 +110,6 @@ class ProductT(object):
         self.id = product.Id()
         self.description = product.Description()
         self.url = product.Url()
-        if not product.CategoriesIsNone():
-            self.categories = []
-            for i in range(product.CategoriesLength()):
-                if product.Categories(i) is None:
-                    self.categories.append(None)
-                else:
-                    category_ = hushh.hcf.Category.CategoryT.InitFromObj(product.Categories(i))
-                    self.categories.append(category_)
-        if not product.VibesIsNone():
-            self.vibes = []
-            for i in range(product.VibesLength()):
-                if product.Vibes(i) is None:
-                    self.vibes.append(None)
-                else:
-                    vibe_ = hushh.hcf.Vibe.VibeT.InitFromObj(product.Vibes(i))
-                    self.vibes.append(vibe_)
 
     # ProductT
     def Pack(self, builder):
@@ -217,22 +119,6 @@ class ProductT(object):
             description = builder.CreateString(self.description)
         if self.url is not None:
             url = builder.CreateString(self.url)
-        if self.categories is not None:
-            categorieslist = []
-            for i in range(len(self.categories)):
-                categorieslist.append(self.categories[i].Pack(builder))
-            ProductStartCategoriesVector(builder, len(self.categories))
-            for i in reversed(range(len(self.categories))):
-                builder.PrependUOffsetTRelative(categorieslist[i])
-            categories = builder.EndVector()
-        if self.vibes is not None:
-            vibeslist = []
-            for i in range(len(self.vibes)):
-                vibeslist.append(self.vibes[i].Pack(builder))
-            ProductStartVibesVector(builder, len(self.vibes))
-            for i in reversed(range(len(self.vibes))):
-                builder.PrependUOffsetTRelative(vibeslist[i])
-            vibes = builder.EndVector()
         ProductStart(builder)
         if self.id is not None:
             ProductAddId(builder, id)
@@ -240,9 +126,5 @@ class ProductT(object):
             ProductAddDescription(builder, description)
         if self.url is not None:
             ProductAddUrl(builder, url)
-        if self.categories is not None:
-            ProductAddCategories(builder, categories)
-        if self.vibes is not None:
-            ProductAddVibes(builder, vibes)
         product = ProductEnd(builder)
         return product

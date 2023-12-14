@@ -5,7 +5,6 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
-from hushh.hcf.Embedding import Embedding
 from typing import Optional
 np = import_numpy()
 
@@ -42,45 +41,34 @@ class Vibe(object):
         return None
 
     # Vibe
-    def ImageBase64(self) -> Optional[str]:
+    def ProductIdx(self, j: int):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
-            return self._tab.String(o + self._tab.Pos)
-        return None
+            a = self._tab.Vector(o)
+            return self._tab.Get(flatbuffers.number_types.Int32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
+        return 0
 
     # Vibe
-    def Url(self) -> Optional[str]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+    def ProductIdxAsNumpy(self):
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
-            return self._tab.String(o + self._tab.Pos)
-        return None
+            return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
+        return 0
 
     # Vibe
-    def Embeddings(self, j: int) -> Optional[Embedding]:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
-        if o != 0:
-            x = self._tab.Vector(o)
-            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
-            x = self._tab.Indirect(x)
-            obj = Embedding()
-            obj.Init(self._tab.Bytes, x)
-            return obj
-        return None
-
-    # Vibe
-    def EmbeddingsLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+    def ProductIdxLength(self) -> int:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Vibe
-    def EmbeddingsIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+    def ProductIdxIsNone(self) -> bool:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         return o == 0
 
 def VibeStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(3)
 
 def Start(builder: flatbuffers.Builder):
     VibeStart(builder)
@@ -97,29 +85,17 @@ def VibeAddDescription(builder: flatbuffers.Builder, description: int):
 def AddDescription(builder: flatbuffers.Builder, description: int):
     VibeAddDescription(builder, description)
 
-def VibeAddImageBase64(builder: flatbuffers.Builder, imageBase64: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(imageBase64), 0)
+def VibeAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
-def AddImageBase64(builder: flatbuffers.Builder, imageBase64: int):
-    VibeAddImageBase64(builder, imageBase64)
+def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    VibeAddProductIdx(builder, productIdx)
 
-def VibeAddUrl(builder: flatbuffers.Builder, url: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
-
-def AddUrl(builder: flatbuffers.Builder, url: int):
-    VibeAddUrl(builder, url)
-
-def VibeAddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
-    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(embeddings), 0)
-
-def AddEmbeddings(builder: flatbuffers.Builder, embeddings: int):
-    VibeAddEmbeddings(builder, embeddings)
-
-def VibeStartEmbeddingsVector(builder, numElems: int) -> int:
+def VibeStartProductIdxVector(builder, numElems: int) -> int:
     return builder.StartVector(4, numElems, 4)
 
-def StartEmbeddingsVector(builder, numElems: int) -> int:
-    return VibeStartEmbeddingsVector(builder, numElems)
+def StartProductIdxVector(builder, numElems: int) -> int:
+    return VibeStartProductIdxVector(builder, numElems)
 
 def VibeEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -127,7 +103,6 @@ def VibeEnd(builder: flatbuffers.Builder) -> int:
 def End(builder: flatbuffers.Builder) -> int:
     return VibeEnd(builder)
 
-import hushh.hcf.Embedding
 try:
     from typing import List
 except:
@@ -139,9 +114,7 @@ class VibeT(object):
     def __init__(self):
         self.id = None  # type: str
         self.description = None  # type: str
-        self.imageBase64 = None  # type: str
-        self.url = None  # type: str
-        self.embeddings = None  # type: List[hushh.hcf.Embedding.EmbeddingT]
+        self.productIdx = None  # type: List[int]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -166,16 +139,13 @@ class VibeT(object):
             return
         self.id = vibe.Id()
         self.description = vibe.Description()
-        self.imageBase64 = vibe.ImageBase64()
-        self.url = vibe.Url()
-        if not vibe.EmbeddingsIsNone():
-            self.embeddings = []
-            for i in range(vibe.EmbeddingsLength()):
-                if vibe.Embeddings(i) is None:
-                    self.embeddings.append(None)
-                else:
-                    embedding_ = hushh.hcf.Embedding.EmbeddingT.InitFromObj(vibe.Embeddings(i))
-                    self.embeddings.append(embedding_)
+        if not vibe.ProductIdxIsNone():
+            if np is None:
+                self.productIdx = []
+                for i in range(vibe.ProductIdxLength()):
+                    self.productIdx.append(vibe.ProductIdx(i))
+            else:
+                self.productIdx = vibe.ProductIdxAsNumpy()
 
     # VibeT
     def Pack(self, builder):
@@ -183,28 +153,20 @@ class VibeT(object):
             id = builder.CreateString(self.id)
         if self.description is not None:
             description = builder.CreateString(self.description)
-        if self.imageBase64 is not None:
-            imageBase64 = builder.CreateString(self.imageBase64)
-        if self.url is not None:
-            url = builder.CreateString(self.url)
-        if self.embeddings is not None:
-            embeddingslist = []
-            for i in range(len(self.embeddings)):
-                embeddingslist.append(self.embeddings[i].Pack(builder))
-            VibeStartEmbeddingsVector(builder, len(self.embeddings))
-            for i in reversed(range(len(self.embeddings))):
-                builder.PrependUOffsetTRelative(embeddingslist[i])
-            embeddings = builder.EndVector()
+        if self.productIdx is not None:
+            if np is not None and type(self.productIdx) is np.ndarray:
+                productIdx = builder.CreateNumpyVector(self.productIdx)
+            else:
+                VibeStartProductIdxVector(builder, len(self.productIdx))
+                for i in reversed(range(len(self.productIdx))):
+                    builder.PrependInt32(self.productIdx[i])
+                productIdx = builder.EndVector()
         VibeStart(builder)
         if self.id is not None:
             VibeAddId(builder, id)
         if self.description is not None:
             VibeAddDescription(builder, description)
-        if self.imageBase64 is not None:
-            VibeAddImageBase64(builder, imageBase64)
-        if self.url is not None:
-            VibeAddUrl(builder, url)
-        if self.embeddings is not None:
-            VibeAddEmbeddings(builder, embeddings)
+        if self.productIdx is not None:
+            VibeAddProductIdx(builder, productIdx)
         vibe = VibeEnd(builder)
         return vibe

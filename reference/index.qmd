@@ -6,10 +6,10 @@ Catalog functions
 
 | | |
 | --- | --- |
+| [catalog.Catalog](catalog.Catalog.qmd#hushh.catalog.Catalog) |  |
 | [hcf](hcf.qmd#hushh.hcf) |  |
 | [hcf.Catalog](hcf.Catalog.qmd#hushh.hcf.Catalog) |  |
 | [hcf.Product](hcf.Product.qmd#hushh.hcf.Product) |  |
 | [hcf.Category](hcf.Category.qmd#hushh.hcf.Category) |  |
-| [hcf.Embedding](hcf.Embedding.qmd#hushh.hcf.Embedding) |  |
-| [hcf.Vibe](hcf.Vibe.qmd#hushh.hcf.Vibe) |  |
-| [catalog](catalog.qmd#hushh.catalog) |  |
+| [hcf.TextVibe](hcf.TextVibe.qmd#hushh.hcf.TextVibe) |  |
+| [hcf.ImageVibe](hcf.ImageVibe.qmd#hushh.hcf.ImageVibe) |  |

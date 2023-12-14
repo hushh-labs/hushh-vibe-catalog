@@ -23,11 +23,11 @@ quartodoc:
       contents:
         # the functions being documented in the package.
         # you can refer to anything: class methods, modules, etc..
+        - catalog.Catalog
         - hcf
         - hcf.Catalog
         - hcf.Product
         - hcf.Category
-        - hcf.Embedding
-        - hcf.Vibe
-        - catalog
+        - hcf.TextVibe
+        - hcf.ImageVibe
 
