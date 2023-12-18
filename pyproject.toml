@@ -18,6 +18,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "kaggle",
+  "jupyter",
+  "pandas",
+  "matplotlib",
   "torch",
   "numpy",
   "quartodoc",
