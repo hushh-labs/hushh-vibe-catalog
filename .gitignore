@@ -1,6 +1,5 @@
 .DS_Store
-/.build
-/Packages
+/.build /Packages
 xcuserdata/
 DerivedData/
 .swiftpm/configuration/registries.json
@@ -13,3 +12,13 @@ dist/
 
 /.quarto/
 objects.json
+
+notebooks/images
+notebooks/myntradataset
+notebooks/*.zip
+notebooks/.ipynb_checkpoints
+
+build/
+
+*.hcf
+*.json

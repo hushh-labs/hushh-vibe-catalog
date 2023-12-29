@@ -1,13 +1,18 @@
-import base64
+import json
 import uuid
 from collections.abc import Iterable
-from io import BytesIO
-from typing import Callable, Dict, List, Optional
+from itertools import islice
+from typing import Dict, List, Optional
 
+import flatbuffers
+import numpy as np
+import pandas as pd
+import torch
 from PIL import Image
 from PIL.Image import Image as ImageT
 from transformers import CLIPModel, CLIPProcessor, ProcessorMixin
 
+import hushh
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
@@ -22,6 +27,16 @@ from .version import VERSION
 Processor = ProcessorMixin
 
 
+def batched(iterable, n):
+    "Batch data into tuples of length n. The last batch may be shorter."
+    # batched('ABCDEFG', 3) --> ABC DEF G
+    if n < 1:
+        raise ValueError("n must be at least one")
+    it = iter(iterable)
+    while batch := tuple(islice(it, n)):
+        yield batch
+
+
 class IdBase:
     id: str
     base = ""
@@ -31,20 +46,24 @@ class IdBase:
 
 
 class Product(ProductT, IdBase):
-    image: ImageT
-
     def __init__(self, description: str, url: str, image: ImageT | str):
         self.id = self.genId()
+        if pd.isna(description):
+            raise NoEmbeddableContent("Missing description of product")
+
         self.description = description
         self.url = url
 
-        if isinstance(image, ImageT):
-            self.image = image
+        if isinstance(image, str):
+            self._image = np.array(Image.open(image).convert("RGB"))
         else:
-            self.image = Image.open(BytesIO(base64.b64decode(image)))
+            self._image = np.array(image.convert("RGB"))
 
         self.textVibes = []
         self.imageVibes = []
+
+    def __repr__(self):
+        return f"Product(textVibes:{len(self.textVibes)}, imageVibes:{len(self.imageVibes)})"
 
 
 class VibeBase(IdBase):
@@ -72,10 +91,10 @@ class Vibe(VibeT, VibeBase):
         self.id = self.genId()
         self.description = description
 
-        if not isinstance(image, ImageT):
-            self.image = Image.open(BytesIO(base64.b64decode(image)))
+        if isinstance(image, str):
+            self._image = np.array(Image.open(image).convert("RGB"))
         else:
-            self.image = image
+            self._image = np.array(image.convert("RGB"))
 
         self.productIdx = []
 
@@ -85,12 +104,14 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
         self,
         shape: Iterable[int],
         type: int,
+        sequence: int,
         flatTensor: Optional[List[float]] = None,
     ):
         self.base = "FEB"
         self.id = self.genId()
         self.shape = shape
         self.type = type
+        self.sequence = sequence
         self.flatTensor = flatTensor if flatTensor is not None else []
 
 
@@ -113,11 +134,16 @@ class Catalog(CatalogT, IdBase):
     productVibes: ProductVibes
     processor: Processor
 
-    def __init__(self, description: str, processor: Processor = None):
+    def __init__(self, description: str, processor: Processor = None, batchSize=10000):
         self.base = "CLG"
         self.id = self.genId()
         self.version = VERSION
         self.description = description
+
+        self.productTextFeatures = []
+        self.productImageFeatures = []
+
+        self.batchSize = batchSize
 
         if processor is not None:
             self.processor = processor
@@ -128,49 +154,88 @@ class Catalog(CatalogT, IdBase):
 
         self.productVibes = ProductVibes()
 
+    def __repr__(self):
+        return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
+
+    def toJSON(self):
+        self.renderProductFlatBatch()
+        return json.dumps(self.productVibes.flatBatches, default=lambda o: o.__dict__)
+
+    def readHCF(self, filename: str):
+        with open(filename, "rb") as fh:
+            cat = hushh.hcf.Catalog.Catalog.GetRootAsCatalog(fh.read())
+        return cat
+
+    def toHCF(self, filename: str):
+        builder = flatbuffers.Builder(0)
+        cat_end = self.Pack(builder)
+        builder.Finish(cat_end)
+        if not filename.endswith(".hcf"):
+            filename = filename + ".hcf"
+        with open(filename, "wb") as fh:
+            fh.write(builder.Output())
+
     def renderProductFlatBatch(self):
-        images = []
-        texts = []
-
         model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+        with torch.no_grad():
+            for i, batch in enumerate(
+                batched(self.productVibes.products, self.batchSize)
+            ):
+                print(i)
+                images = []
+                texts = []
+                for p in batch:
+                    images.append(p._image)
+                    texts.append(p.description)
+                    del p._image
 
-        for p in self.productVibes.products:
-            images.append(p.image)
-            texts.append(p.description)
+                print(f"Collected images and text for batch {i}")
 
-        if not texts and not images:
-            raise NoEmbeddableContent()
+                if not texts and not images:
+                    raise NoEmbeddableContent()
+                inputs = None
 
-        if callable(self.processor):
-            inputs = self.processor(
-                text=texts,
-                images=images,
-                return_tensors="pt",
-                padding=True,
-            )
-        else:
-            raise UncallableProcessor()
+                if callable(self.processor):
+                    inputs = self.processor(
+                        text=texts,
+                        images=images,
+                        return_tensors="pt",
+                        padding=True,
+                    )
+                else:
+                    raise UncallableProcessor()
 
-        image_features = model.get_image_features(
-            pixel_values=inputs.pixel_values,
-        )
+                print(f"Collected inputs for batch {i}")
 
-        image_batch = FlatEmbeddingBatch(
-            shape=image_features.shape,
-            flatTensor=image_features.flatten().tolist(),
-            type=VibeMode.ProductImage,
-        )
-        self.productVibes.flatBatches.append(image_batch)
+                image_features = model.get_image_features(
+                    pixel_values=inputs.pixel_values,
+                )
+                text_features = model.get_text_features(
+                    input_ids=inputs.input_ids,
+                )
+                del inputs
 
-        text_features = model.get_text_features(
-            input_ids=inputs.input_ids,
-        )
-        text_batch = FlatEmbeddingBatch(
-            shape=text_features.shape,
-            flatTensor=text_features.flatten().tolist(),
-            type=VibeMode.ProductText,
-        )
-        self.productVibes.flatBatches.append(text_batch)
+                print(f"Collected Image and text features for batch {i}")
+
+                image_batch = FlatEmbeddingBatch(
+                    shape=image_features.shape,
+                    flatTensor=image_features.flatten().tolist(),
+                    type=VibeMode.ProductImage,
+                    sequence=i,
+                )
+                print(f"Image embeddings collected for batch {i}")
+                self.productVibes.flatBatches.append(image_batch)
+
+                text_batch = FlatEmbeddingBatch(
+                    shape=text_features.shape,
+                    flatTensor=text_features.flatten().tolist(),
+                    type=VibeMode.ProductText,
+                    sequence=i,
+                )
+
+                print(f"Text embeddings collected for batch {i}")
+
+                self.productVibes.flatBatches.append(text_batch)
 
     def Pack(self, builder):
         self.renderProductFlatBatch()
@@ -179,7 +244,9 @@ class Catalog(CatalogT, IdBase):
     def addProduct(self, p: Product):
         if p.id in self.productVibes._products:
             raise ValueError(f"Product {p.id} already exists")
-        self.productVibes._products[p.id] = len(self.productVibes.products)
+        else:
+            self.productVibes._products[p.id] = len(self.productVibes.products)
+
         self.productVibes.products.append(p)
 
     def addProductCategory(self, c: Category):

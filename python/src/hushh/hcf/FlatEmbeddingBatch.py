@@ -34,8 +34,15 @@ class FlatEmbeddingBatch(object):
         return None
 
     # FlatEmbeddingBatch
-    def Shape(self, j: int):
+    def Sequence(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        if o != 0:
+            return self._tab.Get(flatbuffers.number_types.Int32Flags, o + self._tab.Pos)
+        return 0
+
+    # FlatEmbeddingBatch
+    def Shape(self, j: int):
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             a = self._tab.Vector(o)
             return self._tab.Get(flatbuffers.number_types.Int32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
@@ -43,33 +50,33 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ShapeAsNumpy(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
         return 0
 
     # FlatEmbeddingBatch
     def ShapeLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # FlatEmbeddingBatch
     def ShapeIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         return o == 0
 
     # FlatEmbeddingBatch
     def Type(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.Get(flatbuffers.number_types.Int8Flags, o + self._tab.Pos)
         return 0
 
     # FlatEmbeddingBatch
     def FlatTensor(self, j: int):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             a = self._tab.Vector(o)
             return self._tab.Get(flatbuffers.number_types.Float32Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 4))
@@ -77,25 +84,25 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def FlatTensorAsNumpy(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Float32Flags, o)
         return 0
 
     # FlatEmbeddingBatch
     def FlatTensorLength(self) -> int:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # FlatEmbeddingBatch
     def FlatTensorIsNone(self) -> bool:
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         return o == 0
 
 def FlatEmbeddingBatchStart(builder: flatbuffers.Builder):
-    builder.StartObject(4)
+    builder.StartObject(5)
 
 def Start(builder: flatbuffers.Builder):
     FlatEmbeddingBatchStart(builder)
@@ -106,8 +113,14 @@ def FlatEmbeddingBatchAddId(builder: flatbuffers.Builder, id: int):
 def AddId(builder: flatbuffers.Builder, id: int):
     FlatEmbeddingBatchAddId(builder, id)
 
+def FlatEmbeddingBatchAddSequence(builder: flatbuffers.Builder, sequence: int):
+    builder.PrependInt32Slot(1, sequence, 0)
+
+def AddSequence(builder: flatbuffers.Builder, sequence: int):
+    FlatEmbeddingBatchAddSequence(builder, sequence)
+
 def FlatEmbeddingBatchAddShape(builder: flatbuffers.Builder, shape: int):
-    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(shape), 0)
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(shape), 0)
 
 def AddShape(builder: flatbuffers.Builder, shape: int):
     FlatEmbeddingBatchAddShape(builder, shape)
@@ -119,13 +132,13 @@ def StartShapeVector(builder, numElems: int) -> int:
     return FlatEmbeddingBatchStartShapeVector(builder, numElems)
 
 def FlatEmbeddingBatchAddType(builder: flatbuffers.Builder, type: int):
-    builder.PrependInt8Slot(2, type, 0)
+    builder.PrependInt8Slot(3, type, 0)
 
 def AddType(builder: flatbuffers.Builder, type: int):
     FlatEmbeddingBatchAddType(builder, type)
 
 def FlatEmbeddingBatchAddFlatTensor(builder: flatbuffers.Builder, flatTensor: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(flatTensor), 0)
+    builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(flatTensor), 0)
 
 def AddFlatTensor(builder: flatbuffers.Builder, flatTensor: int):
     FlatEmbeddingBatchAddFlatTensor(builder, flatTensor)
@@ -152,6 +165,7 @@ class FlatEmbeddingBatchT(object):
     # FlatEmbeddingBatchT
     def __init__(self):
         self.id = None  # type: str
+        self.sequence = 0  # type: int
         self.shape = None  # type: List[int]
         self.type = 0  # type: int
         self.flatTensor = None  # type: List[float]
@@ -178,6 +192,7 @@ class FlatEmbeddingBatchT(object):
         if flatEmbeddingBatch is None:
             return
         self.id = flatEmbeddingBatch.Id()
+        self.sequence = flatEmbeddingBatch.Sequence()
         if not flatEmbeddingBatch.ShapeIsNone():
             if np is None:
                 self.shape = []
@@ -217,6 +232,7 @@ class FlatEmbeddingBatchT(object):
         FlatEmbeddingBatchStart(builder)
         if self.id is not None:
             FlatEmbeddingBatchAddId(builder, id)
+        FlatEmbeddingBatchAddSequence(builder, self.sequence)
         if self.shape is not None:
             FlatEmbeddingBatchAddShape(builder, shape)
         FlatEmbeddingBatchAddType(builder, self.type)
