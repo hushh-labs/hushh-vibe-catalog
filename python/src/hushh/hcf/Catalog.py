@@ -58,8 +58,15 @@ class Catalog(object):
             return obj
         return None
 
+    # Catalog
+    def BatchSize(self):
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        if o != 0:
+            return self._tab.Get(flatbuffers.number_types.Int32Flags, o + self._tab.Pos)
+        return 0
+
 def CatalogStart(builder: flatbuffers.Builder):
-    builder.StartObject(4)
+    builder.StartObject(5)
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
@@ -88,6 +95,12 @@ def CatalogAddProductVibes(builder: flatbuffers.Builder, productVibes: int):
 def AddProductVibes(builder: flatbuffers.Builder, productVibes: int):
     CatalogAddProductVibes(builder, productVibes)
 
+def CatalogAddBatchSize(builder: flatbuffers.Builder, batchSize: int):
+    builder.PrependInt32Slot(4, batchSize, 0)
+
+def AddBatchSize(builder: flatbuffers.Builder, batchSize: int):
+    CatalogAddBatchSize(builder, batchSize)
+
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
@@ -108,6 +121,7 @@ class CatalogT(object):
         self.version = None  # type: str
         self.description = None  # type: str
         self.productVibes = None  # type: Optional[hushh.hcf.ProductVibes.ProductVibesT]
+        self.batchSize = 0  # type: int
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -135,6 +149,7 @@ class CatalogT(object):
         self.description = catalog.Description()
         if catalog.ProductVibes() is not None:
             self.productVibes = hushh.hcf.ProductVibes.ProductVibesT.InitFromObj(catalog.ProductVibes())
+        self.batchSize = catalog.BatchSize()
 
     # CatalogT
     def Pack(self, builder):
@@ -155,5 +170,6 @@ class CatalogT(object):
             CatalogAddDescription(builder, description)
         if self.productVibes is not None:
             CatalogAddProductVibes(builder, productVibes)
+        CatalogAddBatchSize(builder, self.batchSize)
         catalog = CatalogEnd(builder)
         return catalog
