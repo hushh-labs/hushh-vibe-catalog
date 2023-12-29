@@ -11,6 +11,7 @@ version = "0.0.2"
 readme = "README.md"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
+  "pandas",
   "flatbuffers",
   "transformers",
   "torch",
