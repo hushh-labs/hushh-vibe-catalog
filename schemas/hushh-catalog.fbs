@@ -41,6 +41,7 @@ table Catalog {
   version: string;
   description: string;
   product_vibes: ProductVibes;
+  batch_size: int;
 }
 
 root_type Catalog;

@@ -1,13 +1,19 @@
 import base64
+import copy
+import json
 import uuid
 from collections.abc import Iterable
 from io import BytesIO
-from typing import Callable, Dict, List, Optional
+from typing import Dict, List, Optional
 
+import flatbuffers
+import numpy as np
+import pandas as pd
 from PIL import Image
 from PIL.Image import Image as ImageT
 from transformers import CLIPModel, CLIPProcessor, ProcessorMixin
 
+import hushh
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
@@ -18,6 +24,8 @@ from hushh.hcf.Vibe import VibeT
 from hushh.hcf.VibeMode import VibeMode
 
 from .version import VERSION
+
+model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 
 Processor = ProcessorMixin
 
@@ -31,20 +39,21 @@ class IdBase:
 
 
 class Product(ProductT, IdBase):
-    image: ImageT
-
     def __init__(self, description: str, url: str, image: ImageT | str):
         self.id = self.genId()
+        if pd.isna(description):
+            raise NoEmbeddableContent("Missing description of product")
+
         self.description = description
         self.url = url
 
-        if isinstance(image, ImageT):
-            self.image = image
+        if isinstance(image, str):
+            self.image = np.array(Image.open(image))
         else:
-            self.image = Image.open(BytesIO(base64.b64decode(image)))
+            self.image = np.array(image)
 
-        self.textVibes = []
-        self.imageVibes = []
+    def __repr__(self):
+        return f"Product(textVibes:{len(self.textVibes)}, imageVibes:{len(self.imageVibes)})"
 
 
 class VibeBase(IdBase):
@@ -119,6 +128,9 @@ class Catalog(CatalogT, IdBase):
         self.version = VERSION
         self.description = description
 
+        self.productTextFeatures = []
+        self.productImageFeatures = []
+
         if processor is not None:
             self.processor = processor
         else:
@@ -128,11 +140,30 @@ class Catalog(CatalogT, IdBase):
 
         self.productVibes = ProductVibes()
 
+    def __repr__(self):
+        return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
+
+    def toJSON(self):
+        self.renderProductFlatBatch()
+        return json.dumps(self.productVibes.flatBatches, default=lambda o: o.__dict__)
+
+    def readHCF(self, filename: str):
+        with open(filename, "rb") as fh:
+            cat = hushh.hcf.Catalog.Catalog.GetRootAsCatalog(fh.read())
+        return cat
+
+    def toHCF(self, filename: str):
+        builder = flatbuffers.Builder(0)
+        cat_end = self.Pack(builder)
+        builder.Finish(cat_end)
+        if not filename.endswith(".hcf"):
+            filename = filename + ".hcf"
+        with open(filename, "wb") as fh:
+            fh.write(builder.Output())
+
     def renderProductFlatBatch(self):
         images = []
         texts = []
-
-        model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 
         for p in self.productVibes.products:
             images.append(p.image)
@@ -179,7 +210,9 @@ class Catalog(CatalogT, IdBase):
     def addProduct(self, p: Product):
         if p.id in self.productVibes._products:
             raise ValueError(f"Product {p.id} already exists")
-        self.productVibes._products[p.id] = len(self.productVibes.products)
+        else:
+            self.productVibes._products[p.id] = len(self.productVibes.products)
+
         self.productVibes.products.append(p)
 
     def addProductCategory(self, c: Category):

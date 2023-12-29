@@ -19,3 +19,6 @@ notebooks/*.zip
 notebooks/.ipynb_checkpoints
 
 build/
+
+*.hcf
+*.json

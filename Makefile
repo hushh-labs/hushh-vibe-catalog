@@ -29,7 +29,6 @@ environment :
 	conda env create -f environment.yml
 	eval "$(conda shell.zsh hook)" # load conda env
 	direnv reload
-	$(MAKE) requirements
 
 # Clean environment by rebuilding it completely
 clean_environment : | clean
@@ -47,6 +46,9 @@ clean:
 preflight: test
 	pip-compile
 	conda env export > environment.yml
+	python -m build
+	twine check dist/*
+	docs
 
 test:
 	pytest --cov=python/src python/test

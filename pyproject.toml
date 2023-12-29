@@ -8,6 +8,7 @@ where = ["python/src"]
 [project]
 name = "hushh-vibe-catalog-reader"
 version = "0.0.2"
+readme = "README.md"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
   "flatbuffers",
@@ -18,6 +19,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "twine",
   "kaggle",
   "jupyter",
   "pandas",
