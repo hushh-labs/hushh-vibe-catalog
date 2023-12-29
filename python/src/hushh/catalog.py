@@ -48,9 +48,12 @@ class Product(ProductT, IdBase):
         self.url = url
 
         if isinstance(image, str):
-            self.image = np.array(Image.open(image))
+            self.image = np.array(Image.open(image).convert("RGB"))
         else:
-            self.image = np.array(image)
+            self.image = np.array(image.convert("RGB"))
+
+        self.textVibes = []
+        self.imageVibes = []
 
     def __repr__(self):
         return f"Product(textVibes:{len(self.textVibes)}, imageVibes:{len(self.imageVibes)})"
