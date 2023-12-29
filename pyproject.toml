@@ -23,7 +23,6 @@ dev = [
   "twine",
   "kaggle",
   "jupyter",
-  "pandas",
   "matplotlib",
   "torch",
   "numpy",
