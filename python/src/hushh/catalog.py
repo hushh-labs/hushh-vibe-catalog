@@ -157,16 +157,13 @@ class Catalog(CatalogT, IdBase):
     def __repr__(self):
         return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
 
-    def toJSON(self):
-        self.renderProductFlatBatch()
-        return json.dumps(self.productVibes.flatBatches, default=lambda o: o.__dict__)
-
-    def readHCF(self, filename: str):
+    @staticmethod
+    def read_hcf(filename: str):
         with open(filename, "rb") as fh:
             cat = hushh.hcf.Catalog.Catalog.GetRootAsCatalog(fh.read())
         return cat
 
-    def toHCF(self, filename: str):
+    def to_hcf(self, filename: str):
         builder = flatbuffers.Builder(0)
         cat_end = self.Pack(builder)
         builder.Finish(cat_end)
