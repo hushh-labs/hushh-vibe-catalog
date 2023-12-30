@@ -37,6 +37,12 @@ def batched(iterable, n):
         yield batch
 
 
+def read_hcf(filename: str):
+    with open(filename, "rb") as fh:
+        cat = hushh.hcf.Catalog.Catalog.GetRootAsCatalog(fh.read())
+    return cat
+
+
 class IdBase:
     id: str
     base = ""
@@ -103,14 +109,14 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
     def __init__(
         self,
         shape: Iterable[int],
-        type: int,
+        vibeMode: int,
         sequence: int,
         flatTensor: Optional[List[float]] = None,
     ):
         self.base = "FEB"
         self.id = self.genId()
         self.shape = shape
-        self.type = type
+        self.vibeMode = vibeMode
         self.sequence = sequence
         self.flatTensor = flatTensor if flatTensor is not None else []
 
@@ -156,12 +162,6 @@ class Catalog(CatalogT, IdBase):
 
     def __repr__(self):
         return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
-
-    @staticmethod
-    def read_hcf(filename: str):
-        with open(filename, "rb") as fh:
-            cat = hushh.hcf.Catalog.Catalog.GetRootAsCatalog(fh.read())
-        return cat
 
     def to_hcf(self, filename: str):
         builder = flatbuffers.Builder(0)
@@ -217,7 +217,7 @@ class Catalog(CatalogT, IdBase):
                 image_batch = FlatEmbeddingBatch(
                     shape=image_features.shape,
                     flatTensor=image_features.flatten().tolist(),
-                    type=VibeMode.ProductImage,
+                    vibeMode=VibeMode.ProductImage,
                     sequence=i,
                 )
                 print(f"Image embeddings collected for batch {i}")
@@ -226,7 +226,7 @@ class Catalog(CatalogT, IdBase):
                 text_batch = FlatEmbeddingBatch(
                     shape=text_features.shape,
                     flatTensor=text_features.flatten().tolist(),
-                    type=VibeMode.ProductText,
+                    vibeMode=VibeMode.ProductText,
                     sequence=i,
                 )
 

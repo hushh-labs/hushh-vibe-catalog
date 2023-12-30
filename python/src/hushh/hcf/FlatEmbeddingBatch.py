@@ -68,7 +68,7 @@ class FlatEmbeddingBatch(object):
         return o == 0
 
     # FlatEmbeddingBatch
-    def Type(self):
+    def VibeMode(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.Get(flatbuffers.number_types.Int8Flags, o + self._tab.Pos)
@@ -131,11 +131,11 @@ def FlatEmbeddingBatchStartShapeVector(builder, numElems: int) -> int:
 def StartShapeVector(builder, numElems: int) -> int:
     return FlatEmbeddingBatchStartShapeVector(builder, numElems)
 
-def FlatEmbeddingBatchAddType(builder: flatbuffers.Builder, type: int):
-    builder.PrependInt8Slot(3, type, 0)
+def FlatEmbeddingBatchAddVibeMode(builder: flatbuffers.Builder, vibeMode: int):
+    builder.PrependInt8Slot(3, vibeMode, 0)
 
-def AddType(builder: flatbuffers.Builder, type: int):
-    FlatEmbeddingBatchAddType(builder, type)
+def AddVibeMode(builder: flatbuffers.Builder, vibeMode: int):
+    FlatEmbeddingBatchAddVibeMode(builder, vibeMode)
 
 def FlatEmbeddingBatchAddFlatTensor(builder: flatbuffers.Builder, flatTensor: int):
     builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(flatTensor), 0)
@@ -167,7 +167,7 @@ class FlatEmbeddingBatchT(object):
         self.id = None  # type: str
         self.sequence = 0  # type: int
         self.shape = None  # type: List[int]
-        self.type = 0  # type: int
+        self.vibeMode = 0  # type: int
         self.flatTensor = None  # type: List[float]
 
     @classmethod
@@ -200,7 +200,7 @@ class FlatEmbeddingBatchT(object):
                     self.shape.append(flatEmbeddingBatch.Shape(i))
             else:
                 self.shape = flatEmbeddingBatch.ShapeAsNumpy()
-        self.type = flatEmbeddingBatch.Type()
+        self.vibeMode = flatEmbeddingBatch.VibeMode()
         if not flatEmbeddingBatch.FlatTensorIsNone():
             if np is None:
                 self.flatTensor = []
@@ -235,7 +235,7 @@ class FlatEmbeddingBatchT(object):
         FlatEmbeddingBatchAddSequence(builder, self.sequence)
         if self.shape is not None:
             FlatEmbeddingBatchAddShape(builder, shape)
-        FlatEmbeddingBatchAddType(builder, self.type)
+        FlatEmbeddingBatchAddVibeMode(builder, self.vibeMode)
         if self.flatTensor is not None:
             FlatEmbeddingBatchAddFlatTensor(builder, flatTensor)
         flatEmbeddingBatch = FlatEmbeddingBatchEnd(builder)

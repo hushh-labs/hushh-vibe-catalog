@@ -25,7 +25,7 @@ table FlatEmbeddingBatch {
     id: string;
     sequence: int;
     shape:[int];
-    type: VibeMode;
+    vibe_mode: VibeMode;
     flat_tensor:[float];
 }
 
