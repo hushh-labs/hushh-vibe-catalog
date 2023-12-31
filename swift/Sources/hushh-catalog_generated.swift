@@ -784,6 +784,8 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     case description = 8
     case productVibes = 10
     case batchSize = 12
+    case tokenizerNameOrPath = 14
+    case modelNameOrPath = 16
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
@@ -796,12 +798,18 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public var descriptionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.description.v) }
   public var productVibes: hushh_hcf_ProductVibes? { let o = _accessor.offset(VTOFFSET.productVibes.v); return o == 0 ? nil : hushh_hcf_ProductVibes(_accessor.bb, o: _accessor.indirect(o + _accessor.postion)) }
   public var batchSize: Int32 { let o = _accessor.offset(VTOFFSET.batchSize.v); return o == 0 ? 0 : _accessor.readBuffer(of: Int32.self, at: o) }
-  public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 5) }
+  public var tokenizerNameOrPath: String? { let o = _accessor.offset(VTOFFSET.tokenizerNameOrPath.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var tokenizerNameOrPathSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.tokenizerNameOrPath.v) }
+  public var modelNameOrPath: String? { let o = _accessor.offset(VTOFFSET.modelNameOrPath.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var modelNameOrPathSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.modelNameOrPath.v) }
+  public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 7) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(version: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: version, at: VTOFFSET.version.p) }
   public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
   public static func add(productVibes: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: productVibes, at: VTOFFSET.productVibes.p) }
   public static func add(batchSize: Int32, _ fbb: inout FlatBufferBuilder) { fbb.add(element: batchSize, def: 0, at: VTOFFSET.batchSize.p) }
+  public static func add(tokenizerNameOrPath: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: tokenizerNameOrPath, at: VTOFFSET.tokenizerNameOrPath.p) }
+  public static func add(modelNameOrPath: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: modelNameOrPath, at: VTOFFSET.modelNameOrPath.p) }
   public static func endCatalog(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createCatalog(
     _ fbb: inout FlatBufferBuilder,
@@ -809,7 +817,9 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     versionOffset version: Offset = Offset(),
     descriptionOffset description: Offset = Offset(),
     productVibesOffset productVibes: Offset = Offset(),
-    batchSize: Int32 = 0
+    batchSize: Int32 = 0,
+    tokenizerNameOrPathOffset tokenizerNameOrPath: Offset = Offset(),
+    modelNameOrPathOffset modelNameOrPath: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Catalog.startCatalog(&fbb)
     hushh_hcf_Catalog.add(id: id, &fbb)
@@ -817,6 +827,8 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     hushh_hcf_Catalog.add(description: description, &fbb)
     hushh_hcf_Catalog.add(productVibes: productVibes, &fbb)
     hushh_hcf_Catalog.add(batchSize: batchSize, &fbb)
+    hushh_hcf_Catalog.add(tokenizerNameOrPath: tokenizerNameOrPath, &fbb)
+    hushh_hcf_Catalog.add(modelNameOrPath: modelNameOrPath, &fbb)
     return hushh_hcf_Catalog.endCatalog(&fbb, start: __start)
   }
   
@@ -852,12 +864,28 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     }
 
     let __productVibes = hushh_hcf_ProductVibes.pack(&builder, obj: &obj.productVibes)
+    let __tokenizerNameOrPath: Offset
+    if let s = obj.tokenizerNameOrPath {
+      __tokenizerNameOrPath = builder.create(string: s)
+    } else {
+      __tokenizerNameOrPath = Offset()
+    }
+
+    let __modelNameOrPath: Offset
+    if let s = obj.modelNameOrPath {
+      __modelNameOrPath = builder.create(string: s)
+    } else {
+      __modelNameOrPath = Offset()
+    }
+
     let __root = hushh_hcf_Catalog.startCatalog(&builder)
     hushh_hcf_Catalog.add(id: __id, &builder)
     hushh_hcf_Catalog.add(version: __version, &builder)
     hushh_hcf_Catalog.add(description: __description, &builder)
     hushh_hcf_Catalog.add(productVibes: __productVibes, &builder)
     hushh_hcf_Catalog.add(batchSize: obj.batchSize, &builder)
+    hushh_hcf_Catalog.add(tokenizerNameOrPath: __tokenizerNameOrPath, &builder)
+    hushh_hcf_Catalog.add(modelNameOrPath: __modelNameOrPath, &builder)
     return hushh_hcf_Catalog.endCatalog(&builder, start: __root)
   }
 
@@ -868,6 +896,8 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.productVibes.p, fieldName: "productVibes", required: false, type: ForwardOffset<hushh_hcf_ProductVibes>.self)
     try _v.visit(field: VTOFFSET.batchSize.p, fieldName: "batchSize", required: false, type: Int32.self)
+    try _v.visit(field: VTOFFSET.tokenizerNameOrPath.p, fieldName: "tokenizerNameOrPath", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.modelNameOrPath.p, fieldName: "modelNameOrPath", required: false, type: ForwardOffset<String>.self)
     _v.finish()
   }
 }
@@ -880,6 +910,8 @@ extension hushh_hcf_Catalog: Encodable {
     case description = "description"
     case productVibes = "product_vibes"
     case batchSize = "batch_size"
+    case tokenizerNameOrPath = "tokenizer_name_or_path"
+    case modelNameOrPath = "model_name_or_path"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
@@ -890,6 +922,8 @@ extension hushh_hcf_Catalog: Encodable {
     if batchSize != 0 {
       try container.encodeIfPresent(batchSize, forKey: .batchSize)
     }
+    try container.encodeIfPresent(tokenizerNameOrPath, forKey: .tokenizerNameOrPath)
+    try container.encodeIfPresent(modelNameOrPath, forKey: .modelNameOrPath)
   }
 }
 
@@ -900,6 +934,8 @@ public class hushh_hcf_CatalogT: NativeObject {
   public var description: String?
   public var productVibes: hushh_hcf_ProductVibesT?
   public var batchSize: Int32
+  public var tokenizerNameOrPath: String?
+  public var modelNameOrPath: String?
 
   public init(_ _t: inout hushh_hcf_Catalog) {
     id = _t.id
@@ -908,6 +944,8 @@ public class hushh_hcf_CatalogT: NativeObject {
     var __productVibes = _t.productVibes
     productVibes = __productVibes?.unpack()
     batchSize = _t.batchSize
+    tokenizerNameOrPath = _t.tokenizerNameOrPath
+    modelNameOrPath = _t.modelNameOrPath
   }
 
   public init() {

@@ -10,7 +10,8 @@ import pandas as pd
 import torch
 from PIL import Image
 from PIL.Image import Image as ImageT
-from transformers import CLIPModel, CLIPProcessor, ProcessorMixin
+from transformers import (CLIPModel, CLIPProcessor, CLIPTokenizer,
+                          PreTrainedModel, PreTrainedTokenizer, ProcessorMixin)
 
 import hushh
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
@@ -23,8 +24,6 @@ from hushh.hcf.Vibe import VibeT
 from hushh.hcf.VibeMode import VibeMode
 
 from .version import VERSION
-
-Processor = ProcessorMixin
 
 
 def batched(iterable, n):
@@ -138,9 +137,18 @@ class ProductVibes(ProductVibesT, VibeBase):
 
 class Catalog(CatalogT, IdBase):
     productVibes: ProductVibes
-    processor: Processor
+    model: PreTrainedModel
+    processor: ProcessorMixin
+    tokenizer: PreTrainedTokenizer
 
-    def __init__(self, description: str, processor: Processor = None, batchSize=10000):
+    def __init__(
+        self,
+        description: str,
+        batchSize=10000,
+        model: PreTrainedModel | None = None,
+        processor: ProcessorMixin | None = None,
+        tokenizer: PreTrainedTokenizer | None = None,
+    ):
         self.base = "CLG"
         self.id = self.genId()
         self.version = VERSION
@@ -151,12 +159,29 @@ class Catalog(CatalogT, IdBase):
 
         self.batchSize = batchSize
 
+        if model is not None:
+            self.model = model
+        else:
+            self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+
+        self.model_name_or_path = self.model.name_or_path
+
         if processor is not None:
             self.processor = processor
         else:
             self.processor = CLIPProcessor.from_pretrained(
                 "openai/clip-vit-base-patch32"
             )
+
+        if tokenizer is not None:
+            self.tokenizer = tokenizer
+        else:
+            self.tokenizer = CLIPTokenizer.from_pretrained(
+                "openai/clip-vit-base-patch32"
+            )
+
+        self.modelNameOrPath = self.model.name_or_path
+        self.tokenizerNameOrPath = self.tokenizer.name_or_path
 
         self.productVibes = ProductVibes()
 
@@ -173,7 +198,7 @@ class Catalog(CatalogT, IdBase):
             fh.write(builder.Output())
 
     def renderProductFlatBatch(self):
-        model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+        model = self.model
         with torch.no_grad():
             for i, batch in enumerate(
                 batched(self.productVibes.products, self.batchSize)
