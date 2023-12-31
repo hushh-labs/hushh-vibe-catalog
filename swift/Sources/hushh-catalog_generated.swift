@@ -787,6 +787,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     case tokenizerNameOrPath = 14
     case imageProcessorClass = 16
     case modelNameOrPath = 18
+    case products = 20
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
@@ -805,7 +806,10 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public var imageProcessorClassSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.imageProcessorClass.v) }
   public var modelNameOrPath: String? { let o = _accessor.offset(VTOFFSET.modelNameOrPath.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var modelNameOrPathSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.modelNameOrPath.v) }
-  public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 8) }
+  public var hasProducts: Bool { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? false : true }
+  public var productsCount: Int32 { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func products(at index: Int32) -> hushh_hcf_Product? { let o = _accessor.offset(VTOFFSET.products.v); return o == 0 ? nil : hushh_hcf_Product(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
+  public static func startCatalog(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 9) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(version: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: version, at: VTOFFSET.version.p) }
   public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
@@ -814,6 +818,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public static func add(tokenizerNameOrPath: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: tokenizerNameOrPath, at: VTOFFSET.tokenizerNameOrPath.p) }
   public static func add(imageProcessorClass: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: imageProcessorClass, at: VTOFFSET.imageProcessorClass.p) }
   public static func add(modelNameOrPath: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: modelNameOrPath, at: VTOFFSET.modelNameOrPath.p) }
+  public static func addVectorOf(products: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: products, at: VTOFFSET.products.p) }
   public static func endCatalog(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createCatalog(
     _ fbb: inout FlatBufferBuilder,
@@ -824,7 +829,8 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     batchSize: Int32 = 0,
     tokenizerNameOrPathOffset tokenizerNameOrPath: Offset = Offset(),
     imageProcessorClassOffset imageProcessorClass: Offset = Offset(),
-    modelNameOrPathOffset modelNameOrPath: Offset = Offset()
+    modelNameOrPathOffset modelNameOrPath: Offset = Offset(),
+    productsVectorOffset products: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Catalog.startCatalog(&fbb)
     hushh_hcf_Catalog.add(id: id, &fbb)
@@ -835,6 +841,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     hushh_hcf_Catalog.add(tokenizerNameOrPath: tokenizerNameOrPath, &fbb)
     hushh_hcf_Catalog.add(imageProcessorClass: imageProcessorClass, &fbb)
     hushh_hcf_Catalog.add(modelNameOrPath: modelNameOrPath, &fbb)
+    hushh_hcf_Catalog.addVectorOf(products: products, &fbb)
     return hushh_hcf_Catalog.endCatalog(&fbb, start: __start)
   }
   
@@ -891,6 +898,11 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
       __modelNameOrPath = Offset()
     }
 
+    var __products__: [Offset] = []
+    for var i in obj.products {
+      __products__.append(hushh_hcf_Product.pack(&builder, obj: &i))
+    }
+    let __products = builder.createVector(ofOffsets: __products__)
     let __root = hushh_hcf_Catalog.startCatalog(&builder)
     hushh_hcf_Catalog.add(id: __id, &builder)
     hushh_hcf_Catalog.add(version: __version, &builder)
@@ -900,6 +912,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     hushh_hcf_Catalog.add(tokenizerNameOrPath: __tokenizerNameOrPath, &builder)
     hushh_hcf_Catalog.add(imageProcessorClass: __imageProcessorClass, &builder)
     hushh_hcf_Catalog.add(modelNameOrPath: __modelNameOrPath, &builder)
+    hushh_hcf_Catalog.addVectorOf(products: __products, &builder)
     return hushh_hcf_Catalog.endCatalog(&builder, start: __root)
   }
 
@@ -913,6 +926,7 @@ public struct hushh_hcf_Catalog: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.tokenizerNameOrPath.p, fieldName: "tokenizerNameOrPath", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.imageProcessorClass.p, fieldName: "imageProcessorClass", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.modelNameOrPath.p, fieldName: "modelNameOrPath", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.products.p, fieldName: "products", required: false, type: ForwardOffset<Vector<ForwardOffset<hushh_hcf_Product>, hushh_hcf_Product>>.self)
     _v.finish()
   }
 }
@@ -928,6 +942,7 @@ extension hushh_hcf_Catalog: Encodable {
     case tokenizerNameOrPath = "tokenizer_name_or_path"
     case imageProcessorClass = "image_processor_class"
     case modelNameOrPath = "model_name_or_path"
+    case products = "products"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
@@ -941,6 +956,13 @@ extension hushh_hcf_Catalog: Encodable {
     try container.encodeIfPresent(tokenizerNameOrPath, forKey: .tokenizerNameOrPath)
     try container.encodeIfPresent(imageProcessorClass, forKey: .imageProcessorClass)
     try container.encodeIfPresent(modelNameOrPath, forKey: .modelNameOrPath)
+    if productsCount > 0 {
+      var contentEncoder = container.nestedUnkeyedContainer(forKey: .products)
+      for index in 0..<productsCount {
+        guard let type = products(at: index) else { continue }
+        try contentEncoder.encode(type)
+      }
+    }
   }
 }
 
@@ -954,6 +976,7 @@ public class hushh_hcf_CatalogT: NativeObject {
   public var tokenizerNameOrPath: String?
   public var imageProcessorClass: String?
   public var modelNameOrPath: String?
+  public var products: [hushh_hcf_ProductT?]
 
   public init(_ _t: inout hushh_hcf_Catalog) {
     id = _t.id
@@ -965,11 +988,17 @@ public class hushh_hcf_CatalogT: NativeObject {
     tokenizerNameOrPath = _t.tokenizerNameOrPath
     imageProcessorClass = _t.imageProcessorClass
     modelNameOrPath = _t.modelNameOrPath
+    products = []
+    for index in 0..<_t.productsCount {
+        var __v_ = _t.products(at: index)
+        products.append(__v_?.unpack())
+    }
   }
 
   public init() {
     productVibes = hushh_hcf_ProductVibesT()
     batchSize = 0
+    products = []
   }
 
   public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Catalog.self) }

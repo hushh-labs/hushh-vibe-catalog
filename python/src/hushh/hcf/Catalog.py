@@ -5,6 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
+from hushh.hcf.Product import Product
 from hushh.hcf.ProductVibes import ProductVibes
 from typing import Optional
 np = import_numpy()
@@ -86,8 +87,32 @@ class Catalog(object):
             return self._tab.String(o + self._tab.Pos)
         return None
 
+    # Catalog
+    def Products(self, j: int) -> Optional[Product]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(20))
+        if o != 0:
+            x = self._tab.Vector(o)
+            x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
+            x = self._tab.Indirect(x)
+            obj = Product()
+            obj.Init(self._tab.Bytes, x)
+            return obj
+        return None
+
+    # Catalog
+    def ProductsLength(self) -> int:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(20))
+        if o != 0:
+            return self._tab.VectorLen(o)
+        return 0
+
+    # Catalog
+    def ProductsIsNone(self) -> bool:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(20))
+        return o == 0
+
 def CatalogStart(builder: flatbuffers.Builder):
-    builder.StartObject(8)
+    builder.StartObject(9)
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
@@ -140,15 +165,28 @@ def CatalogAddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int
 def AddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
     CatalogAddModelNameOrPath(builder, modelNameOrPath)
 
+def CatalogAddProducts(builder: flatbuffers.Builder, products: int):
+    builder.PrependUOffsetTRelativeSlot(8, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
+
+def AddProducts(builder: flatbuffers.Builder, products: int):
+    CatalogAddProducts(builder, products)
+
+def CatalogStartProductsVector(builder, numElems: int) -> int:
+    return builder.StartVector(4, numElems, 4)
+
+def StartProductsVector(builder, numElems: int) -> int:
+    return CatalogStartProductsVector(builder, numElems)
+
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
     return CatalogEnd(builder)
 
+import hushh.hcf.Product
 import hushh.hcf.ProductVibes
 try:
-    from typing import Optional
+    from typing import List, Optional
 except:
     pass
 
@@ -164,6 +202,7 @@ class CatalogT(object):
         self.tokenizerNameOrPath = None  # type: str
         self.imageProcessorClass = None  # type: str
         self.modelNameOrPath = None  # type: str
+        self.products = None  # type: List[hushh.hcf.Product.ProductT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -195,6 +234,14 @@ class CatalogT(object):
         self.tokenizerNameOrPath = catalog.TokenizerNameOrPath()
         self.imageProcessorClass = catalog.ImageProcessorClass()
         self.modelNameOrPath = catalog.ModelNameOrPath()
+        if not catalog.ProductsIsNone():
+            self.products = []
+            for i in range(catalog.ProductsLength()):
+                if catalog.Products(i) is None:
+                    self.products.append(None)
+                else:
+                    product_ = hushh.hcf.Product.ProductT.InitFromObj(catalog.Products(i))
+                    self.products.append(product_)
 
     # CatalogT
     def Pack(self, builder):
@@ -212,6 +259,14 @@ class CatalogT(object):
             imageProcessorClass = builder.CreateString(self.imageProcessorClass)
         if self.modelNameOrPath is not None:
             modelNameOrPath = builder.CreateString(self.modelNameOrPath)
+        if self.products is not None:
+            productslist = []
+            for i in range(len(self.products)):
+                productslist.append(self.products[i].Pack(builder))
+            CatalogStartProductsVector(builder, len(self.products))
+            for i in reversed(range(len(self.products))):
+                builder.PrependUOffsetTRelative(productslist[i])
+            products = builder.EndVector()
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
@@ -228,5 +283,7 @@ class CatalogT(object):
             CatalogAddImageProcessorClass(builder, imageProcessorClass)
         if self.modelNameOrPath is not None:
             CatalogAddModelNameOrPath(builder, modelNameOrPath)
+        if self.products is not None:
+            CatalogAddProducts(builder, products)
         catalog = CatalogEnd(builder)
         return catalog
