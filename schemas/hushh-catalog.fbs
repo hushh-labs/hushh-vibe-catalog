@@ -44,7 +44,6 @@ table Catalog {
   product_vibes: ProductVibes;
   batch_size: int;
   tokenizer_name_or_path: string;
-  image_processor_class: string;
   model_name_or_path: string;
 }
 

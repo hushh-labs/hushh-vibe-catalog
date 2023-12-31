@@ -173,8 +173,6 @@ class Catalog(CatalogT, IdBase):
                 "openai/clip-vit-base-patch32"
             )
 
-        self.image_processor_class = self.processor.image_processor_class
-
         if tokenizer is not None:
             self.tokenizer = tokenizer
         else:
@@ -182,7 +180,8 @@ class Catalog(CatalogT, IdBase):
                 "openai/clip-vit-base-patch32"
             )
 
-        self.tokenizer_name_or_path = self.tokenizer.name_or_path
+        self.modelNameOrPath = self.model.name_or_path
+        self.tokenizerNameOrPath = self.tokenizer.name_or_path
 
         self.productVibes = ProductVibes()
 
