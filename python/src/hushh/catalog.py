@@ -107,17 +107,17 @@ class Vibe(VibeT, VibeBase):
 class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
     def __init__(
         self,
-        shape: Iterable[int],
+        shape: List[int],
         vibeMode: int,
-        sequence: int,
-        flatTensor: Optional[List[float]] = None,
+        flatTensor: List[float],
+        productIndex: List[int],
     ):
         self.base = "FEB"
         self.id = self.genId()
         self.shape = shape
         self.vibeMode = vibeMode
-        self.sequence = sequence
-        self.flatTensor = flatTensor if flatTensor is not None else []
+        self.flatTensor = flatTensor
+        self.productIndex = productIndex
 
 
 class ProductVibes(ProductVibesT, VibeBase):
@@ -132,7 +132,10 @@ class ProductVibes(ProductVibesT, VibeBase):
         self.vibes = []
         self._vibes = {}
 
-        self.flatBatches = []
+        self.productTextBatches = []
+        self.productImageBatches = []
+        self.textBatches = []
+        self.imageBatches = []
 
 
 class Catalog(CatalogT, IdBase):
@@ -203,7 +206,6 @@ class Catalog(CatalogT, IdBase):
             for i, batch in enumerate(
                 batched(self.productVibes.products, self.batchSize)
             ):
-                print(i)
                 images = []
                 texts = []
                 for p in batch:
@@ -243,21 +245,25 @@ class Catalog(CatalogT, IdBase):
                     shape=image_features.shape,
                     flatTensor=image_features.flatten().tolist(),
                     vibeMode=VibeMode.ProductImage,
-                    sequence=i,
+                    productIndex=list(
+                        range(i * self.batchSize, i + 1 * self.batchSize)
+                    ),
                 )
                 print(f"Image embeddings collected for batch {i}")
-                self.productVibes.flatBatches.append(image_batch)
+                self.productVibes.productImageBatches.append(image_batch)
 
                 text_batch = FlatEmbeddingBatch(
                     shape=text_features.shape,
                     flatTensor=text_features.flatten().tolist(),
                     vibeMode=VibeMode.ProductText,
-                    sequence=i,
+                    productIndex=list(
+                        range(i * self.batchSize, i + 1 * self.batchSize)
+                    ),
                 )
 
                 print(f"Text embeddings collected for batch {i}")
 
-                self.productVibes.flatBatches.append(text_batch)
+                self.productVibes.productTextBatches.append(text_batch)
 
     def Pack(self, builder):
         self.renderProductFlatBatch()

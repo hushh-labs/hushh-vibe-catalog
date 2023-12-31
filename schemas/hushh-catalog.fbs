@@ -23,10 +23,10 @@ enum VibeMode : byte { ProductText = 0, ProductImage, Text, Image, Category}
 
 table FlatEmbeddingBatch {
     id: string;
-    sequence: int;
     shape:[int];
     vibe_mode: VibeMode;
     flat_tensor:[float];
+    product_index: [int];
 }
 
 table ProductVibes {
@@ -34,7 +34,10 @@ table ProductVibes {
   products: [Product];
   categories: [Category];
   vibes: [Vibe];
-  flat_batches: [FlatEmbeddingBatch];
+  product_text_batches: [FlatEmbeddingBatch];
+  product_image_batches: [FlatEmbeddingBatch];
+  text_batches: [FlatEmbeddingBatch];
+  image_batches: [FlatEmbeddingBatch];
 }
 
 table Catalog {

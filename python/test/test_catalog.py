@@ -61,7 +61,8 @@ def test_catalog_type_with_products():
     assert pvibes is not None
 
     # There are two flatbatches... one for text and one for images.
-    assert pvibes.FlatBatchesLength() == 2
+    assert pvibes.ProductTextBatchesLength() == 1
+    assert pvibes.ProductImageBatchesLength() == 1
 
 
 def test_embeddings():
@@ -108,17 +109,12 @@ def test_image_catalog():
     vibes = rcat.ProductVibes()
     assert vibes is not None
 
-    assert vibes.FlatBatchesLength() > 0
+    assert vibes.ProductTextBatchesLength() > 0
 
-    batch = vibes.FlatBatches(0)
-    for b in range(0, vibes.FlatBatchesLength()):
-        batch = vibes.FlatBatches(b)
-        assert batch is not None
-        assert np.array_equal(batch.ShapeAsNumpy(), [3, 512])
-        if batch.VibeMode() == VibeMode.VibeMode.ProductImage:
-            break
+    batch = vibes.ProductImageBatches(0)
 
     assert batch is not None
+
     tensor = batch.FlatTensorAsNumpy()
     tensor.shape = (-1, 512)
 
