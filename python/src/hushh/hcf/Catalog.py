@@ -65,8 +65,29 @@ class Catalog(object):
             return self._tab.Get(flatbuffers.number_types.Int32Flags, o + self._tab.Pos)
         return 0
 
+    # Catalog
+    def TokenizerNameOrPath(self) -> Optional[str]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
+        if o != 0:
+            return self._tab.String(o + self._tab.Pos)
+        return None
+
+    # Catalog
+    def ImageProcessorClass(self) -> Optional[str]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
+        if o != 0:
+            return self._tab.String(o + self._tab.Pos)
+        return None
+
+    # Catalog
+    def ModelNameOrPath(self) -> Optional[str]:
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
+        if o != 0:
+            return self._tab.String(o + self._tab.Pos)
+        return None
+
 def CatalogStart(builder: flatbuffers.Builder):
-    builder.StartObject(5)
+    builder.StartObject(8)
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
@@ -101,6 +122,24 @@ def CatalogAddBatchSize(builder: flatbuffers.Builder, batchSize: int):
 def AddBatchSize(builder: flatbuffers.Builder, batchSize: int):
     CatalogAddBatchSize(builder, batchSize)
 
+def CatalogAddTokenizerNameOrPath(builder: flatbuffers.Builder, tokenizerNameOrPath: int):
+    builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(tokenizerNameOrPath), 0)
+
+def AddTokenizerNameOrPath(builder: flatbuffers.Builder, tokenizerNameOrPath: int):
+    CatalogAddTokenizerNameOrPath(builder, tokenizerNameOrPath)
+
+def CatalogAddImageProcessorClass(builder: flatbuffers.Builder, imageProcessorClass: int):
+    builder.PrependUOffsetTRelativeSlot(6, flatbuffers.number_types.UOffsetTFlags.py_type(imageProcessorClass), 0)
+
+def AddImageProcessorClass(builder: flatbuffers.Builder, imageProcessorClass: int):
+    CatalogAddImageProcessorClass(builder, imageProcessorClass)
+
+def CatalogAddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
+    builder.PrependUOffsetTRelativeSlot(7, flatbuffers.number_types.UOffsetTFlags.py_type(modelNameOrPath), 0)
+
+def AddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
+    CatalogAddModelNameOrPath(builder, modelNameOrPath)
+
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
 
@@ -122,6 +161,9 @@ class CatalogT(object):
         self.description = None  # type: str
         self.productVibes = None  # type: Optional[hushh.hcf.ProductVibes.ProductVibesT]
         self.batchSize = 0  # type: int
+        self.tokenizerNameOrPath = None  # type: str
+        self.imageProcessorClass = None  # type: str
+        self.modelNameOrPath = None  # type: str
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -150,6 +192,9 @@ class CatalogT(object):
         if catalog.ProductVibes() is not None:
             self.productVibes = hushh.hcf.ProductVibes.ProductVibesT.InitFromObj(catalog.ProductVibes())
         self.batchSize = catalog.BatchSize()
+        self.tokenizerNameOrPath = catalog.TokenizerNameOrPath()
+        self.imageProcessorClass = catalog.ImageProcessorClass()
+        self.modelNameOrPath = catalog.ModelNameOrPath()
 
     # CatalogT
     def Pack(self, builder):
@@ -161,6 +206,12 @@ class CatalogT(object):
             description = builder.CreateString(self.description)
         if self.productVibes is not None:
             productVibes = self.productVibes.Pack(builder)
+        if self.tokenizerNameOrPath is not None:
+            tokenizerNameOrPath = builder.CreateString(self.tokenizerNameOrPath)
+        if self.imageProcessorClass is not None:
+            imageProcessorClass = builder.CreateString(self.imageProcessorClass)
+        if self.modelNameOrPath is not None:
+            modelNameOrPath = builder.CreateString(self.modelNameOrPath)
         CatalogStart(builder)
         if self.id is not None:
             CatalogAddId(builder, id)
@@ -171,5 +222,11 @@ class CatalogT(object):
         if self.productVibes is not None:
             CatalogAddProductVibes(builder, productVibes)
         CatalogAddBatchSize(builder, self.batchSize)
+        if self.tokenizerNameOrPath is not None:
+            CatalogAddTokenizerNameOrPath(builder, tokenizerNameOrPath)
+        if self.imageProcessorClass is not None:
+            CatalogAddImageProcessorClass(builder, imageProcessorClass)
+        if self.modelNameOrPath is not None:
+            CatalogAddModelNameOrPath(builder, modelNameOrPath)
         catalog = CatalogEnd(builder)
         return catalog
