@@ -1,5 +1,5 @@
 
-.PHONY: clean lint dev test preflight docs
+.PHONY: clean lint dev test preflight, docs, publish_docs, pypi, build
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -44,22 +44,24 @@ clean:
 	find . -type d -name "__pycache__" -delete
 	find . -path "*hushh/hcf" -type d -exec rm -rf {} +
 
-preflight: test
+docs:
+	quartodoc build
+	quarto render
+
+build:
+	python -m build
+
+preflight: test, build
 	pip-compile
 	conda env export > environment.yml
-	python -m build
 	twine check dist/*
 	docs
 
-upload: preflight
+pypi: preflight, publish_docs
 	twine upload dist/*
 
 test:
 	pytest --cov=python/src python/test
-
-docs:
-	quartodoc build
-	quarto render
 
 publish_docs: docs
 	quarto publish

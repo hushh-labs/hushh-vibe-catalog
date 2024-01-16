@@ -34,7 +34,7 @@ dev = [
   "pip-tools",
   "flake8",
   "bumpversion",
-  "hushh-vibe-catalog-reader[ci]"
+  "hushh-vibe-catalog[ci]"
 ]
 ci = [
   "pytest-cov",
