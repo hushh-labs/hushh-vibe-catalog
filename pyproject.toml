@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 where = ["python/src"]
 
 [project]
-name = "hushh-vibe-catalog-reader"
+name = "hushh-vibe-catalog"
 version = "0.0.2"
 readme = "README.md"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
@@ -32,7 +32,7 @@ dev = [
   "pip-tools",
   "flake8",
   "bumpversion",
-  "hushh-vibe-catalog-reader[ci]"
+  "hushh-vibe-catalog[ci]"
 ]
 ci = [
   "pytest-cov",
