@@ -11,7 +11,7 @@ $> pip install hushh-vibe-catalog
 
 ```
 
-# Schema
+# Latest Version Schema
 ```flatbuffer
 
 namespace hushh.hcf;
