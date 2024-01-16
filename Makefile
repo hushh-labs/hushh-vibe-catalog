@@ -50,6 +50,9 @@ preflight: test
 	twine check dist/*
 	docs
 
+upload: preflight
+	twine upload dist/*
+
 test:
 	pytest --cov=python/src python/test
 
