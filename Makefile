@@ -25,7 +25,7 @@ endif
 environment :
 	brew install swift
 	brew install direnv
-	brew install miniconda
+	brew install miniforge
 	conda env create -f environment.yml
 	eval "$(conda shell.zsh hook)" # load conda env
 	direnv reload
