@@ -4,7 +4,6 @@ Support clients for the hushh vibe-catalog file format
 
 There is documentation [available](https://hushh.quarto.pub/hushh/reference)
 
-
 # Installation
 ```python3
 $> pip install hushh-vibe-catalog
@@ -61,4 +60,5 @@ table Catalog {
 
 root_type Catalog;
 ```
+
 

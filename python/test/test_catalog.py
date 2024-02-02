@@ -7,7 +7,6 @@ from transformers import CLIPModel, CLIPProcessor
 
 from hushh.catalog import Catalog, Category, Product
 from hushh.hcf import Catalog as RawCatalog
-from hushh.hcf import VibeMode
 
 builder = flatbuffers.Builder(0)
 
