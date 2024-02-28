@@ -1,9 +1,17 @@
 namespace hushh.hcf;
 
+table Brand {
+  id: string;
+  description: string;
+  url: string;
+  brand_id: string;
+}
+
 table Product {
   id: string;
   description: string;
   url: string;
+  brand_id: string;
 }
 
 table Vibe {

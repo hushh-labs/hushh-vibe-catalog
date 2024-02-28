@@ -1,6 +1,3 @@
-import subprocess
-import warnings
-
 import flatbuffers
 import numpy as np
 from PIL import Image
@@ -129,3 +126,7 @@ def test_image_catalog():
     assert image_features.shape[1] == 512
 
     assert np.array_equal(image_features[0].detach().numpy(), tensor[0])
+
+
+def test_image_present():
+    pass

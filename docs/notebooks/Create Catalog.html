@@ -137,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Download an example product catalog from this <a href="https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-small">Kaggle dataset</a>.</p>
-<div id="63f2b9d5-428e-49b3-bf00-dd26ed279cc1" class="cell" data-execution_count="1">
+<div id="63f2b9d5-428e-49b3-bf00-dd26ed279cc1" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> hushh <span class="im">import</span> catalog</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> hushh.catalog <span class="im">import</span> Catalog, Product</span>
@@ -145,7 +145,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> msgpack</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> timeit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="download-data" class="level2">
 <h2 class="anchored" data-anchor-id="download-data">Download Data</h2>
@@ -160,24 +162,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-details" class="level2">
 <h2 class="anchored" data-anchor-id="data-details">Data Details</h2>
 <p>The dataset contains around ~40K fashion related images</p>
-<div id="6a99a9ea-4d69-4a36-8b14-b795962494ee" class="cell" data-execution_count="4">
+<div id="6a99a9ea-4d69-4a36-8b14-b795962494ee" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(glob.glob(<span class="st">"images/*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>44441</code></pre>
 </div>
 </div>
 <p>Taking a quick look at the images, they’re jpeg files, with an id as a file name.</p>
-<div id="55d7de12-6592-4575-b891-87bef2bbbaa2" class="cell" data-execution_count="5">
+<div id="55d7de12-6592-4575-b891-87bef2bbbaa2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(glob.glob(<span class="st">"images/*"</span>)[:<span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['images/9733.jpg', 'images/14147.jpg', 'images/52112.jpg', 'images/6400.jpg', 'images/34297.jpg', 'images/24084.jpg', 'images/12536.jpg', 'images/54563.jpg', 'images/15259.jpg', 'images/35189.jpg']</code></pre>
 </div>
 </div>
 <p>The “styles” csv file gives some of the metadata for a given id.</p>
-<div id="e3cf1060-f5c2-417a-8fb5-475f305abaa9" class="cell" data-execution_count="6">
+<div id="e3cf1060-f5c2-417a-8fb5-475f305abaa9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>styles <span class="op">=</span> pd.read_csv(<span class="st">"styles.csv"</span>,usecols<span class="op">=</span><span class="bu">range</span>(<span class="dv">10</span>), index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>styles.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <div>
 
@@ -287,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Create a product for the id and metadata (using a dummy url, since we won’t be linking to a product url).</li>
 </ol>
 <p>The Catalog comes with its own method for writing catalog files.</p>
-<div id="f79c3d89-4236-4b67-9675-fd1f076ebb73" class="cell" data-execution_count="7">
+<div id="f79c3d89-4236-4b67-9675-fd1f076ebb73" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> Catalog(<span class="st">"demo_catalog"</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -305,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Writing Catalog"</span>)</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>cat.to_hcf(<span class="st">"catalog.hcf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 44441/44441 [00:06&lt;00:00, 7172.86it/s]</code></pre>
+<pre><code>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 44441/44441 [00:14&lt;00:00, 3120.79it/s]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing Catalog
@@ -325,50 +327,270 @@ Collected Image and text features for batch 2
 Image embeddings collected for batch 2
 Text embeddings collected for batch 2
 Collected images and text for batch 3
-Collected inputs for batch 3
-Collected Image and text features for batch 3
-Image embeddings collected for batch 3
-Text embeddings collected for batch 3
-Collected images and text for batch 4
-Collected inputs for batch 4
-Collected Image and text features for batch 4
-Image embeddings collected for batch 4
-Text embeddings collected for batch 4</code></pre>
+Collected inputs for batch 3</code></pre>
 </div>
 </div>
 </section>
 <section id="create-a-comparison-json-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-comparison-json-dataset">Create a comparison JSON dataset</h2>
 <p>We will set up a quick and dirty json output for comparison. This just dumps the flatbatch content from the catalog in standard json format.</p>
-<div id="87020271-8a04-45ed-90ea-6ca6d135446a" class="cell" data-execution_count="8">
+<div id="87020271-8a04-45ed-90ea-6ca6d135446a" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span> (<span class="st">"catalog.json"</span>, <span class="st">"w"</span>) <span class="im">as</span> fh:</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    json.dump(cat.productVibes, fh, default<span class="op">=</span><span class="kw">lambda</span> o: o.__dict__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="json-timings" class="level2">
-<h2 class="anchored" data-anchor-id="json-timings">JSON timings</h2>
-<p>We can see that it takes roughly 8 seconds to decode a json paylod of ~40K embeddings.</p>
-<div id="e017eba2-5179-498e-8504-2d6ba4e5fbdd" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit <span class="op">-</span>n <span class="dv">3</span> <span class="cf">with</span> <span class="bu">open</span> (<span class="st">"catalog.json"</span>, <span class="st">"r"</span>) <span class="im">as</span> fh : json.load(fh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>8.36 s ± 13 ms per loop (mean ± std. dev. of 7 runs, 3 loops each)</code></pre>
-</div>
+<section id="create-a-comparison-msgpack-dataset" class="level1">
+<h1>Create a comparison MsgPack dataset</h1>
+<div id="331b99c7-773f-4888-bbd8-196914accd16" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span> (<span class="st">"catalog.msgpack"</span>, <span class="st">"wb"</span>) <span class="im">as</span> fh:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    packed <span class="op">=</span> msgpack.packb(cat.productVibes, default<span class="op">=</span><span class="kw">lambda</span> o: o.__dict__)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    fh.write(packed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="hcf-timings" class="level2">
-<h2 class="anchored" data-anchor-id="hcf-timings">HCF timings</h2>
-<p>HCF, by comparison, is loaded in 480 microseconds.</p>
-<div id="f55c28b5-6d4f-40d2-b933-d08a8b0d4338" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit <span class="op">-</span>n <span class="dv">3</span> catalog.read_hcf(<span class="st">"test.hcf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="timings" class="level1">
+<h1>Timings</h1>
+<div id="e017eba2-5179-498e-8504-2d6ba4e5fbdd" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> json_open():</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'catalog.json'</span>, <span class="st">'r'</span>) <span class="im">as</span> fh:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        json.load(fh)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> msg_open():</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'catalog.msgpack'</span>, <span class="st">'rb'</span>) <span class="im">as</span> fh:</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        data_loaded <span class="op">=</span> msgpack.unpackb(fh.read())</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hcf_open():</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    catalog.read_hcf(<span class="st">"test.hcf"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">iter</span> <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> timer(func, iterations<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,iterations):</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        start <span class="op">=</span> time.time()</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        func()</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        duration <span class="op">=</span> time.time() <span class="op">-</span> start</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        results.append(duration)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>hcf_result <span class="op">=</span> timer(hcf_open, <span class="bu">iter</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hcf_result)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>msg_result <span class="op">=</span> timer(msg_open, <span class="bu">iter</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(msg_result)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>json_result <span class="op">=</span> timer(json_open, <span class="bu">iter</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>432 µs ± 228 µs per loop (mean ± std. dev. of 7 runs, 3 loops each)</code></pre>
+<pre><code>[0.0017621517181396484, 0.0009391307830810547, 0.0007212162017822266, 0.0009021759033203125, 0.0008409023284912109, 0.0009250640869140625, 0.0008530616760253906, 0.0006358623504638672, 0.0006289482116699219, 0.0006871223449707031]
+[0.9692511558532715, 1.0034160614013672, 1.0053150653839111, 0.8395180702209473, 0.9242990016937256, 0.9968812465667725, 1.0046262741088867, 0.7576639652252197, 0.9129230976104736, 0.9955949783325195]
+[7.44507908821106, 7.346750974655151, 7.513769865036011, 7.661447763442993, 7.529480934143066, 7.461015701293945, 7.61430025100708, 7.577383995056152, 7.6200478076934814, 7.3818018436431885]</code></pre>
 </div>
 </div>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>HCF’s ability to load data directly from a byte stream eliminates most of the overhead of dealing with large embedding formats, making it ideal for quickly loading catalogs of data for search-related functionality.</p>
-<p>In this particular example, HCF is <strong>~10K times</strong> faster for loading a similar json payload.</p>
+<div id="308942f0-92e2-479c-8df7-26ef7a5163ba" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>dat<span class="op">=</span> pd.DataFrame({<span class="st">"hcf"</span> : hcf_result,<span class="st">"msgpack"</span> : msg_result,  <span class="st">"json"</span> : json_result})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d0e65786-91fe-4827-9c66-dfd82fdcae35" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">hcf</th>
+<th data-quarto-table-cell-role="th">json</th>
+<th data-quarto-table-cell-role="th">msgpack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.001762</td>
+<td>7.445079</td>
+<td>0.969251</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.000939</td>
+<td>7.346751</td>
+<td>1.003416</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.000721</td>
+<td>7.513770</td>
+<td>1.005315</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.000902</td>
+<td>7.661448</td>
+<td>0.839518</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.000841</td>
+<td>7.529481</td>
+<td>0.924299</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>0.000925</td>
+<td>7.461016</td>
+<td>0.996881</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>0.000853</td>
+<td>7.614300</td>
+<td>1.004626</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>0.000636</td>
+<td>7.577384</td>
+<td>0.757664</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>0.000629</td>
+<td>7.620048</td>
+<td>0.912923</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>0.000687</td>
+<td>7.381802</td>
+<td>0.995595</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="90e6bcc7-f5d1-4500-b647-f24c2efdf01e" class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat.to_csv(<span class="st">"results.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="6c67ddc8-f6fb-4ce4-94eb-e475407aa360" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"results.csv"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="10b59749-fa1c-40f8-99dc-13557ceaf50c" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> dat[[<span class="st">"hcf"</span>, <span class="st">"msgpack"</span>, <span class="st">"json"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="29548b1e-5ab3-4594-b4a2-36079a699d0d" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dat.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">hcf</th>
+<th data-quarto-table-cell-role="th">msgpack</th>
+<th data-quarto-table-cell-role="th">json</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>10.000000</td>
+<td>10.000000</td>
+<td>10.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>0.000890</td>
+<td>0.940949</td>
+<td>7.515108</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>0.000328</td>
+<td>0.084301</td>
+<td>0.105566</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0.000629</td>
+<td>0.757664</td>
+<td>7.346751</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>0.000696</td>
+<td>0.915767</td>
+<td>7.449063</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>0.000847</td>
+<td>0.982423</td>
+<td>7.521625</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>0.000919</td>
+<td>1.001782</td>
+<td>7.605071</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>0.001762</td>
+<td>1.005315</td>
+<td>7.661448</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="08251ca3-23dd-4d33-a30e-444552268b95" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dat.boxplot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Create Catalog_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="7a5946c1-4c08-4fcc-ae1e-172a9533c6a4" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dat.mean().plot.bar(title<span class="op">=</span><span class="st">"Loading Time (seconds)"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Create Catalog_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="d2b1d568-e99f-40c2-83ab-c68a570b4ef3" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> pd.DataFrame({<span class="st">"hcf"</span> : [<span class="dv">179</span>] ,<span class="st">"msgpack"</span> : [<span class="dv">357</span>],  <span class="st">"json"</span> : [<span class="dv">834</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="bbe3680f-dfe3-4883-bb39-96359df28488" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dat2.mean().plot.bar(title<span class="op">=</span><span class="st">"File Size (MB)"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Create Catalog_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>

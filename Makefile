@@ -76,14 +76,10 @@ lint:
 
 ## Generate flatbuffer stubs
 flatbuffers:
+	rm -rf python/src/hushh/hcf
 	flatc --python -o python/src schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit --python-typing
 	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
 
-## Delete all flatbuffer stubs and regenerate them
-flatbuffers:
-regen_flatbuffers:
-	rm -rf python/src/hushh/hcf
-	flatbuffers
 
 readme:
 	quarto render README.qmd

@@ -15,6 +15,7 @@ from transformers import (CLIPModel, CLIPProcessor, CLIPTokenizer,
 import hushh
 from hushh._version import __version__
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
+from hushh.hcf.Brand import BrandT
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
 from hushh.hcf.FlatEmbeddingBatch import FlatEmbeddingBatchT
@@ -48,8 +49,19 @@ class IdBase:
         return self.base + "-" + str(uuid.uuid1())
 
 
+class Brand(BrandT, IdBase):
+    base = "BRD"
+
+    def __init__(self, description: str, url: str):
+        self.id = self.genId()
+        self.description = description
+        self.url = url
+
+
 class Product(ProductT, IdBase):
-    def __init__(self, description: str, url: str, image: ImageT | str):
+    def __init__(
+        self, description: str, url: str, image: ImageT | str, brand: Brand | str
+    ):
         self.id = self.genId()
         if pd.isna(description):
             raise NoEmbeddableContent("Missing description of product")
@@ -80,8 +92,9 @@ class VibeBase(IdBase):
 
 
 class Category(CategoryT, VibeBase):
+    base = "CTG"
+
     def __init__(self, description: str, url: str):
-        self.base = "CTG"
         self.id = self.genId()
         self.description = description
         self.url = url
@@ -89,8 +102,9 @@ class Category(CategoryT, VibeBase):
 
 
 class Vibe(VibeT, VibeBase):
+    base = "IVB"
+
     def __init__(self, image: ImageT | str, description: str):
-        self.base = "IVB"
         self.id = self.genId()
         self.description = description
 
@@ -103,6 +117,8 @@ class Vibe(VibeT, VibeBase):
 
 
 class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
+    base = "FEB"
+
     def __init__(
         self,
         shape: List[int],
@@ -110,7 +126,6 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
         flatTensor: List[float],
         productIndex: List[int],
     ):
-        self.base = "FEB"
         self.id = self.genId()
         self.shape = shape
         self.vibeMode = vibeMode
@@ -119,8 +134,9 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
 
 
 class ProductVibes(ProductVibesT, VibeBase):
+    base = "PVB"
+
     def __init__(self):
-        self.base = "PVB"
         self.id = self.genId()
         self.products = []
 

@@ -31,6 +31,146 @@ extension hushh_hcf_VibeMode: Encodable {
   }
 }
 
+public struct hushh_hcf_Brand: FlatBufferObject, Verifiable, ObjectAPIPacker {
+
+  static func validateVersion() { FlatBuffersVersion_23_5_26() }
+  public var __buffer: ByteBuffer! { return _accessor.bb }
+  private var _accessor: Table
+
+  private init(_ t: Table) { _accessor = t }
+  public init(_ bb: ByteBuffer, o: Int32) { _accessor = Table(bb: bb, position: o) }
+
+  private enum VTOFFSET: VOffset {
+    case id = 4
+    case description = 6
+    case url = 8
+    case brandId = 10
+    var v: Int32 { Int32(self.rawValue) }
+    var p: VOffset { self.rawValue }
+  }
+
+  public var id: String? { let o = _accessor.offset(VTOFFSET.id.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var idSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.id.v) }
+  public var description: String? { let o = _accessor.offset(VTOFFSET.description.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var descriptionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.description.v) }
+  public var url: String? { let o = _accessor.offset(VTOFFSET.url.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var urlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.url.v) }
+  public var brandId: String? { let o = _accessor.offset(VTOFFSET.brandId.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var brandIdSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.brandId.v) }
+  public static func startBrand(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
+  public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
+  public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
+  public static func add(url: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: url, at: VTOFFSET.url.p) }
+  public static func add(brandId: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: brandId, at: VTOFFSET.brandId.p) }
+  public static func endBrand(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
+  public static func createBrand(
+    _ fbb: inout FlatBufferBuilder,
+    idOffset id: Offset = Offset(),
+    descriptionOffset description: Offset = Offset(),
+    urlOffset url: Offset = Offset(),
+    brandIdOffset brandId: Offset = Offset()
+  ) -> Offset {
+    let __start = hushh_hcf_Brand.startBrand(&fbb)
+    hushh_hcf_Brand.add(id: id, &fbb)
+    hushh_hcf_Brand.add(description: description, &fbb)
+    hushh_hcf_Brand.add(url: url, &fbb)
+    hushh_hcf_Brand.add(brandId: brandId, &fbb)
+    return hushh_hcf_Brand.endBrand(&fbb, start: __start)
+  }
+  
+
+  public mutating func unpack() -> hushh_hcf_BrandT {
+    return hushh_hcf_BrandT(&self)
+  }
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_BrandT?) -> Offset {
+    guard var obj = obj else { return Offset() }
+    return pack(&builder, obj: &obj)
+  }
+
+  public static func pack(_ builder: inout FlatBufferBuilder, obj: inout hushh_hcf_BrandT) -> Offset {
+    let __id: Offset
+    if let s = obj.id {
+      __id = builder.create(string: s)
+    } else {
+      __id = Offset()
+    }
+
+    let __description: Offset
+    if let s = obj.description {
+      __description = builder.create(string: s)
+    } else {
+      __description = Offset()
+    }
+
+    let __url: Offset
+    if let s = obj.url {
+      __url = builder.create(string: s)
+    } else {
+      __url = Offset()
+    }
+
+    let __brandId: Offset
+    if let s = obj.brandId {
+      __brandId = builder.create(string: s)
+    } else {
+      __brandId = Offset()
+    }
+
+    let __root = hushh_hcf_Brand.startBrand(&builder)
+    hushh_hcf_Brand.add(id: __id, &builder)
+    hushh_hcf_Brand.add(description: __description, &builder)
+    hushh_hcf_Brand.add(url: __url, &builder)
+    hushh_hcf_Brand.add(brandId: __brandId, &builder)
+    return hushh_hcf_Brand.endBrand(&builder, start: __root)
+  }
+
+  public static func verify<T>(_ verifier: inout Verifier, at position: Int, of type: T.Type) throws where T: Verifiable {
+    var _v = try verifier.visitTable(at: position)
+    try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.url.p, fieldName: "url", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.brandId.p, fieldName: "brandId", required: false, type: ForwardOffset<String>.self)
+    _v.finish()
+  }
+}
+
+extension hushh_hcf_Brand: Encodable {
+
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case description = "description"
+    case url = "url"
+    case brandId = "brand_id"
+  }
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(id, forKey: .id)
+    try container.encodeIfPresent(description, forKey: .description)
+    try container.encodeIfPresent(url, forKey: .url)
+    try container.encodeIfPresent(brandId, forKey: .brandId)
+  }
+}
+
+public class hushh_hcf_BrandT: NativeObject {
+
+  public var id: String?
+  public var description: String?
+  public var url: String?
+  public var brandId: String?
+
+  public init(_ _t: inout hushh_hcf_Brand) {
+    id = _t.id
+    description = _t.description
+    url = _t.url
+    brandId = _t.brandId
+  }
+
+  public init() {
+  }
+
+  public func serialize() -> ByteBuffer { return serialize(type: hushh_hcf_Brand.self) }
+
+}
 public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
 
   static func validateVersion() { FlatBuffersVersion_23_5_26() }
@@ -44,6 +184,7 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
     case id = 4
     case description = 6
     case url = 8
+    case brandId = 10
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
@@ -54,21 +195,26 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
   public var descriptionSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.description.v) }
   public var url: String? { let o = _accessor.offset(VTOFFSET.url.v); return o == 0 ? nil : _accessor.string(at: o) }
   public var urlSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.url.v) }
-  public static func startProduct(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 3) }
+  public var brandId: String? { let o = _accessor.offset(VTOFFSET.brandId.v); return o == 0 ? nil : _accessor.string(at: o) }
+  public var brandIdSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.brandId.v) }
+  public static func startProduct(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 4) }
   public static func add(id: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: id, at: VTOFFSET.id.p) }
   public static func add(description: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: description, at: VTOFFSET.description.p) }
   public static func add(url: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: url, at: VTOFFSET.url.p) }
+  public static func add(brandId: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: brandId, at: VTOFFSET.brandId.p) }
   public static func endProduct(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createProduct(
     _ fbb: inout FlatBufferBuilder,
     idOffset id: Offset = Offset(),
     descriptionOffset description: Offset = Offset(),
-    urlOffset url: Offset = Offset()
+    urlOffset url: Offset = Offset(),
+    brandIdOffset brandId: Offset = Offset()
   ) -> Offset {
     let __start = hushh_hcf_Product.startProduct(&fbb)
     hushh_hcf_Product.add(id: id, &fbb)
     hushh_hcf_Product.add(description: description, &fbb)
     hushh_hcf_Product.add(url: url, &fbb)
+    hushh_hcf_Product.add(brandId: brandId, &fbb)
     return hushh_hcf_Product.endProduct(&fbb, start: __start)
   }
   
@@ -103,10 +249,18 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
       __url = Offset()
     }
 
+    let __brandId: Offset
+    if let s = obj.brandId {
+      __brandId = builder.create(string: s)
+    } else {
+      __brandId = Offset()
+    }
+
     let __root = hushh_hcf_Product.startProduct(&builder)
     hushh_hcf_Product.add(id: __id, &builder)
     hushh_hcf_Product.add(description: __description, &builder)
     hushh_hcf_Product.add(url: __url, &builder)
+    hushh_hcf_Product.add(brandId: __brandId, &builder)
     return hushh_hcf_Product.endProduct(&builder, start: __root)
   }
 
@@ -115,6 +269,7 @@ public struct hushh_hcf_Product: FlatBufferObject, Verifiable, ObjectAPIPacker {
     try _v.visit(field: VTOFFSET.id.p, fieldName: "id", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.description.p, fieldName: "description", required: false, type: ForwardOffset<String>.self)
     try _v.visit(field: VTOFFSET.url.p, fieldName: "url", required: false, type: ForwardOffset<String>.self)
+    try _v.visit(field: VTOFFSET.brandId.p, fieldName: "brandId", required: false, type: ForwardOffset<String>.self)
     _v.finish()
   }
 }
@@ -125,12 +280,14 @@ extension hushh_hcf_Product: Encodable {
     case id = "id"
     case description = "description"
     case url = "url"
+    case brandId = "brand_id"
   }
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
     try container.encodeIfPresent(description, forKey: .description)
     try container.encodeIfPresent(url, forKey: .url)
+    try container.encodeIfPresent(brandId, forKey: .brandId)
   }
 }
 
@@ -139,11 +296,13 @@ public class hushh_hcf_ProductT: NativeObject {
   public var id: String?
   public var description: String?
   public var url: String?
+  public var brandId: String?
 
   public init(_ _t: inout hushh_hcf_Product) {
     id = _t.id
     description = _t.description
     url = _t.url
+    brandId = _t.brandId
   }
 
   public init() {
