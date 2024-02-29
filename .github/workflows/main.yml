@@ -32,7 +32,7 @@ jobs:
               python -m pip install build
 
       - name: Build wheels
-        run: python -m build --sdist
+        run: python -m build
 
       - name : Run Tests
         run : |
