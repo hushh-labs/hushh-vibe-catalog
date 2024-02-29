@@ -65,19 +65,6 @@ def test_catalog_type_with_products():
     assert pvibes.ProductImageBatchesLength() == 1
 
 
-def test_catalog_auto_version():
-    cat = Catalog("test")
-    (status, VERSION) = subprocess.getstatusoutput("git describe")
-    if status == 0:
-        assert cat.version == VERSION
-    else:
-        warnings.warn(
-            UserWarning(
-                "testing auto_version skipped, git not available on command line"
-            )
-        )
-
-
 def test_embeddings():
     categories = []
     for _ in range(0, 3):

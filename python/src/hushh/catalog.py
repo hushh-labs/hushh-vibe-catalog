@@ -1,6 +1,5 @@
 import uuid
 from collections.abc import Iterable
-from importlib.metadata import PackageNotFoundError, version
 from itertools import islice
 from typing import Dict, List, Optional
 
@@ -14,6 +13,7 @@ from transformers import (CLIPModel, CLIPProcessor, CLIPTokenizer,
                           PreTrainedModel, PreTrainedTokenizer, ProcessorMixin)
 
 import hushh
+from hushh import __version__
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
@@ -22,14 +22,6 @@ from hushh.hcf.Product import ProductT
 from hushh.hcf.ProductVibes import ProductVibesT
 from hushh.hcf.Vibe import VibeT
 from hushh.hcf.VibeMode import VibeMode
-
-try:
-    import pdb
-
-    pdb.set_trace()
-    __version__ = version("hushh-vibe-catalog")
-except PackageNotFoundError:
-    pass
 
 
 def batched(iterable, n):
@@ -160,7 +152,7 @@ class Catalog(CatalogT, IdBase):
     ):
         self.base = "CLG"
         self.id = self.genId()
-        self.version = version
+        self.version = __version__
         self.description = description
 
         self.productTextFeatures = []
