@@ -1,4 +1,5 @@
-from typing import Literal
+import subprocess
+import warnings
 
 import flatbuffers
 import numpy as np
@@ -7,7 +8,6 @@ from transformers import CLIPModel, CLIPProcessor
 
 from hushh.catalog import Catalog, Category, Product
 from hushh.hcf import Catalog as RawCatalog
-from hushh.hcf import VibeMode
 
 builder = flatbuffers.Builder(0)
 
@@ -63,6 +63,19 @@ def test_catalog_type_with_products():
     # There are two flatbatches... one for text and one for images.
     assert pvibes.ProductTextBatchesLength() == 1
     assert pvibes.ProductImageBatchesLength() == 1
+
+
+def test_catalog_auto_version():
+    cat = Catalog("test")
+    (status, VERSION) = subprocess.getstatusoutput("git describe")
+    if status == 0:
+        assert cat.version == VERSION
+    else:
+        warnings.warn(
+            UserWarning(
+                "testing auto_version skipped, git not available on command line"
+            )
+        )
 
 
 def test_embeddings():

@@ -1,6 +1,6 @@
-import json
 import uuid
 from collections.abc import Iterable
+from importlib.metadata import PackageNotFoundError, version
 from itertools import islice
 from typing import Dict, List, Optional
 
@@ -23,7 +23,13 @@ from hushh.hcf.ProductVibes import ProductVibesT
 from hushh.hcf.Vibe import VibeT
 from hushh.hcf.VibeMode import VibeMode
 
-from .version import VERSION
+try:
+    import pdb
+
+    pdb.set_trace()
+    __version__ = version("hushh-vibe-catalog")
+except PackageNotFoundError:
+    pass
 
 
 def batched(iterable, n):
@@ -154,7 +160,7 @@ class Catalog(CatalogT, IdBase):
     ):
         self.base = "CLG"
         self.id = self.genId()
-        self.version = VERSION
+        self.version = version
         self.description = description
 
         self.productTextFeatures = []
