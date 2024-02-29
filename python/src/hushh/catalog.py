@@ -1,4 +1,3 @@
-import json
 import uuid
 from collections.abc import Iterable
 from itertools import islice
@@ -14,6 +13,7 @@ from transformers import (CLIPModel, CLIPProcessor, CLIPTokenizer,
                           PreTrainedModel, PreTrainedTokenizer, ProcessorMixin)
 
 import hushh
+from hushh import __version__
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
@@ -22,8 +22,6 @@ from hushh.hcf.Product import ProductT
 from hushh.hcf.ProductVibes import ProductVibesT
 from hushh.hcf.Vibe import VibeT
 from hushh.hcf.VibeMode import VibeMode
-
-from .version import VERSION
 
 
 def batched(iterable, n):
@@ -154,7 +152,7 @@ class Catalog(CatalogT, IdBase):
     ):
         self.base = "CLG"
         self.id = self.genId()
-        self.version = VERSION
+        self.version = __version__
         self.description = description
 
         self.productTextFeatures = []

@@ -1,13 +1,13 @@
 [build]
-requires = ["setuptools ~= 64.0", "setuptools_scm"]
+requires = ["setuptools >= 64.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["python/src"]
 
 [project]
-name = "hushh-vibe-catalog-reader"
-version = "0.0.2"
+name = "hushh-vibe-catalog"
+version = "0.0.4"
 readme = "README.md"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [

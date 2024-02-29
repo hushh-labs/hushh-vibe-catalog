@@ -1,4 +1,5 @@
-from typing import Literal
+import subprocess
+import warnings
 
 import flatbuffers
 import numpy as np
@@ -7,7 +8,6 @@ from transformers import CLIPModel, CLIPProcessor
 
 from hushh.catalog import Catalog, Category, Product
 from hushh.hcf import Catalog as RawCatalog
-from hushh.hcf import VibeMode
 
 builder = flatbuffers.Builder(0)
 
