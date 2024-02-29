@@ -18,6 +18,9 @@ dependencies = [
   "Pillow"
 ]
 
+[tool.distutils.bdist_wheel]
+universal = true
+
 [project.optional-dependencies]
 dev = [
   "sentence-transformers",
