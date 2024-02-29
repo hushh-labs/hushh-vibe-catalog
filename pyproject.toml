@@ -7,7 +7,7 @@ where = ["python/src"]
 
 [project]
 name = "hushh-vibe-catalog-reader"
-version = "0.0.2"
+version = "0.0.3"
 readme = "README.md"
 authors = [{name = "Justin Donaldson", email = "justin@hushh.ai"}]
 dependencies = [
