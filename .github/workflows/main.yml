@@ -1,49 +1,35 @@
+name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
 
-name: Build
-
-on: [push, pull_request]
-
-permissions:
-  contents: write
-  id-token: write
+on: push
 
 jobs:
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        # os: [ubuntu-20.04, windows-2019, macOS-11]
-        os: [ubuntu-20.04]
+  build:
+    name: Build distribution 📦
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v3
-        with:
-          python-version: '3.11'
-
-      - name: Install wheel
-        run : |
-              python -m pip install wheel
-              python -m pip install setuptools>64
-              python -m pip install build
-
-
-      - name : Run Tests
-        run : |
-          python -m pip install ".[ci]"
-          make test
-      - name: Build wheels
-        run: |
-             python3 -m build
-      - name: Store the distribution packages
-          uses: actions/upload-artifact@v3
-          with:
-            name: python-package-distributions
-            path: dist/
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+    - name : Install lib and test
+      run : >-
+        python3 -m pip install ".[ci]"
+        make test
+    - name: Install pypa/build
+      run: >-
+        python3 -m
+        pip install
+        build
+        --user
+    - name: Build a binary wheel and a source tarball
+      run: python3 -m build
+    - name: Store the distribution packages
+      uses: actions/upload-artifact@v3
+      with:
+        name: python-package-distributions
+        path: dist/
 
   publish-to-pypi:
     name: >-
@@ -54,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/<package-name>  # Replace <package-name> with your PyPI project name
+      url: https://pypi.org/p/hushh-vibe-catalog  # Replace <package-name> with your PyPI project name
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
 
