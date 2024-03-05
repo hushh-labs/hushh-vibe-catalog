@@ -13,7 +13,7 @@ from transformers import (CLIPModel, CLIPProcessor, CLIPTokenizer,
                           PreTrainedModel, PreTrainedTokenizer, ProcessorMixin)
 
 import hushh
-from hushh import __version__
+from hushh._version import __version__
 from hushh.errors import NoEmbeddableContent, UncallableProcessor
 from hushh.hcf.Catalog import CatalogT
 from hushh.hcf.Category import CategoryT
