@@ -28,6 +28,4 @@ quartodoc:
         - hcf.Catalog
         - hcf.Product
         - hcf.Category
-        - hcf.TextVibe
-        - hcf.ImageVibe
 

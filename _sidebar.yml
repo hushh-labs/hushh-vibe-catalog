@@ -8,8 +8,6 @@ website:
       - reference/hcf.Catalog.qmd
       - reference/hcf.Product.qmd
       - reference/hcf.Category.qmd
-      - reference/hcf.TextVibe.qmd
-      - reference/hcf.ImageVibe.qmd
       section: Catalog
     id: reference
   - id: dummy-sidebar
