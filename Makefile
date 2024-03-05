@@ -42,6 +42,7 @@ dev :
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+	find . -path "*hushh/hcf" -type d -exec rm -rf {} +
 
 preflight: test
 	pip-compile
