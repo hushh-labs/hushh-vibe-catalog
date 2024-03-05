@@ -1,4 +1,0 @@
-# hcf.TextVibe { #hushh.hcf.TextVibe }
-
-`hcf.TextVibe`
-

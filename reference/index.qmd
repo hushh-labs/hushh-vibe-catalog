@@ -11,5 +11,3 @@ Catalog functions
 | [hcf.Catalog](hcf.Catalog.qmd#hushh.hcf.Catalog) |  |
 | [hcf.Product](hcf.Product.qmd#hushh.hcf.Product) |  |
 | [hcf.Category](hcf.Category.qmd#hushh.hcf.Category) |  |
-| [hcf.TextVibe](hcf.TextVibe.qmd#hushh.hcf.TextVibe) |  |
-| [hcf.ImageVibe](hcf.ImageVibe.qmd#hushh.hcf.ImageVibe) |  |
