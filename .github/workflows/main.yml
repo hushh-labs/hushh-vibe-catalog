@@ -97,7 +97,7 @@ jobs:
         --repo '${{ github.repository }}'
 
   publish-to-testpypi:
-    name: [TestPyPI] Publish Python 🐍 distribution 📦
+    name: "[TestPyPI] Publish Python 🐍 distribution 📦"
     needs:
     - build
     runs-on: ubuntu-latest
