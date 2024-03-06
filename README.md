@@ -62,3 +62,6 @@ table Catalog {
 root_type Catalog;
 ```
 
+
+# Better documentation coming soon!
+I promise :)
