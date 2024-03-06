@@ -23,9 +23,7 @@ universal = true
 
 [project.optional-dependencies]
 dev = [
-  "build",
   "sentence-transformers",
-  "twine",
   "kaggle",
   "jupyter",
   "matplotlib",
