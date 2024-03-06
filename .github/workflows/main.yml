@@ -45,6 +45,7 @@ jobs:
 
   github_release:
     name: Create Github Release
+    needs: build_and_test_wheels
     runs-on: ubuntu-latest
     steps:
       - name: Release
@@ -61,4 +62,5 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        pip install twine
         twine upload dist/*
