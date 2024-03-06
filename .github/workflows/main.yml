@@ -45,26 +45,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install wheel libraries
-        run : |
-              pip install wheel
-              pip install setuptools>64
-              pip install build
-
-      - name: Build wheels
-        run: |
-          python -m build
+      - name: Create PyPI release
+        uses: casperdcl/deploy-pypi@v2
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          build: true
 
       - name: Publish to Github Releases
         uses: softprops/action-gh-release@v1
-
-      - name: Publish to Pypi Releases
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          pip install twine
-          twine upload ./dist/*
 
       - uses: actions/upload-artifact@v3
         with:
