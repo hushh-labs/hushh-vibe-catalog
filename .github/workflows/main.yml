@@ -36,6 +36,14 @@ jobs:
     needs: build_and_test_wheels
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+
       - name: Install wheel libraries
         run : |
               pip install wheel
