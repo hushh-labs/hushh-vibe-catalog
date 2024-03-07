@@ -49,7 +49,9 @@ jobs:
         uses: softprops/action-gh-release@v1
 
       - name: Publish to Pypi
-        run: twine upload dist/*.whl
+        run: |
+          pip install twine
+          twine upload dist/*.whl --verbose
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
