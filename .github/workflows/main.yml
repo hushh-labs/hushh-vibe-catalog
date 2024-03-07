@@ -34,7 +34,7 @@ jobs:
     name: Create Github/Pypi Release
     needs:
       - test
-    # if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
