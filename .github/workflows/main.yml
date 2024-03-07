@@ -43,7 +43,7 @@ jobs:
           python-version: '3.11'
 
       - name : Build library wheel
-        run : pip wheel --no-deps .
+        run : pip wheel --no-deps -w dist .
 
       - name: Publish to Github Releases
         uses: softprops/action-gh-release@v1
