@@ -7,7 +7,7 @@ permissions:
   id-token: write
 
 jobs:
-  build_and_test_wheels:
+  test:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -30,26 +30,29 @@ jobs:
           pip install ".[ci]"
           make test
 
-
   release:
     name: Create Github/Pypi Release
-    if: startsWith(github.ref, 'refs/tags/')
-    needs: build_and_test_wheels
+    needs:
+      - test
+    # if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-python@v5.0.0
         with:
           python-version: '3.11'
 
-      - name: Create PyPI release
-        uses: casperdcl/deploy-pypi@v2
-        with:
-          password: ${{ secrets.PYPI_TOKEN }}
-          build: true
+      - name : Build library wheel
+        run : pip wheel --no-deps .
+
+      - name: Publish to Github Releases
+        uses: softprops/action-gh-release@v1
+
+      - name: Publish to Pypi
+        run: twine upload dist/*.whl
+        env:
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
 
       - uses: actions/upload-artifact@v3
         with:
