@@ -51,7 +51,7 @@ jobs:
       - name: Publish to Pypi
         run: |
           pip install twine
-          twine upload dist/*.whl --verbose
+          twine upload ./dist/* --verbose
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
