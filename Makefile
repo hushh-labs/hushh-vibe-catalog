@@ -83,6 +83,9 @@ regen_flatbuffers:
 	rm -rf python/src/hushh/hcf
 	flatbuffers
 
+readme:
+	quarto render README.qmd
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
