@@ -5,6 +5,7 @@
 import flatbuffers
 from flatbuffers.compat import import_numpy
 from typing import Any
+from hushh.hcf.Brand import Brand
 from typing import Optional
 np = import_numpy()
 
@@ -48,10 +49,13 @@ class Product(object):
         return None
 
     # Product
-    def BrandId(self) -> Optional[str]:
+    def Brand(self) -> Optional[Brand]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
-            return self._tab.String(o + self._tab.Pos)
+            x = self._tab.Indirect(o + self._tab.Pos)
+            obj = Brand()
+            obj.Init(self._tab.Bytes, x)
+            return obj
         return None
 
 def ProductStart(builder: flatbuffers.Builder):
@@ -78,11 +82,11 @@ def ProductAddUrl(builder: flatbuffers.Builder, url: int):
 def AddUrl(builder: flatbuffers.Builder, url: int):
     ProductAddUrl(builder, url)
 
-def ProductAddBrandId(builder: flatbuffers.Builder, brandId: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(brandId), 0)
+def ProductAddBrand(builder: flatbuffers.Builder, brand: int):
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(brand), 0)
 
-def AddBrandId(builder: flatbuffers.Builder, brandId: int):
-    ProductAddBrandId(builder, brandId)
+def AddBrand(builder: flatbuffers.Builder, brand: int):
+    ProductAddBrand(builder, brand)
 
 def ProductEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -90,6 +94,11 @@ def ProductEnd(builder: flatbuffers.Builder) -> int:
 def End(builder: flatbuffers.Builder) -> int:
     return ProductEnd(builder)
 
+import hushh.hcf.Brand
+try:
+    from typing import Optional
+except:
+    pass
 
 class ProductT(object):
 
@@ -98,7 +107,7 @@ class ProductT(object):
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
-        self.brandId = None  # type: str
+        self.brand = None  # type: Optional[hushh.hcf.Brand.BrandT]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -124,7 +133,8 @@ class ProductT(object):
         self.id = product.Id()
         self.description = product.Description()
         self.url = product.Url()
-        self.brandId = product.BrandId()
+        if product.Brand() is not None:
+            self.brand = hushh.hcf.Brand.BrandT.InitFromObj(product.Brand())
 
     # ProductT
     def Pack(self, builder):
@@ -134,8 +144,8 @@ class ProductT(object):
             description = builder.CreateString(self.description)
         if self.url is not None:
             url = builder.CreateString(self.url)
-        if self.brandId is not None:
-            brandId = builder.CreateString(self.brandId)
+        if self.brand is not None:
+            brand = self.brand.Pack(builder)
         ProductStart(builder)
         if self.id is not None:
             ProductAddId(builder, id)
@@ -143,7 +153,7 @@ class ProductT(object):
             ProductAddDescription(builder, description)
         if self.url is not None:
             ProductAddUrl(builder, url)
-        if self.brandId is not None:
-            ProductAddBrandId(builder, brandId)
+        if self.brand is not None:
+            ProductAddBrand(builder, brand)
         product = ProductEnd(builder)
         return product

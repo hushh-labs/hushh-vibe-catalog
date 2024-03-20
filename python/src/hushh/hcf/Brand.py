@@ -41,14 +41,14 @@ class Brand(object):
         return None
 
     # Brand
-    def Url(self) -> Optional[str]:
+    def Name(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
     # Brand
-    def BrandId(self) -> Optional[str]:
+    def Url(self) -> Optional[str]:
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -72,17 +72,17 @@ def BrandAddDescription(builder: flatbuffers.Builder, description: int):
 def AddDescription(builder: flatbuffers.Builder, description: int):
     BrandAddDescription(builder, description)
 
+def BrandAddName(builder: flatbuffers.Builder, name: int):
+    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(name), 0)
+
+def AddName(builder: flatbuffers.Builder, name: int):
+    BrandAddName(builder, name)
+
 def BrandAddUrl(builder: flatbuffers.Builder, url: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
+    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
     BrandAddUrl(builder, url)
-
-def BrandAddBrandId(builder: flatbuffers.Builder, brandId: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(brandId), 0)
-
-def AddBrandId(builder: flatbuffers.Builder, brandId: int):
-    BrandAddBrandId(builder, brandId)
 
 def BrandEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
@@ -97,8 +97,8 @@ class BrandT(object):
     def __init__(self):
         self.id = None  # type: str
         self.description = None  # type: str
+        self.name = None  # type: str
         self.url = None  # type: str
-        self.brandId = None  # type: str
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
@@ -123,8 +123,8 @@ class BrandT(object):
             return
         self.id = brand.Id()
         self.description = brand.Description()
+        self.name = brand.Name()
         self.url = brand.Url()
-        self.brandId = brand.BrandId()
 
     # BrandT
     def Pack(self, builder):
@@ -132,18 +132,18 @@ class BrandT(object):
             id = builder.CreateString(self.id)
         if self.description is not None:
             description = builder.CreateString(self.description)
+        if self.name is not None:
+            name = builder.CreateString(self.name)
         if self.url is not None:
             url = builder.CreateString(self.url)
-        if self.brandId is not None:
-            brandId = builder.CreateString(self.brandId)
         BrandStart(builder)
         if self.id is not None:
             BrandAddId(builder, id)
         if self.description is not None:
             BrandAddDescription(builder, description)
+        if self.name is not None:
+            BrandAddName(builder, name)
         if self.url is not None:
             BrandAddUrl(builder, url)
-        if self.brandId is not None:
-            BrandAddBrandId(builder, brandId)
         brand = BrandEnd(builder)
         return brand

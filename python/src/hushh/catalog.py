@@ -43,25 +43,24 @@ def read_hcf(filename: str):
 
 class IdBase:
     id: str
-    base = ""
+    _id_base = "IDB"
 
     def genId(self):
-        return self.base + "-" + str(uuid.uuid1())
+        return self._id_base + "-" + str(uuid.uuid1())
 
 
 class Brand(BrandT, IdBase):
-    base = "BRD"
+    _id_base = "BRD"
 
-    def __init__(self, description: str, url: str):
+    def __init__(self, name: str, description: str, url: str):
         self.id = self.genId()
+        self.name = name
         self.description = description
         self.url = url
 
 
 class Product(ProductT, IdBase):
-    def __init__(
-        self, description: str, url: str, image: ImageT | str, brand: Brand | str
-    ):
+    def __init__(self, description: str, url: str, image: ImageT | str, brand: Brand):
         self.id = self.genId()
         if pd.isna(description):
             raise NoEmbeddableContent("Missing description of product")
@@ -73,6 +72,8 @@ class Product(ProductT, IdBase):
             self._image = np.array(Image.open(image).convert("RGB"))
         else:
             self._image = np.array(image.convert("RGB"))
+
+        self.brand = brand
 
         self.textVibes = []
         self.imageVibes = []
@@ -92,7 +93,7 @@ class VibeBase(IdBase):
 
 
 class Category(CategoryT, VibeBase):
-    base = "CTG"
+    _id_base = "CTG"
 
     def __init__(self, description: str, url: str):
         self.id = self.genId()
@@ -102,7 +103,7 @@ class Category(CategoryT, VibeBase):
 
 
 class Vibe(VibeT, VibeBase):
-    base = "IVB"
+    _id_base = "IVB"
 
     def __init__(self, image: ImageT | str, description: str):
         self.id = self.genId()
@@ -117,24 +118,24 @@ class Vibe(VibeT, VibeBase):
 
 
 class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
-    base = "FEB"
+    _id_base = "FEB"
 
     def __init__(
         self,
         shape: List[int],
         vibeMode: int,
         flatTensor: List[float],
-        productIndex: List[int],
+        productIdx: List[int],
     ):
         self.id = self.genId()
         self.shape = shape
         self.vibeMode = vibeMode
         self.flatTensor = flatTensor
-        self.productIndex = productIndex
+        self.productIdx = productIdx
 
 
 class ProductVibes(ProductVibesT, VibeBase):
-    base = "PVB"
+    _id_base = "PVB"
 
     def __init__(self):
         self.id = self.genId()
@@ -145,11 +146,13 @@ class ProductVibes(ProductVibesT, VibeBase):
 
         self.vibes = []
         self._vibes = {}
+        self._brands = {}
 
         self.productTextBatches = []
         self.productImageBatches = []
         self.textBatches = []
         self.imageBatches = []
+        self.brands = []
 
 
 class Catalog(CatalogT, IdBase):
@@ -157,6 +160,7 @@ class Catalog(CatalogT, IdBase):
     model: PreTrainedModel
     processor: ProcessorMixin
     tokenizer: PreTrainedTokenizer
+    _id_base = "CLG"
 
     def __init__(
         self,
@@ -166,7 +170,6 @@ class Catalog(CatalogT, IdBase):
         processor: ProcessorMixin | None = None,
         tokenizer: PreTrainedTokenizer | None = None,
     ):
-        self.base = "CLG"
         self.id = self.genId()
         self.version = __version__
         self.description = description
@@ -175,6 +178,7 @@ class Catalog(CatalogT, IdBase):
         self.productImageFeatures = []
 
         self.batchSize = batchSize
+        self.brands = []
 
         if model is not None:
             self.model = model
@@ -259,9 +263,7 @@ class Catalog(CatalogT, IdBase):
                     shape=image_features.shape,
                     flatTensor=image_features.flatten().tolist(),
                     vibeMode=VibeMode.ProductImage,
-                    productIndex=list(
-                        range(i * self.batchSize, i + 1 * self.batchSize)
-                    ),
+                    productIdx=list(range(i * self.batchSize, i + 1 * self.batchSize)),
                 )
                 print(f"Image embeddings collected for batch {i}")
                 self.productVibes.productImageBatches.append(image_batch)
@@ -270,9 +272,7 @@ class Catalog(CatalogT, IdBase):
                     shape=text_features.shape,
                     flatTensor=text_features.flatten().tolist(),
                     vibeMode=VibeMode.ProductText,
-                    productIndex=list(
-                        range(i * self.batchSize, i + 1 * self.batchSize)
-                    ),
+                    productIdx=list(range(i * self.batchSize, i + 1 * self.batchSize)),
                 )
 
                 print(f"Text embeddings collected for batch {i}")

@@ -3,10 +3,14 @@ import numpy as np
 from PIL import Image
 from transformers import CLIPModel, CLIPProcessor
 
-from hushh.catalog import Catalog, Category, Product
+from hushh.catalog import Brand, Catalog, Category, Product
 from hushh.hcf import Catalog as RawCatalog
 
 builder = flatbuffers.Builder(0)
+
+
+def create_brand():
+    return Brand("foo", "description", "dummy_url")
 
 
 def create_image():
@@ -44,7 +48,9 @@ def test_catalog_type_with_products():
     cat.version = "1.2.0"
 
     image = create_image()
-    p = Product("desc", "url", image)
+
+    brand = create_brand()
+    p = Product("desc", "url", image, brand)
     cat.addProduct(p)
     builder = flatbuffers.Builder(0)
 
@@ -71,7 +77,7 @@ def test_embeddings():
     catalog = Catalog("test_embeddings")
     catalog.id = "foo"
     for _ in range(0, 10):
-        p = Product("desc", "url", create_image())
+        p = Product("desc", "url", create_image(), create_brand())
         catalog.addProduct(p)
 
     builder = flatbuffers.Builder(0)
@@ -90,9 +96,10 @@ def test_image_catalog():
 
     catalog = Catalog("image_test")
 
-    cat_product = Product("cat", "test_url", cat)
-    dog_product = Product("dog", "test_url", dog)
-    bird_product = Product("bird", "test_url", bird)
+    brand = create_brand()
+    cat_product = Product("cat", "test_url", cat, brand)
+    dog_product = Product("dog", "test_url", dog, brand)
+    bird_product = Product("bird", "test_url", bird, brand)
 
     catalog.addProduct(cat_product)
     catalog.addProduct(dog_product)

@@ -1,5 +1,5 @@
 
-.PHONY: clean lint dev test preflight, docs, publish_docs, pypi, build
+.PHONY: clean lint dev test preflight, docs, publish_docs, pypi, build, docs
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -47,6 +47,7 @@ clean:
 docs:
 	quartodoc build
 	quarto render
+	quarto render README.qmd
 
 build:
 	python -m build

@@ -2,10 +2,8 @@
 
 
 [![Build](https://github.com/hushh-labs/hushh-vibe-catalog-reader/actions/workflows/main.yml/badge.svg)](https://github.com/hushh-labs/hushh-vibe-catalog-reader/actions/workflows/main.yml)
-# hushh-vibe-catalog
-Support clients for the hushh vibe-catalog file format
-
-There is documentation [available](https://hushh.quarto.pub/hushh/reference)
+\# hushh-vibe-catalog Support clients for the hushh vibe-catalog file
+format
 
 There is documentation
 [available](https://hushh-labs.github.io/hushh-vibe-catalog-reader/reference)
@@ -21,10 +19,18 @@ $> pip install hushh-vibe-catalog
 ``` flatbuffer
 namespace hushh.hcf;
 
+table Brand {
+  id: string;
+  description: string;
+  name: string;
+  url: string;
+}
+
 table Product {
   id: string;
   description: string;
   url: string;
+  brand: Brand;
 }
 
 table Vibe {
@@ -47,12 +53,13 @@ table FlatEmbeddingBatch {
     shape:[int];
     vibe_mode: VibeMode;
     flat_tensor:[float];
-    product_index: [int];
+    product_idx: [int];
 }
 
 table ProductVibes {
   id: string;
   products: [Product];
+  brands: [Brand];
   categories: [Category];
   vibes: [Vibe];
   product_text_batches: [FlatEmbeddingBatch];
