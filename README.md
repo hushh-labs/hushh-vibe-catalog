@@ -5,8 +5,7 @@
 \# hushh-vibe-catalog Support clients for the hushh vibe-catalog file
 format
 
-There is documentation
-[available](https://hushh-labs.github.io/hushh-vibe-catalog-reader/reference)
+<!-- There is documentation [available](https://hushh-labs.github.io/hushh-vibe-catalog-reader/reference) -->
 
 # Installation
 
