@@ -9,13 +9,11 @@ from hushh.hcf import Catalog as RawCatalog
 builder = flatbuffers.Builder(0)
 
 
+TEST_IMAGE_BIRD = "assets/bird.jpg"
+
+
 def create_brand():
     return Brand("foo", "description", "dummy_url")
-
-
-def create_image():
-    image = Image.new("RGB", (512, 512))
-    return image
 
 
 def build_raw_catalog():
@@ -47,7 +45,7 @@ def test_catalog_type_with_products():
     cat.id = "foo"
     cat.version = "1.2.0"
 
-    image = create_image()
+    image = "assets/bird.jpg"
 
     brand = create_brand()
     p = Product("desc", "url", image, brand)
@@ -77,7 +75,7 @@ def test_embeddings():
     catalog = Catalog("test_embeddings")
     catalog.id = "foo"
     for _ in range(0, 10):
-        p = Product("desc", "url", create_image(), create_brand())
+        p = Product("desc", "url", TEST_IMAGE_BIRD, create_brand())
         catalog.addProduct(p)
 
     builder = flatbuffers.Builder(0)

@@ -60,7 +60,7 @@ class Brand(BrandT, IdBase):
 
 
 class Product(ProductT, IdBase):
-    def __init__(self, description: str, url: str, image: ImageT | str, brand: Brand):
+    def __init__(self, description: str, url: str, image_path: str, brand: Brand):
         self.id = self.genId()
         if pd.isna(description):
             raise NoEmbeddableContent("Missing description of product")
@@ -68,10 +68,7 @@ class Product(ProductT, IdBase):
         self.description = description
         self.url = url
 
-        if isinstance(image, str):
-            self._image = np.array(Image.open(image).convert("RGB"))
-        else:
-            self._image = np.array(image.convert("RGB"))
+        self.image_path = image_path
 
         self.brand = brand
 
@@ -105,14 +102,10 @@ class Category(CategoryT, VibeBase):
 class Vibe(VibeT, VibeBase):
     _id_base = "IVB"
 
-    def __init__(self, image: ImageT | str, description: str):
+    def __init__(self, image_path: str, description: str):
         self.id = self.genId()
         self.description = description
-
-        if isinstance(image, str):
-            self._image = np.array(Image.open(image).convert("RGB"))
-        else:
-            self._image = np.array(image.convert("RGB"))
+        self.image_path = image_path
 
         self.productIdx = []
 
@@ -210,12 +203,12 @@ class Catalog(CatalogT, IdBase):
         return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
 
     def to_hcf(self, filename: str):
-        builder = flatbuffers.Builder(0)
-        cat_end = self.Pack(builder)
-        builder.Finish(cat_end)
         if not filename.endswith(".hcf"):
             filename = filename + ".hcf"
         with open(filename, "wb") as fh:
+            builder = flatbuffers.Builder(0)
+            cat_end = self.Pack(builder)
+            builder.Finish(cat_end)
             fh.write(builder.Output())
 
     def renderProductFlatBatch(self):
@@ -227,9 +220,12 @@ class Catalog(CatalogT, IdBase):
                 images = []
                 texts = []
                 for p in batch:
-                    images.append(p._image)
+                    import pdb
+
+                    pdb.set_trace()
+                    image = np.array(Image.open(p.image_path).convert("RGB"))
+                    images.append(image)
                     texts.append(p.description)
-                    del p._image
 
                 print(f"Collected images and text for batch {i}")
 
@@ -246,6 +242,9 @@ class Catalog(CatalogT, IdBase):
                     )
                 else:
                     raise UncallableProcessor()
+
+                del images
+                del texts
 
                 print(f"Collected inputs for batch {i}")
 

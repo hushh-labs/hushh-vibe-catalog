@@ -2,15 +2,18 @@
 
 # namespace: hcf
 
+from typing import Any, Optional
+
 import flatbuffers
 from flatbuffers.compat import import_numpy
-from typing import Any
+
 from hushh.hcf.ProductVibes import ProductVibes
-from typing import Optional
+
 np = import_numpy()
 
+
 class Catalog(object):
-    __slots__ = ['_tab']
+    __slots__ = ["_tab"]
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
@@ -23,6 +26,7 @@ class Catalog(object):
     def GetRootAsCatalog(cls, buf, offset=0):
         """This method is deprecated. Please switch to GetRootAs."""
         return cls.GetRootAs(buf, offset)
+
     # Catalog
     def Init(self, buf: bytes, pos: int):
         self._tab = flatbuffers.table.Table(buf, pos)
@@ -79,68 +83,102 @@ class Catalog(object):
             return self._tab.String(o + self._tab.Pos)
         return None
 
+
 def CatalogStart(builder: flatbuffers.Builder):
     builder.StartObject(7)
+
 
 def Start(builder: flatbuffers.Builder):
     CatalogStart(builder)
 
+
 def CatalogAddId(builder: flatbuffers.Builder, id: int):
-    builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
+    builder.PrependUOffsetTRelativeSlot(
+        0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0
+    )
+
 
 def AddId(builder: flatbuffers.Builder, id: int):
     CatalogAddId(builder, id)
 
+
 def CatalogAddVersion(builder: flatbuffers.Builder, version: int):
-    builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(version), 0)
+    builder.PrependUOffsetTRelativeSlot(
+        1, flatbuffers.number_types.UOffsetTFlags.py_type(version), 0
+    )
+
 
 def AddVersion(builder: flatbuffers.Builder, version: int):
     CatalogAddVersion(builder, version)
 
+
 def CatalogAddDescription(builder: flatbuffers.Builder, description: int):
-    builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
+    builder.PrependUOffsetTRelativeSlot(
+        2, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0
+    )
+
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
     CatalogAddDescription(builder, description)
 
+
 def CatalogAddProductVibes(builder: flatbuffers.Builder, productVibes: int):
-    builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productVibes), 0)
+    builder.PrependUOffsetTRelativeSlot(
+        3, flatbuffers.number_types.UOffsetTFlags.py_type(productVibes), 0
+    )
+
 
 def AddProductVibes(builder: flatbuffers.Builder, productVibes: int):
     CatalogAddProductVibes(builder, productVibes)
 
+
 def CatalogAddBatchSize(builder: flatbuffers.Builder, batchSize: int):
     builder.PrependInt32Slot(4, batchSize, 0)
+
 
 def AddBatchSize(builder: flatbuffers.Builder, batchSize: int):
     CatalogAddBatchSize(builder, batchSize)
 
-def CatalogAddTokenizerNameOrPath(builder: flatbuffers.Builder, tokenizerNameOrPath: int):
-    builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(tokenizerNameOrPath), 0)
+
+def CatalogAddTokenizerNameOrPath(
+    builder: flatbuffers.Builder, tokenizerNameOrPath: int
+):
+    builder.PrependUOffsetTRelativeSlot(
+        5, flatbuffers.number_types.UOffsetTFlags.py_type(tokenizerNameOrPath), 0
+    )
+
 
 def AddTokenizerNameOrPath(builder: flatbuffers.Builder, tokenizerNameOrPath: int):
     CatalogAddTokenizerNameOrPath(builder, tokenizerNameOrPath)
 
+
 def CatalogAddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
-    builder.PrependUOffsetTRelativeSlot(6, flatbuffers.number_types.UOffsetTFlags.py_type(modelNameOrPath), 0)
+    builder.PrependUOffsetTRelativeSlot(
+        6, flatbuffers.number_types.UOffsetTFlags.py_type(modelNameOrPath), 0
+    )
+
 
 def AddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
     CatalogAddModelNameOrPath(builder, modelNameOrPath)
 
+
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
     return builder.EndObject()
+
 
 def End(builder: flatbuffers.Builder) -> int:
     return CatalogEnd(builder)
 
+
 import hushh.hcf.ProductVibes
+
 try:
     from typing import Optional
 except:
     pass
 
-class CatalogT(object):
 
+class CatalogT(object):
     # CatalogT
     def __init__(self):
         self.id = None  # type: str
@@ -160,7 +198,7 @@ class CatalogT(object):
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
-        return cls.InitFromBuf(buf, pos+n)
+        return cls.InitFromBuf(buf, pos + n)
 
     @classmethod
     def InitFromObj(cls, catalog):
@@ -176,7 +214,9 @@ class CatalogT(object):
         self.version = catalog.Version()
         self.description = catalog.Description()
         if catalog.ProductVibes() is not None:
-            self.productVibes = hushh.hcf.ProductVibes.ProductVibesT.InitFromObj(catalog.ProductVibes())
+            self.productVibes = hushh.hcf.ProductVibes.ProductVibesT.InitFromObj(
+                catalog.ProductVibes()
+            )
         self.batchSize = catalog.BatchSize()
         self.tokenizerNameOrPath = catalog.TokenizerNameOrPath()
         self.modelNameOrPath = catalog.ModelNameOrPath()
