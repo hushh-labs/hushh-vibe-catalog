@@ -220,11 +220,9 @@ class Catalog(CatalogT, IdBase):
                 images = []
                 texts = []
                 for p in batch:
-                    import pdb
-
-                    pdb.set_trace()
-                    image = np.array(Image.open(p.image_path).convert("RGB"))
-                    images.append(image)
+                    with open(p.image_path, "rb") as fh:
+                        image = np.array(Image.open(fh).convert("RGB"))
+                        images.append(image)
                     texts.append(p.description)
 
                 print(f"Collected images and text for batch {i}")

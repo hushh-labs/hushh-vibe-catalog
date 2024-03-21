@@ -88,9 +88,12 @@ def test_embeddings():
 
 
 def test_image_catalog():
-    cat = Image.open("assets/cat.jpg")
-    dog = Image.open("assets/dog.jpg")
-    bird = Image.open("assets/bird.jpg")
+    cat = "assets/cat.jpg"
+    dog = "assets/dog.jpg"
+    bird = "assets/bird.jpg"
+    cat_image = Image.open(cat)
+    dog_image = Image.open(dog)
+    bird_image = Image.open(bird)
 
     catalog = Catalog("image_test")
 
@@ -123,7 +126,9 @@ def test_image_catalog():
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
-    inputs = processor(images=[cat, dog, bird], return_tensors="pt", padding=True)
+    inputs = processor(
+        images=[cat_image, dog_image, bird_image], return_tensors="pt", padding=True
+    )
 
     assert isinstance(model, CLIPModel)
     image_features = model.get_image_features(pixel_values=inputs.pixel_values)
