@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "reference/hcf.Catalog.html",
-    "href": "reference/hcf.Catalog.html",
-    "title": "hcf.Catalog",
-    "section": "",
-    "text": "hcf.Catalog\nhcf.Catalog"
-  },
-  {
     "objectID": "reference/hcf.html",
     "href": "reference/hcf.html",
     "title": "hcf",
@@ -14,65 +7,68 @@
     "text": "hcf\nhcf",
     "crumbs": [
       "Reference",
-      "Deploy",
+      "HCF",
       "hcf"
     ]
   },
   {
-    "objectID": "reference/index.html",
-    "href": "reference/index.html",
-    "title": "Function reference",
+    "objectID": "reference/catalog.Catalog.html",
+    "href": "reference/catalog.Catalog.html",
+    "title": "catalog.Catalog",
     "section": "",
-    "text": "catalog\n\n\n\nhcf\n\n\n\n\n\n\n\n\n\n\nhcf",
+    "text": "catalog.Catalog\ncatalog.Catalog(self, description, batchSize=10000, model=None, processor=None, tokenizer=None)",
     "crumbs": [
       "Reference",
-      "Function reference"
+      "Catalog",
+      "catalog.Catalog"
     ]
   },
   {
-    "objectID": "reference/index.html#deploy",
-    "href": "reference/index.html#deploy",
-    "title": "Function reference",
+    "objectID": "reference/catalog.Product.html",
+    "href": "reference/catalog.Product.html",
+    "title": "catalog.Product",
     "section": "",
-    "text": "catalog\n\n\n\nhcf",
+    "text": "catalog.Product(self, description, url, image_path, brand)\nA class representing a product.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\ndescription\nstr\nThe description of the product.\n\n\nurl\nstr\nThe URL of the product.\n\n\nimage_path\nstr\nThe path to the image of the product.\n\n\nbrand\nhushh.catalog.Brand\nThe brand of the product.\n\n\ntextVibes\nlist\nA list of text vibes associated with the product.\n\n\nimageVibes\nlist\nA list of image vibes associated with the product.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndescription\nstr\nThe description of the product.\nrequired\n\n\nurl\nstr\nThe URL of the product.\nrequired\n\n\nimage_path\nstr\nThe path to the image of the product.\nrequired\n\n\nbrand\nhushh.catalog.Brand\nThe brand of the product.\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nhushh.errors.NoEmbeddableContent\nIf the description is missing.",
     "crumbs": [
       "Reference",
-      "Function reference"
+      "Catalog",
+      "catalog.Product"
     ]
   },
   {
-    "objectID": "reference/index.html#monitor",
-    "href": "reference/index.html#monitor",
-    "title": "Function reference",
+    "objectID": "reference/catalog.Product.html#attributes",
+    "href": "reference/catalog.Product.html#attributes",
+    "title": "catalog.Product",
     "section": "",
-    "text": "hcf",
+    "text": "Name\nType\nDescription\n\n\n\n\ndescription\nstr\nThe description of the product.\n\n\nurl\nstr\nThe URL of the product.\n\n\nimage_path\nstr\nThe path to the image of the product.\n\n\nbrand\nhushh.catalog.Brand\nThe brand of the product.\n\n\ntextVibes\nlist\nA list of text vibes associated with the product.\n\n\nimageVibes\nlist\nA list of image vibes associated with the product.",
     "crumbs": [
       "Reference",
-      "Function reference"
+      "Catalog",
+      "catalog.Product"
     ]
   },
   {
-    "objectID": "reference/catalog.html",
-    "href": "reference/catalog.html",
-    "title": "catalog",
+    "objectID": "reference/catalog.Product.html#parameters",
+    "href": "reference/catalog.Product.html#parameters",
+    "title": "catalog.Product",
     "section": "",
-    "text": "catalog\n\n\n\n\n\nName\nDescription\n\n\n\n\n\nBatch data into tuples of length n. The last batch may be shorter.",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ndescription\nstr\nThe description of the product.\nrequired\n\n\nurl\nstr\nThe URL of the product.\nrequired\n\n\nimage_path\nstr\nThe path to the image of the product.\nrequired\n\n\nbrand\nhushh.catalog.Brand\nThe brand of the product.\nrequired",
     "crumbs": [
       "Reference",
-      "Deploy",
-      "catalog"
+      "Catalog",
+      "catalog.Product"
     ]
   },
   {
-    "objectID": "reference/catalog.html#functions",
-    "href": "reference/catalog.html#functions",
-    "title": "catalog",
+    "objectID": "reference/catalog.Product.html#raises",
+    "href": "reference/catalog.Product.html#raises",
+    "title": "catalog.Product",
     "section": "",
-    "text": "Name\nDescription\n\n\n\n\n\nBatch data into tuples of length n. The last batch may be shorter.",
+    "text": "Type\nDescription\n\n\n\n\nhushh.errors.NoEmbeddableContent\nIf the description is missing.",
     "crumbs": [
       "Reference",
-      "Deploy",
-      "catalog"
+      "Catalog",
+      "catalog.Product"
     ]
   },
   {
@@ -87,7 +83,7 @@
     "href": "index.html",
     "title": "Hushh Vibe Catalog ",
     "section": "",
-    "text": "Hushh Catalogs Files (hcf) are serialized formats intended to provide rapid loading of embedding data for the purposes of vector search. More information on the Hushh Catalog Format is available below: - the documentation at https://hushh-labs.github.io/hushh-vibe-catalog/reference/ - the R package at https://rstudio.github.io/vetiver-r/\n\n\nYou can install the library from PyPI:\npython -m pip install hushh-vibe-catalog\nAnd the development version from GitHub with:\npython -m pip install git+https://github.com/hushh-labs/hushh-labs-catalog\n\n\n\n\n\ncat = Catalog(\"demo_catalog\")\ndummy_brand = Brand(\"dummy\", \"description\", \"dummy_url\")\nfor filename in tqdm(glob.glob(\"images/*\")):\n    id, ext = os.path.splitext(os.path.basename(filename))\n    id = int(id)\n    style = styles.loc[id]\n    if pd.isna(style.productDisplayName):\n        pass\n        # print(f\"Skipping: {id}, product had no description\")\n    else:\n        prod = Product(description=style.productDisplayName, url=\"dummy_url\", image_path=filename, brand = dummy_brand)\n        cat.addProduct(prod)\n\nprint(\"Writing Catalog\")\ncat.to_hcf(\"catalog.hcf\")\n\n\n\ncat = catalog.read_hcf(\"catalog.hcf\")\n    pv = cat.ProductVibes()\n    all_embeddings = []\n\n    embeddings = []\n\n    for idx in range(0,pv.ProductTextBatchesLength()):\n        batch = pv.ProductTextBatches(idx)\n        embs = batch.FlatTensorAsNumpy()\n        embs = embs.reshape(batch.ShapeAsNumpy())\n        embeddings.append(embs)\n\n    embeddings = np.concatenate(embeddings)\n\n\n    query = \"shoes\"\n\n    inputs = tokenizer([query], padding=True, return_tensors=\"pt\")\n    query_emb = model.get_text_features(**inputs)\n    hits = util.semantic_search(query_emb, embeddings, top_k=3)[0]\n    return cat.ProductVibes().Products(hits[0]['corpus_id']).Description()\n\n\n\n\nThe latest version of the schema is as follows.\nnamespace hushh.hcf;\n\ntable Brand {\n  id: string;\n  description: string;\n  name: string;\n  url: string;\n}\n\ntable Product {\n  id: string;\n  description: string;\n  url: string;\n  brand: Brand;\n}\n\ntable Vibe {\n  id: string;\n  description: string;\n  product_idx: [int];\n}\n\ntable Category {\n  id: string;\n  description: string;\n  url: string;\n  product_idx: [int];\n}\n\nenum VibeMode : byte { ProductText = 0, ProductImage, Text, Image, Category}\n\ntable FlatEmbeddingBatch {\n    id: string;\n    shape:[int];\n    vibe_mode: VibeMode;\n    flat_tensor:[float];\n    product_idx: [int];\n}\n\ntable ProductVibes {\n  id: string;\n  products: [Product];\n  brands: [Brand];\n  categories: [Category];\n  vibes: [Vibe];\n  product_text_batches: [FlatEmbeddingBatch];\n  product_image_batches: [FlatEmbeddingBatch];\n  text_batches: [FlatEmbeddingBatch];\n  image_batches: [FlatEmbeddingBatch];\n}\n\ntable Catalog {\n  id : string;\n  version: string;\n  description: string;\n  product_vibes: ProductVibes;\n  batch_size: int;\n  tokenizer_name_or_path: string;\n  model_name_or_path: string;\n}\n\nroot_type Catalog;\n\n\n\n\nThis project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.\n\nIf you think you have encountered a bug, please submit an issue."
+    "text": "Hushh Catalogs Files (hcf) are serialized formats intended to provide rapid loading of embedding data for the purposes of vector search. More information on the Hushh Catalog Format is available here\n\n\nYou can install the library from PyPI:\npython -m pip install hushh-vibe-catalog\nAnd the development version from GitHub with:\npython -m pip install git+https://github.com/hushh-labs/hushh-labs-catalog\n\n\n\n\n\ncat = Catalog(\"demo_catalog\")\ndummy_brand = Brand(\"dummy\", \"description\", \"dummy_url\")\nfor filename in tqdm(glob.glob(\"images/*\")):\n    id, ext = os.path.splitext(os.path.basename(filename))\n    id = int(id)\n    style = styles.loc[id]\n    if pd.isna(style.productDisplayName):\n        pass\n        # print(f\"Skipping: {id}, product had no description\")\n    else:\n        prod = Product(description=style.productDisplayName, url=\"dummy_url\", image_path=filename, brand = dummy_brand)\n        cat.addProduct(prod)\n\nprint(\"Writing Catalog\")\ncat.to_hcf(\"catalog.hcf\")\n\n\n\ncat = catalog.read_hcf(\"catalog.hcf\")\n    pv = cat.ProductVibes()\n    all_embeddings = []\n\n    embeddings = []\n\n    for idx in range(0,pv.ProductTextBatchesLength()):\n        batch = pv.ProductTextBatches(idx)\n        embs = batch.FlatTensorAsNumpy()\n        embs = embs.reshape(batch.ShapeAsNumpy())\n        embeddings.append(embs)\n\n    embeddings = np.concatenate(embeddings)\n\n\n    query = \"shoes\"\n\n    inputs = tokenizer([query], padding=True, return_tensors=\"pt\")\n    query_emb = model.get_text_features(**inputs)\n    hits = util.semantic_search(query_emb, embeddings, top_k=3)[0]\n    return cat.ProductVibes().Products(hits[0]['corpus_id']).Description()\n\n\n\n\nThe latest version of the schema is as follows.\nnamespace hushh.hcf;\n\ntable Brand {\n  id: string;\n  description: string;\n  name: string;\n  url: string;\n}\n\ntable Product {\n  id: string;\n  description: string;\n  url: string;\n  brand: Brand;\n}\n\ntable Vibe {\n  id: string;\n  description: string;\n  product_idx: [int];\n}\n\ntable Category {\n  id: string;\n  description: string;\n  url: string;\n  product_idx: [int];\n}\n\nenum VibeMode : byte { ProductText = 0, ProductImage, Text, Image, Category}\n\ntable FlatEmbeddingBatch {\n    id: string;\n    shape:[int];\n    vibe_mode: VibeMode;\n    flat_tensor:[float];\n    product_idx: [int];\n}\n\ntable ProductVibes {\n  id: string;\n  products: [Product];\n  brands: [Brand];\n  categories: [Category];\n  vibes: [Vibe];\n  product_text_batches: [FlatEmbeddingBatch];\n  product_image_batches: [FlatEmbeddingBatch];\n  text_batches: [FlatEmbeddingBatch];\n  image_batches: [FlatEmbeddingBatch];\n}\n\ntable Catalog {\n  id : string;\n  version: string;\n  description: string;\n  product_vibes: ProductVibes;\n  batch_size: int;\n  tokenizer_name_or_path: string;\n  model_name_or_path: string;\n}\n\nroot_type Catalog;\n\n\n\n\nThis project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.\n\nIf you think you have encountered a bug, please submit an issue."
   },
   {
     "objectID": "index.html#installation",
@@ -265,31 +261,108 @@
     "text": "Create a comparison JSON dataset\nWe will set up a quick and dirty json output for comparison. This just dumps the flatbatch content from the catalog in standard json format.\n\nwith open (\"catalog.json\", \"w\") as fh:\n    json.dump(cat.productVibes, fh, default=lambda o: o.__dict__)"
   },
   {
-    "objectID": "reference/hcf.ImageVibe.html",
-    "href": "reference/hcf.ImageVibe.html",
-    "title": "hcf.ImageVibe",
+    "objectID": "reference/catalog.html",
+    "href": "reference/catalog.html",
+    "title": "catalog",
     "section": "",
-    "text": "hcf.ImageVibe\nhcf.ImageVibe"
+    "text": "catalog\n\n\n\n\n\nName\nDescription\n\n\n\n\n\nA class representing a brand.\n\n\n\nA class representing a product.\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\n\nBatch data into tuples of length n. The last batch may be shorter.",
+    "crumbs": [
+      "Reference",
+      "Catalog",
+      "catalog"
+    ]
   },
   {
-    "objectID": "reference/catalog.Catalog.html",
-    "href": "reference/catalog.Catalog.html",
-    "title": "catalog.Catalog",
+    "objectID": "reference/catalog.html#classes",
+    "href": "reference/catalog.html#classes",
+    "title": "catalog",
     "section": "",
-    "text": "catalog.Catalog\ncatalog.Catalog(self, description, batchSize=10000, model=None, processor=None, tokenizer=None)"
+    "text": "Name\nDescription\n\n\n\n\n\nA class representing a brand.\n\n\n\nA class representing a product.",
+    "crumbs": [
+      "Reference",
+      "Catalog",
+      "catalog"
+    ]
   },
   {
-    "objectID": "reference/hcf.Category.html",
-    "href": "reference/hcf.Category.html",
-    "title": "hcf.Category",
+    "objectID": "reference/catalog.html#functions",
+    "href": "reference/catalog.html#functions",
+    "title": "catalog",
     "section": "",
-    "text": "hcf.Category\nhcf.Category"
+    "text": "Name\nDescription\n\n\n\n\n\nBatch data into tuples of length n. The last batch may be shorter.",
+    "crumbs": [
+      "Reference",
+      "Catalog",
+      "catalog"
+    ]
   },
   {
-    "objectID": "reference/hcf.Product.html",
-    "href": "reference/hcf.Product.html",
-    "title": "hcf.Product",
+    "objectID": "reference/catalog.Brand.html",
+    "href": "reference/catalog.Brand.html",
+    "title": "catalog.Brand",
     "section": "",
-    "text": "hcf.Product\nhcf.Product"
+    "text": "catalog.Brand(self, name, description, url)\nA class representing a brand.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nname\nstr\nThe name of the brand.\n\n\ndescription\nstr\nThe description of the brand.\n\n\nurl\nstr\nThe URL of the brand.\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nname\nstr\nThe name of the brand.\nrequired\n\n\ndescription\nstr\nThe description of the brand.\nrequired\n\n\nurl\nstr\nThe URL of the brand.\nrequired",
+    "crumbs": [
+      "Reference",
+      "Catalog",
+      "catalog.Brand"
+    ]
+  },
+  {
+    "objectID": "reference/catalog.Brand.html#attributes",
+    "href": "reference/catalog.Brand.html#attributes",
+    "title": "catalog.Brand",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\nname\nstr\nThe name of the brand.\n\n\ndescription\nstr\nThe description of the brand.\n\n\nurl\nstr\nThe URL of the brand.",
+    "crumbs": [
+      "Reference",
+      "Catalog",
+      "catalog.Brand"
+    ]
+  },
+  {
+    "objectID": "reference/catalog.Brand.html#parameters",
+    "href": "reference/catalog.Brand.html#parameters",
+    "title": "catalog.Brand",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\nname\nstr\nThe name of the brand.\nrequired\n\n\ndescription\nstr\nThe description of the brand.\nrequired\n\n\nurl\nstr\nThe URL of the brand.\nrequired",
+    "crumbs": [
+      "Reference",
+      "Catalog",
+      "catalog.Brand"
+    ]
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Function reference",
+    "section": "",
+    "text": "catalog\n\n\n\ncatalog.Product\nA class representing a product.\n\n\ncatalog.Catalog\n\n\n\ncatalog.Brand\nA class representing a brand.\n\n\n\n\n\n\nAutogenerated Python Clients from Flatbuffer Schemas\n\n\n\nhcf",
+    "crumbs": [
+      "Reference",
+      "Function reference"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#catalog",
+    "href": "reference/index.html#catalog",
+    "title": "Function reference",
+    "section": "",
+    "text": "catalog\n\n\n\ncatalog.Product\nA class representing a product.\n\n\ncatalog.Catalog\n\n\n\ncatalog.Brand\nA class representing a brand.",
+    "crumbs": [
+      "Reference",
+      "Function reference"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#hcf",
+    "href": "reference/index.html#hcf",
+    "title": "Function reference",
+    "section": "",
+    "text": "Autogenerated Python Clients from Flatbuffer Schemas\n\n\n\nhcf",
+    "crumbs": [
+      "Reference",
+      "Function reference"
+    ]
   }
 ]
