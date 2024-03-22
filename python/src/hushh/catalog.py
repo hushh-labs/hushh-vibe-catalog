@@ -242,11 +242,16 @@ class ProductVibes(ProductVibesT, VibeBase):
 
 
 class Catalog(CatalogT, IdBase):
-    productVibes: ProductVibes
-    model: PreTrainedModel
-    processor: ProcessorMixin
-    tokenizer: PreTrainedTokenizer
-    _id_base = "CLG"
+    """
+    Catalog class for managing product information and embeddings.
+
+    Attributes:
+        productVibes (ProductVibes): Object containing product vibes.
+        model (PreTrainedModel): Pre-trained model for embeddings.
+        processor (ProcessorMixin): Processor for handling inputs.
+        tokenizer (PreTrainedTokenizer): Tokenizer for processing text inputs.
+        _id_base (str): Base identifier for generating unique IDs.
+    """
 
     def __init__(
         self,
@@ -256,6 +261,16 @@ class Catalog(CatalogT, IdBase):
         processor: ProcessorMixin | None = None,
         tokenizer: PreTrainedTokenizer | None = None,
     ):
+        """
+        Initialize Catalog object.
+
+        Args:
+            description (str): Description of the catalog.
+            batchSize (int): Batch size for processing embeddings.
+            model (PreTrainedModel, optional): Pre-trained model for embeddings.
+            processor (ProcessorMixin, optional): Processor for handling inputs.
+            tokenizer (PreTrainedTokenizer, optional): Tokenizer for processing text inputs.
+        """
         self.id = self.genId()
         self.version = __version__
         self.description = description
@@ -293,9 +308,18 @@ class Catalog(CatalogT, IdBase):
         self.productVibes = ProductVibes()
 
     def __repr__(self):
+        """
+        Return a string representation of the Catalog object.
+        """
         return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
 
     def to_hcf(self, filename: str):
+        """
+        Convert Catalog object to HCF file format.
+
+        Args:
+            filename (str): Name of the HCF file.
+        """
         if not filename.endswith(".hcf"):
             filename = filename + ".hcf"
         with open(filename, "wb") as fh:
@@ -305,6 +329,9 @@ class Catalog(CatalogT, IdBase):
             fh.write(builder.Output())
 
     def renderProductFlatBatch(self):
+        """
+        Render product embeddings in flat batch format.
+        """
         model = self.model
         with torch.no_grad():
             for i, batch in enumerate(
@@ -370,10 +397,25 @@ class Catalog(CatalogT, IdBase):
                 self.productVibes.productTextBatches.append(text_batch)
 
     def Pack(self, builder):
+        """
+        Pack Catalog object using FlatBuffers.
+
+        Args:
+            builder: FlatBuffer builder object.
+
+        Returns:
+            Offset of the packed Catalog object.
+        """
         self.renderProductFlatBatch()
         return super().Pack(builder)
 
     def addProduct(self, p: Product):
+        """
+        Add a product to the Catalog.
+
+        Args:
+            p (Product): Product object to add.
+        """
         if p.id in self.productVibes._products:
             raise ValueError(f"Product {p.id} already exists")
         else:
@@ -382,18 +424,37 @@ class Catalog(CatalogT, IdBase):
         self.productVibes.products.append(p)
 
     def addProductCategory(self, c: Category):
+        """
+        Add a product category to the Catalog.
+
+        Args:
+            c (Category): Category object to add.
+        """
         if c.id in self.productVibes._categories:
             raise ValueError(f"Category {c.id} already exists")
         self.productVibes._categories[c.id] = len(self.productVibes.categories)
         self.productVibes.categories.append(c)
 
     def addProductVibe(self, v: Vibe):
+        """
+        Add a product vibe to the Catalog.
+
+        Args:
+            v (Vibe): Vibe object to add.
+        """
         if v.id in self.productVibes._vibes:
             raise ValueError(f"Vibe {v.id} already exists")
         self.productVibes._vibes[v.id] = len(self.productVibes.vibes)
         self.productVibes.vibes.append(v)
 
     def linkProductCategory(self, p_id: str, c_id: str):
+        """
+        Link a product with a category.
+
+        Args:
+            p_id (str): ID of the product.
+            c_id (str): ID of the category.
+        """
         if p_id not in self.productVibes._products:
             raise ValueError(f"Product {p_id} does not exist in Catalog")
         if c_id not in self.productVibes._categories:
