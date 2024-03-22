@@ -1,0 +1,94 @@
+# Hushh Vibe Catalog <a href='https://hushh-labs.github.io/hushh-vibe-catalog/'><img src='figures/logo.svg' align="right" height="139" /></a>
+
+<!-- badges: start -->
+
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
+<!-- [![codecov](https://codecov.io/gh/isabelizimm/vetiver-python/branch/main/graph/badge.svg?token=CW6JHVS6ZX)](https://codecov.io/gh/isabelizimm/vetiver-python) -->
+<!-- [![codecov](https://codecov.io/gh/isabelizimm/vetiver-python/branch/main/graph/badge.svg?token=CW6JHVS6ZX)](https://codecov.io/gh/isabelizimm/vetiver-python) -->
+
+[![Build](https://github.com/hushh-labs/hushh-vibe-catalog-reader/actions/workflows/main.yml/badge.svg)](https://github.com/hushh-labs/hushh-vibe-catalog-reader/actions/workflows/main.yml)
+<!-- badges: end -->
+
+
+Hushh Catalogs Files (hcf) are serialized formats intended to provide rapid loading of embedding data for the purposes of vector search.
+More information on the Hushh Catalog Format is available below:
+- the documentation at <https://hushh-labs.github.io/hushh-vibe-catalog/reference/>
+- the R package at <https://rstudio.github.io/vetiver-r/>
+
+
+## Installation
+
+You can install the library from [PyPI](https://pypi.org/project/hushh-vibe-catalog/):
+
+```python
+python -m pip install hushh-vibe-catalog
+```
+
+And the development version from [GitHub](https://github.com/hushh-labs/hushh-vibe-catalog) with:
+
+```python
+python -m pip install git+https://github.com/hushh-labs/hushh-labs-catalog
+```
+
+
+## Example
+
+### Creating an HCF file
+```python
+cat = Catalog("demo_catalog")
+dummy_brand = Brand("dummy", "description", "dummy_url")
+for filename in tqdm(glob.glob("images/*")):
+    id, ext = os.path.splitext(os.path.basename(filename))
+    id = int(id)
+    style = styles.loc[id]
+    if pd.isna(style.productDisplayName):
+        pass
+        # print(f"Skipping: {id}, product had no description")
+    else:
+        prod = Product(description=style.productDisplayName, url="dummy_url", image_path=filename, brand = dummy_brand)
+        cat.addProduct(prod)
+
+print("Writing Catalog")
+cat.to_hcf("catalog.hcf")
+```
+
+### Reading an HCF file
+
+```python
+cat = catalog.read_hcf("catalog.hcf")
+    pv = cat.ProductVibes()
+    all_embeddings = []
+
+    embeddings = []
+
+    for idx in range(0,pv.ProductTextBatchesLength()):
+        batch = pv.ProductTextBatches(idx)
+        embs = batch.FlatTensorAsNumpy()
+        embs = embs.reshape(batch.ShapeAsNumpy())
+        embeddings.append(embs)
+
+    embeddings = np.concatenate(embeddings)
+
+
+    query = "shoes"
+
+    inputs = tokenizer([query], padding=True, return_tensors="pt")
+    query_emb = model.get_text_features(**inputs)
+    hits = util.semantic_search(query_emb, embeddings, top_k=3)[0]
+    return cat.ProductVibes().Products(hits[0]['corpus_id']).Description()
+```
+
+
+## Latest Schema
+
+The latest version of the schema is as follows.
+
+```flatbuffer
+{{< include schemas/hushh-catalog.fbs >}}
+```
+
+## Contributing
+
+This project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
+- If you think you have encountered a bug, please [submit an issue](https://github.com/hushh-labs/hushh-vibe-catalog/issues).

@@ -23,3 +23,6 @@ build/
 *.hcf
 *.json
 *.msgpack
+_site/*
+index_files/*
+reference/*

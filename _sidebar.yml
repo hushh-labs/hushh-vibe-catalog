@@ -3,11 +3,11 @@ website:
   - contents:
     - reference/index.qmd
     - contents:
-      - reference/catalog.Catalog.qmd
+      - reference/catalog.qmd
       - reference/hcf.qmd
-      - reference/hcf.Catalog.qmd
-      - reference/hcf.Product.qmd
-      - reference/hcf.Category.qmd
-      section: Catalog
+      section: Deploy
+    - contents:
+      - reference/hcf.qmd
+      section: Monitor
     id: reference
   - id: dummy-sidebar

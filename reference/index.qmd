@@ -1,13 +1,18 @@
 # Function reference
 
-## Catalog
+## Deploy
 
-Catalog functions
+
 
 | | |
 | --- | --- |
-| [catalog.Catalog](catalog.Catalog.qmd#hushh.catalog.Catalog) |  |
+| [catalog](catalog.qmd#hushh.catalog) |  |
 | [hcf](hcf.qmd#hushh.hcf) |  |
-| [hcf.Catalog](hcf.Catalog.qmd#hushh.hcf.Catalog) |  |
-| [hcf.Product](hcf.Product.qmd#hushh.hcf.Product) |  |
-| [hcf.Category](hcf.Category.qmd#hushh.hcf.Category) |  |
+
+## Monitor
+
+
+
+| | |
+| --- | --- |
+| [hcf](hcf.qmd#hushh.hcf) |  |

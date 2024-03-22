@@ -48,6 +48,7 @@ docs:
 	quartodoc build
 	quarto render
 	quarto render README.qmd
+	git-changelog --provider github > changelog.md
 
 build:
 	python -m build

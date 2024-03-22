@@ -1,31 +1,68 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
 
+website:
+  title: "Catalog Format"
+  description: "You (probably) don't need a vector database"
+  repo-url: https://github.com/hushh-labs/hushh-vibe-catalog
+  page-navigation: true
+  favicon: "figures/logo.svg"
+  navbar:
+    pinned: true
+    logo: "figures/logo.svg"
+    logo-alt: "hushh-home"
+    search: true
+    left:
+      - text: "Reference"
+        file: reference/index.qmd
+      - text: "Changelog"
+        file: changelog.md
+      - text: "Learn more"
+        menu:
+          - text: "Introductory Article"
+            href: https://hushh-labs.github.io/hushh-labs-blog/posts/you_dont_need_a_vector_database.html
+            target: _blank
+          - text: "Hushh Catalog Trusted Python Deployment"
+            href: https://hushh-labs.github.io/hushh-labs-blog/posts/python_engineering.html
+            target: _blank
+    right:
+      - icon: github
+        href: https://github.com/hushh-labs/hushh-vibe-catalog
+        aria-label: hushh vibe catalog github
 
-execute:
-  freeze: auto
-
-# tell quarto to read the generated sidebar
-# metadata-files:
-#   - _sidebar.yml
+  sidebar:
+    - id: reference
+      contents: "_sidebar.yml"
 
 quartodoc:
-  # the name used to import the package you want to create reference docs for
-  package: hushh
-
-  # write sidebar data to this file
-  sidebar: _sidebar.yml
-
+  style: pkgdown
+  package: hushh 
+  renderer:
+    style: markdown
+    display_name: relative
+  sidebar: "_sidebar.yml"
   sections:
-    - title: Catalog
-      desc: Catalog functions
+    - title: Deploy
+      desc: ""
       contents:
-        # the functions being documented in the package.
-        # you can refer to anything: class methods, modules, etc..
-        - catalog.Catalog
-        - hcf
-        - hcf.Catalog
-        - hcf.Product
-        - hcf.Category
+        - name: catalog 
+          children: linked
+        - hcf 
 
+    - title: Monitor
+      desc: ""
+      contents:
+        - hcf
+
+
+metadata-files:
+  - _sidebar.yml
+
+profile:
+  default: latest
+
+format:
+  html:
+    theme:
+      - pulse
