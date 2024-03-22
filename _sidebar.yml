@@ -4,10 +4,12 @@ website:
     - reference/index.qmd
     - contents:
       - reference/catalog.qmd
-      - reference/hcf.qmd
-      section: Deploy
+      - reference/catalog.Product.qmd
+      - reference/catalog.Catalog.qmd
+      - reference/catalog.Brand.qmd
+      section: Catalog
     - contents:
       - reference/hcf.qmd
-      section: Monitor
+      section: HCF
     id: reference
   - id: dummy-sidebar

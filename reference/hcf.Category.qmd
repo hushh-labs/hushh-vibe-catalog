@@ -1,4 +1,0 @@
-# hcf.Category { #hushh.hcf.Category }
-
-`hcf.Category`
-

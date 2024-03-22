@@ -1,4 +1,0 @@
-# hcf.ImageVibe { #hushh.hcf.ImageVibe }
-
-`hcf.ImageVibe`
-

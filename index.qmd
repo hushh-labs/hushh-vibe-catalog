@@ -6,7 +6,7 @@
 
 
 Hushh Catalogs Files (hcf) are serialized formats intended to provide rapid loading of embedding data for the purposes of vector search.
-More information on the Hushh Catalog Format is available here: <https://hushh-labs.github.io/hushh-vibe-catalog/reference/>
+More information on the Hushh Catalog Format is available [here](https://hushh-labs.github.io/hushh-vibe-catalog/reference/)
 
 
 ## Installation

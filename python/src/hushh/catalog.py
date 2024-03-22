@@ -50,9 +50,43 @@ class IdBase:
 
 
 class Brand(BrandT, IdBase):
+    """
+    A class representing a brand.
+
+    Attributes
+    ----------
+    name : str
+        The name of the brand.
+    description : str
+        The description of the brand.
+    url : str
+        The URL of the brand.
+
+    Parameters
+    ----------
+    name : str
+        The name of the brand.
+    description : str
+        The description of the brand.
+    url : str
+        The URL of the brand.
+    """
+
     _id_base = "BRD"
 
     def __init__(self, name: str, description: str, url: str):
+        """
+        Initializes a Brand object.
+
+        Parameters
+        ----------
+        name : str
+            The name of the brand.
+        description : str
+            The description of the brand.
+        url : str
+            The URL of the brand.
+        """
         self.id = self.genId()
         self.name = name
         self.description = description
@@ -61,29 +95,59 @@ class Brand(BrandT, IdBase):
 
 class Product(ProductT, IdBase):
     """
-    Represents a product with various attributes such as description, URL, image path, and brand.
+    A class representing a product.
 
-    Attributes:
-        description (str): A string describing the product.
-        url (str): The URL associated with the product.
-        image_path (str): The file path to the product's image.
-        brand (Brand): An instance of the Brand class representing the brand of the product.
-        textVibes (list): A list containing text-based vibes associated with the product.
-        imageVibes (list): A list containing image-based vibes associated with the product.
+    Attributes
+    ----------
+    description : str
+        The description of the product.
+    url : str
+        The URL of the product.
+    image_path : str
+        The path to the image of the product.
+    brand : Brand
+        The brand of the product.
+    textVibes : list
+        A list of text vibes associated with the product.
+    imageVibes : list
+        A list of image vibes associated with the product.
+
+    Parameters
+    ----------
+    description : str
+        The description of the product.
+    url : str
+        The URL of the product.
+    image_path : str
+        The path to the image of the product.
+    brand : Brand
+        The brand of the product.
+
+    Raises
+    ------
+    NoEmbeddableContent
+        If the description is missing.
     """
 
     def __init__(self, description: str, url: str, image_path: str, brand: Brand):
         """
-        Initializes a Product instance.
+        Initializes a Product object.
 
-        Args:
-            description (str): A string describing the product.
-            url (str): The URL associated with the product.
-            image_path (str): The file path to the product's image.
-            brand (Brand): An instance of the Brand class representing the brand of the product.
+        Parameters
+        ----------
+        description : str
+            The description of the product.
+        url : str
+            The URL of the product.
+        image_path : str
+            The path to the image of the product.
+        brand : Brand
+            The brand of the product.
 
-        Raises:
-            NoEmbeddableContent: If the description provided is missing (i.e., is NaN).
+        Raises
+        ------
+        NoEmbeddableContent
+            If the description is missing.
         """
         self.id = self.genId()
         if pd.isna(description):
@@ -98,10 +162,12 @@ class Product(ProductT, IdBase):
 
     def __repr__(self):
         """
-        Returns a string representation of the Product instance.
+        Returns a string representation of the Product object.
 
-        Returns:
-            str: A string representing the product and its associated textVibes and imageVibes.
+        Returns
+        -------
+        str
+            A string representation of the Product object showing the number of text vibes and image vibes associated with it.
         """
         return f"Product(textVibes:{len(self.textVibes)}, imageVibes:{len(self.imageVibes)})"
 
