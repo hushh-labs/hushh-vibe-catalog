@@ -1,19 +1,12 @@
 # Hushh Vibe Catalog <a href='https://hushh-labs.github.io/hushh-vibe-catalog/'><img src='figures/logo.svg' align="right" height="139" /></a>
 
 <!-- badges: start -->
-
-<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
-<!-- [![codecov](https://codecov.io/gh/isabelizimm/vetiver-python/branch/main/graph/badge.svg?token=CW6JHVS6ZX)](https://codecov.io/gh/isabelizimm/vetiver-python) -->
-<!-- [![codecov](https://codecov.io/gh/isabelizimm/vetiver-python/branch/main/graph/badge.svg?token=CW6JHVS6ZX)](https://codecov.io/gh/isabelizimm/vetiver-python) -->
-
 [![Build](https://github.com/hushh-labs/hushh-vibe-catalog-reader/actions/workflows/main.yml/badge.svg)](https://github.com/hushh-labs/hushh-vibe-catalog-reader/actions/workflows/main.yml)
 <!-- badges: end -->
 
 
 Hushh Catalogs Files (hcf) are serialized formats intended to provide rapid loading of embedding data for the purposes of vector search.
-More information on the Hushh Catalog Format is available below:
-- the documentation at <https://hushh-labs.github.io/hushh-vibe-catalog/reference/>
-- the R package at <https://rstudio.github.io/vetiver-r/>
+More information on the Hushh Catalog Format is available here: <https://hushh-labs.github.io/hushh-vibe-catalog/reference/>
 
 
 ## Installation

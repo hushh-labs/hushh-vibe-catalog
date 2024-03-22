@@ -60,22 +60,49 @@ class Brand(BrandT, IdBase):
 
 
 class Product(ProductT, IdBase):
+    """
+    Represents a product with various attributes such as description, URL, image path, and brand.
+
+    Attributes:
+        description (str): A string describing the product.
+        url (str): The URL associated with the product.
+        image_path (str): The file path to the product's image.
+        brand (Brand): An instance of the Brand class representing the brand of the product.
+        textVibes (list): A list containing text-based vibes associated with the product.
+        imageVibes (list): A list containing image-based vibes associated with the product.
+    """
+
     def __init__(self, description: str, url: str, image_path: str, brand: Brand):
+        """
+        Initializes a Product instance.
+
+        Args:
+            description (str): A string describing the product.
+            url (str): The URL associated with the product.
+            image_path (str): The file path to the product's image.
+            brand (Brand): An instance of the Brand class representing the brand of the product.
+
+        Raises:
+            NoEmbeddableContent: If the description provided is missing (i.e., is NaN).
+        """
         self.id = self.genId()
         if pd.isna(description):
             raise NoEmbeddableContent("Missing description of product")
 
         self.description = description
         self.url = url
-
         self.image_path = image_path
-
         self.brand = brand
-
         self.textVibes = []
         self.imageVibes = []
 
     def __repr__(self):
+        """
+        Returns a string representation of the Product instance.
+
+        Returns:
+            str: A string representing the product and its associated textVibes and imageVibes.
+        """
         return f"Product(textVibes:{len(self.textVibes)}, imageVibes:{len(self.imageVibes)})"
 
 

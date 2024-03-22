@@ -59,17 +59,11 @@ preflight: test, build
 	twine check dist/*
 	docs
 
-pypi: preflight, publish_docs
-	twine upload dist/*
-
 test:
 	pytest --cov=python/src python/test
 
 publish_docs: docs
 	quarto publish
-
-serve:
-	sh -c "$(PYTHON_INTERPRETER) -m uvicorn hushh.server:app --reload & open http://127.0.0.1:8000 & wait"
 
 ## Lint using flake8
 lint:
@@ -81,10 +75,6 @@ flatbuffers:
 	rm -rf python/src/hushh/hcf
 	flatc --python -o python/src schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit --python-typing
 	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
-
-
-readme:
-	quarto render README.qmd
 
 
 #################################################################################

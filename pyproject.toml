@@ -33,6 +33,7 @@ dev = [
   "black",
   "pip-tools",
   "flake8",
+  "git-changelog",
   "bumpversion",
   "hushh-vibe-catalog[ci]"
 ]
