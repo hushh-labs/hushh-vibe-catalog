@@ -29,8 +29,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/Brand.html" rel="next">
-<link href="../reference/index.html" rel="prev">
+<link href="../reference/Vibe.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -133,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/Catalog.html">Catalog Helpers</a></li><li class="breadcrumb-item"><a href="../reference/Catalog.html">Catalog</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/Catalog.html">Catalog Helpers</a></li><li class="breadcrumb-item"><a href="../reference/FlatEmbeddingBatch.html">FlatEmbeddingBatch</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -162,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/Catalog.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/Catalog.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Catalog</span></a>
   </div>
 </li>
@@ -192,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/FlatEmbeddingBatch.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/FlatEmbeddingBatch.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">FlatEmbeddingBatch</span></a>
   </div>
 </li>
@@ -210,17 +209,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="hushh.Catalog" class="level1">
-<h1>Catalog</h1>
-<p><code>Catalog(self, description, batchSize=10000, model=None, processor=None, tokenizer=None)</code></p>
-<p>Represents a collection of products by one or more brands.</p>
+<section id="hushh.FlatEmbeddingBatch" class="level1">
+<h1>FlatEmbeddingBatch</h1>
+<p><code>FlatEmbeddingBatch(self, shape, vibeMode, flatTensor, productIdx)</code></p>
+<p>Represents a batch of flat embeddings associated with products.</p>
+<p>This class combines features from FlatEmbeddingBatchT and IdBase.</p>
 <section id="attributes" class="level2">
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 36%">
-<col style="width: 47%">
+<col style="width: 9%">
+<col style="width: 18%">
+<col style="width: 72%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -231,29 +231,29 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>productVibes</td>
-<td>hushh.catalog.ProductVibes</td>
-<td>Object containing product vibes.</td>
-</tr>
-<tr class="even">
-<td>model</td>
-<td>transformers.PreTrainedModel</td>
-<td>Pre-trained model for embeddings.</td>
-</tr>
-<tr class="odd">
-<td>processor</td>
-<td>transformers.ProcessorMixin</td>
-<td>Processor for handling inputs.</td>
-</tr>
-<tr class="even">
-<td>tokenizer</td>
-<td>transformers.PreTrainedTokenizer</td>
-<td>Tokenizer for processing text inputs.</td>
-</tr>
-<tr class="odd">
 <td>_id_base</td>
 <td>str</td>
-<td>Base identifier for generating unique IDs.</td>
+<td>The base identifier for the flat embedding batch.</td>
+</tr>
+<tr class="even">
+<td>shape</td>
+<td>typing.List[int]</td>
+<td>The shape of the flat embedding tensor.</td>
+</tr>
+<tr class="odd">
+<td>vibeMode</td>
+<td>int</td>
+<td>The vibe mode associated with the flat embeddings.</td>
+</tr>
+<tr class="even">
+<td>flatTensor</td>
+<td>typing.List[float]</td>
+<td>The flat embedding tensor.</td>
+</tr>
+<tr class="odd">
+<td>productIdx</td>
+<td>typing.List[int]</td>
+<td>A list of indices representing products associated with this batch of flat embeddings.</td>
 </tr>
 </tbody>
 </table>
@@ -674,14 +674,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/index.html" class="pagination-link" aria-label="Function reference">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Function reference</span>
+      <a href="../reference/Vibe.html" class="pagination-link" aria-label="Vibe">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Vibe</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/Brand.html" class="pagination-link" aria-label="Brand">
-        <span class="nav-page-text">Brand</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
