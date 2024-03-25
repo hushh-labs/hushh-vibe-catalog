@@ -1,7 +1,7 @@
 import uuid
 from collections.abc import Iterable
 from itertools import islice
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 import flatbuffers
 import numpy as np
@@ -25,9 +25,23 @@ from hushh.hcf.Vibe import VibeT
 from hushh.hcf.VibeMode import VibeMode
 
 
-def batched(iterable, n):
-    "Batch data into tuples of length n. The last batch may be shorter."
-    # batched('ABCDEFG', 3) --> ABC DEF G
+def _batched(iterable, n):
+    """
+    Batch data into tuples of length n. The last batch may be shorter.
+
+    Parameters
+    ----------
+    iterable : iterable
+        The iterable containing the data to be batched.
+    n : int
+        The desired length of each batch.
+
+    Yields
+    ------
+    tuple
+        A tuple containing elements from the iterable, with each tuple having
+        a length of at most n.
+    """
     if n < 1:
         raise ValueError("n must be at least one")
     it = iter(iterable)
@@ -245,31 +259,43 @@ class Catalog(CatalogT, IdBase):
     """
     Catalog class for managing product information and embeddings.
 
-    Attributes:
-        productVibes (ProductVibes): Object containing product vibes.
-        model (PreTrainedModel): Pre-trained model for embeddings.
-        processor (ProcessorMixin): Processor for handling inputs.
-        tokenizer (PreTrainedTokenizer): Tokenizer for processing text inputs.
-        _id_base (str): Base identifier for generating unique IDs.
+    Attributes
+    ----------
+    productVibes : ProductVibes
+        Object containing product vibes.
+    model : PreTrainedModel
+        Pre-trained model for embeddings.
+    processor : ProcessorMixin
+        Processor for handling inputs.
+    tokenizer : PreTrainedTokenizer
+        Tokenizer for processing text inputs.
+    _id_base : str
+        Base identifier for generating unique IDs.
     """
 
     def __init__(
         self,
         description: str,
-        batchSize=10000,
-        model: PreTrainedModel | None = None,
-        processor: ProcessorMixin | None = None,
-        tokenizer: PreTrainedTokenizer | None = None,
-    ):
+        batchSize: int = 10000,
+        model: Union[PreTrainedModel, None] = None,
+        processor: Union[ProcessorMixin, None] = None,
+        tokenizer: Union[PreTrainedTokenizer, None] = None,
+    ) -> None:
         """
         Initialize Catalog object.
 
-        Args:
-            description (str): Description of the catalog.
-            batchSize (int): Batch size for processing embeddings.
-            model (PreTrainedModel, optional): Pre-trained model for embeddings.
-            processor (ProcessorMixin, optional): Processor for handling inputs.
-            tokenizer (PreTrainedTokenizer, optional): Tokenizer for processing text inputs.
+        Parameters
+        ----------
+        description : str
+            Description of the catalog.
+        batchSize : int, optional
+            Batch size for processing embeddings, by default 10000.
+        model : Union[PreTrainedModel, None], optional
+            Pre-trained model for embeddings, by default None.
+        processor : Union[ProcessorMixin, None], optional
+            Processor for handling inputs, by default None.
+        tokenizer : Union[PreTrainedTokenizer, None], optional
+            Tokenizer for processing text inputs, by default None.
         """
         self.id = self.genId()
         self.version = __version__
@@ -307,18 +333,20 @@ class Catalog(CatalogT, IdBase):
 
         self.productVibes = ProductVibes()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Return a string representation of the Catalog object.
         """
         return f"Catalog(productVibes.products: {len(self.productVibes.products)})"
 
-    def to_hcf(self, filename: str):
+    def to_hcf(self, filename: str) -> None:
         """
         Convert Catalog object to HCF file format.
 
-        Args:
-            filename (str): Name of the HCF file.
+        Parameters
+        ----------
+        filename : str
+            Name of the HCF file.
         """
         if not filename.endswith(".hcf"):
             filename = filename + ".hcf"
@@ -328,14 +356,14 @@ class Catalog(CatalogT, IdBase):
             builder.Finish(cat_end)
             fh.write(builder.Output())
 
-    def renderProductFlatBatch(self):
+    def renderProductFlatBatch(self) -> None:
         """
         Render product embeddings in flat batch format.
         """
         model = self.model
         with torch.no_grad():
             for i, batch in enumerate(
-                batched(self.productVibes.products, self.batchSize)
+                _batched(self.productVibes.products, self.batchSize)
             ):
                 images = []
                 texts = []
@@ -396,25 +424,31 @@ class Catalog(CatalogT, IdBase):
 
                 self.productVibes.productTextBatches.append(text_batch)
 
-    def Pack(self, builder):
+    def Pack(self, builder) -> int:
         """
         Pack Catalog object using FlatBuffers.
 
-        Args:
-            builder: FlatBuffer builder object.
+        Parameters
+        ----------
+        builder : flatbuffers.Builder
+            FlatBuffer builder object.
 
-        Returns:
+        Returns
+        -------
+        int
             Offset of the packed Catalog object.
         """
         self.renderProductFlatBatch()
         return super().Pack(builder)
 
-    def addProduct(self, p: Product):
+    def addProduct(self, p: Product) -> None:
         """
         Add a product to the Catalog.
 
-        Args:
-            p (Product): Product object to add.
+        Parameters
+        ----------
+        p : Product
+            Product object to add.
         """
         if p.id in self.productVibes._products:
             raise ValueError(f"Product {p.id} already exists")
@@ -423,51 +457,30 @@ class Catalog(CatalogT, IdBase):
 
         self.productVibes.products.append(p)
 
-    def addProductCategory(self, c: Category):
+    def addProductCategory(self, c: Category) -> None:
         """
         Add a product category to the Catalog.
 
-        Args:
-            c (Category): Category object to add.
+        Parameters
+        ----------
+        c : Category
+            Category object to add.
         """
         if c.id in self.productVibes._categories:
             raise ValueError(f"Category {c.id} already exists")
         self.productVibes._categories[c.id] = len(self.productVibes.categories)
         self.productVibes.categories.append(c)
 
-    def addProductVibe(self, v: Vibe):
+    def addProductVibe(self, v: Vibe) -> None:
         """
         Add a product vibe to the Catalog.
 
-        Args:
-            v (Vibe): Vibe object to add.
+        Parameters
+        ----------
+        v : Vibe
+            Vibe object to add.
         """
         if v.id in self.productVibes._vibes:
             raise ValueError(f"Vibe {v.id} already exists")
         self.productVibes._vibes[v.id] = len(self.productVibes.vibes)
-        self.productVibes.vibes.append(v)
-
-    def linkProductCategory(self, p_id: str, c_id: str):
-        """
-        Link a product with a category.
-
-        Args:
-            p_id (str): ID of the product.
-            c_id (str): ID of the category.
-        """
-        if p_id not in self.productVibes._products:
-            raise ValueError(f"Product {p_id} does not exist in Catalog")
-        if c_id not in self.productVibes._categories:
-            raise ValueError(f"Category {c_id} does not exist in Catalog")
-
-        c_idx = self.productVibes._categories[c_id]
-        p_idx = self.productVibes._products[p_id]
-        self.productVibes.categories[c_idx].productIdx.append(p_idx)
-
-    def linkProductVibe(self, p_id: str, v_id: str):
-        if v_id not in self.productVibes._vibes:
-            raise ValueError(f"Vibe {v_id} does not exist in Catalog")
-
-        p_idx = self.productVibes._products[p_id]
-        v_idx = self.productVibes._vibes[v_id]
-        self.productVibes.vibes[v_idx].productIdx.append(p_idx)
+        self.product

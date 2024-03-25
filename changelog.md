@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <small>[Compare with latest](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.3.0...HEAD)</small>
 
+### Added
+
+- add catalog docs ([5f01f3b](https://github.com/hushh-labs/hushh-vibe-catalog/commit/5f01f3b820a720209404865b91318dac93308044) by Justin Donaldson).
+
 <!-- insertion marker -->
 ## [v0.3.0](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.3.0) - 2024-03-21
 
