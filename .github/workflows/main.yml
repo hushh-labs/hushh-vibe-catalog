@@ -36,7 +36,9 @@ jobs:
 
       - name: Build Docs [Main Branch Only]
         if: github.ref == 'refs/heads/main'
-        run: make docs
+        run: |
+          pip install quartodoc
+          quartodoc build
 
       - name: Publish to GitHub Pages [Main Branch Only]
         uses: quarto-dev/quarto-actions/publish@v2
