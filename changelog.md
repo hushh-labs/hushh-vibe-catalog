@@ -8,13 +8,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.3.0...HEAD)</small>
+<small>[Compare with latest](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.4.0...HEAD)</small>
 
 ### Added
 
-- add catalog docs ([5f01f3b](https://github.com/hushh-labs/hushh-vibe-catalog/commit/5f01f3b820a720209404865b91318dac93308044) by Justin Donaldson).
+- add link to docs back ([d4b4021](https://github.com/hushh-labs/hushh-vibe-catalog/commit/d4b4021b9d41a307b61caba991572d020d0f035a) by Justin Donaldson).
+
+### Fixed
+
+- fix quarto build ([11de23c](https://github.com/hushh-labs/hushh-vibe-catalog/commit/11de23ce38637b3558b6eda664e403e532b8b7c6) by Justin Donaldson).
+- fix pyproject typo ([1c16c39](https://github.com/hushh-labs/hushh-vibe-catalog/commit/1c16c39a233afcf8eec2df9b35a97466e2bf770a) by Justin Donaldson).
 
 <!-- insertion marker -->
+## [v0.4.0](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.4.0) - 2024-03-25
+
+<small>[Compare with v0.3.0](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.3.0...v0.4.0)</small>
+
+### Added
+
+- add new doc publish workflow, add more class docs ([7cd9400](https://github.com/hushh-labs/hushh-vibe-catalog/commit/7cd94009d05cf9a6eacfdb407e819d957f0e8370) by Justin Donaldson).
+- add catalog docs ([5f01f3b](https://github.com/hushh-labs/hushh-vibe-catalog/commit/5f01f3b820a720209404865b91318dac93308044) by Justin Donaldson).
+
 ## [v0.3.0](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.3.0) - 2024-03-21
 
 <small>[Compare with v0.2.1](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.2.1...v0.3.0)</small>

@@ -44,10 +44,12 @@ clean:
 	find . -type d -name "__pycache__" -delete
 	find . -path "*hushh/hcf" -type d -exec rm -rf {} +
 
-docs:
+docs: readme
 	quartodoc build
 	quarto render
 	quarto render README.qmd
+
+readme:
 	git-changelog --provider github > changelog.md
 
 build:
