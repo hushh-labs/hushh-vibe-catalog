@@ -1,1 +1,1 @@
-from .catalog import Brand, Catalog, Category, Product
+from .catalog import Brand, Catalog, Category, Product, Vibe, FlatEmbeddingBatch

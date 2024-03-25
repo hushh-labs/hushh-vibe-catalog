@@ -64,8 +64,7 @@ class IdBase:
 
 
 class Brand(BrandT, IdBase):
-    """
-    A class representing a brand.
+    """Represents a brand
 
     Attributes
     ----------
@@ -108,8 +107,7 @@ class Brand(BrandT, IdBase):
 
 
 class Product(ProductT, IdBase):
-    """
-    A class representing a product.
+    """Represents a product by a given brand.
 
     Attributes
     ----------
@@ -197,9 +195,37 @@ class VibeBase(IdBase):
 
 
 class Category(CategoryT, VibeBase):
+    """Represents a category of products.
+
+    Attributes:
+        _id_base (str): The base identifier for the category.
+        description (str): A description of the category.
+        url (str): The URL associated with the category.
+        productIx (list): A list of indices representing products associated with this category.
+
+    Methods:
+        __init__(self, description: str, url: str): Initializes a Category instance.
+
+    Example:
+        category = Category("Electronics", "https://example.com/electronics")
+    """
+
     _id_base = "CTG"
 
     def __init__(self, description: str, url: str):
+        """
+        Initializes a Category instance.
+
+        Args:
+            description (str): A description of the category.
+            url (str): The URL associated with the category.
+
+        Returns:
+            None
+
+        Example:
+            category = Category("Electronics", "https://example.com/electronics")
+        """
         self.id = self.genId()
         self.description = description
         self.url = url
@@ -207,17 +233,66 @@ class Category(CategoryT, VibeBase):
 
 
 class Vibe(VibeT, VibeBase):
+    """
+    Represents a vibe associated with products.
+
+    This class combines features from `VibeT` and `VibeBase`.
+
+    Attributes:
+        _id_base (str): The base identifier for the vibe.
+        description (str): A description of the vibe.
+        image_path (str): The path to the image associated with the vibe.
+        productIdx (list): A list of indices representing products associated with this vibe.
+
+    Methods:
+        __init__(self, image_path: str, description: str): Initializes a Vibe instance.
+
+    Example:
+        vibe = Vibe("path/to/image.jpg", "Pants")
+    """
+
     _id_base = "IVB"
 
     def __init__(self, image_path: str, description: str):
+        """
+        Initializes a Vibe instance.
+
+        Args:
+            image_path (str): The path to the image associated with the vibe.
+            description (str): A description of the vibe.
+
+        Returns:
+            None
+
+        Example:
+            vibe = Vibe("path/to/image.jpg", "Trendy")
+        """
         self.id = self.genId()
         self.description = description
         self.image_path = image_path
-
         self.productIdx = []
 
 
 class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
+    """ Represents a batch of flat embeddings associated with products.
+
+    This class combines features from FlatEmbeddingBatchT and IdBase.
+
+    Attributes
+    ----------
+    _id_base : str
+        The base identifier for the flat embedding batch.
+    shape : List[int]
+        The shape of the flat embedding tensor.
+    vibeMode : int
+        The vibe mode associated with the flat embeddings.
+    flatTensor : List[float]
+        The flat embedding tensor.
+    productIdx : List[int]
+        A list of indices representing products associated with this batch of flat embeddings.
+
+    """
+
     _id_base = "FEB"
 
     def __init__(
@@ -226,7 +301,29 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
         vibeMode: int,
         flatTensor: List[float],
         productIdx: List[int],
-    ):
+    ) -> None:
+        """
+        Initializes a FlatEmbeddingBatch instance.
+
+        Parameters
+        ----------
+        shape : List[int]
+            The shape of the flat embedding tensor.
+        vibeMode : int
+            The vibe mode associated with the flat embeddings.
+        flatTensor : List[float]
+            The flat embedding tensor.
+        productIdx : List[int]
+            A list of indices representing products associated with this batch of flat embeddings.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        >>> flat_batch = FlatEmbeddingBatch([10, 10, 3], 1, [0.1, 0.2, ...], [0, 1, 2])
+        """
         self.id = self.genId()
         self.shape = shape
         self.vibeMode = vibeMode
@@ -256,8 +353,7 @@ class ProductVibes(ProductVibesT, VibeBase):
 
 
 class Catalog(CatalogT, IdBase):
-    """
-    Catalog class for managing product information and embeddings.
+    """Represents a collection of products by one or more brands.
 
     Attributes
     ----------
@@ -484,3 +580,4 @@ class Catalog(CatalogT, IdBase):
             raise ValueError(f"Vibe {v.id} already exists")
         self.productVibes._vibes[v.id] = len(self.productVibes.vibes)
         self.product
+
