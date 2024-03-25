@@ -188,45 +188,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="example">Example</h2>
 <section id="creating-an-hcf-file" class="level3">
 <h3 class="anchored" data-anchor-id="creating-an-hcf-file">Creating an HCF file</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> Catalog(<span class="st">"demo_catalog"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dummy_brand <span class="op">=</span> Brand(<span class="st">"dummy"</span>, <span class="st">"description"</span>, <span class="st">"dummy_url"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span> tqdm(glob.glob(<span class="st">"images/*"</span>)):</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>, ext <span class="op">=</span> os.path.splitext(os.path.basename(filename))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span> <span class="op">=</span> <span class="bu">int</span>(<span class="bu">id</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    style <span class="op">=</span> styles.loc[<span class="bu">id</span>]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(style.productDisplayName):</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(f"Skipping: {id}, product had no description")</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        prod <span class="op">=</span> Product(description<span class="op">=</span>style.productDisplayName, url<span class="op">=</span><span class="st">"dummy_url"</span>, image_path<span class="op">=</span>filename, brand <span class="op">=</span> dummy_brand)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        cat.addProduct(prod)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Writing Catalog"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>cat.to_hcf(<span class="st">"catalog.hcf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> Catalog(<span class="st">"demo_catalog"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dummy_brand <span class="op">=</span> Brand(<span class="st">"dummy"</span>, <span class="st">"description"</span>, <span class="st">"dummy_url"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span> [<span class="st">"assets/bird.jpg"</span>, <span class="st">"assets/dog.jpg"</span>, <span class="st">"assets/cat.jpg"</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> Path(filenam).stem</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        prod <span class="op">=</span> Product(description<span class="op">=</span>name, url<span class="op">=</span><span class="st">"dummy_url"</span>, image_path<span class="op">=</span>filename, brand <span class="op">=</span> dummy_brand)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        cat.addProduct(prod)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Writing Catalog"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>cat.to_hcf(<span class="st">"catalog.hcf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reading-an-hcf-file" class="level3">
 <h3 class="anchored" data-anchor-id="reading-an-hcf-file">Reading an HCF file</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> catalog.read_hcf(<span class="st">"catalog.hcf"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pv <span class="op">=</span> cat.ProductVibes()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    all_embeddings <span class="op">=</span> []</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pv <span class="op">=</span> cat.ProductVibes()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>all_embeddings <span class="op">=</span> []</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    embeddings <span class="op">=</span> []</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> []</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,pv.ProductTextBatchesLength()):</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        batch <span class="op">=</span> pv.ProductTextBatches(idx)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        embs <span class="op">=</span> batch.FlatTensorAsNumpy()</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        embs <span class="op">=</span> embs.reshape(batch.ShapeAsNumpy())</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        embeddings.append(embs)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,pv.ProductTextBatchesLength()):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    batch <span class="op">=</span> pv.ProductTextBatches(idx)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    embs <span class="op">=</span> batch.FlatTensorAsNumpy()</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    embs <span class="op">=</span> embs.reshape(batch.ShapeAsNumpy())</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    embeddings.append(embs)</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    embeddings <span class="op">=</span> np.concatenate(embeddings)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> np.concatenate(embeddings)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="st">"shoes"</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"dog"</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> tokenizer([query], padding<span class="op">=</span><span class="va">True</span>, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    query_emb <span class="op">=</span> model.get_text_features(<span class="op">**</span>inputs)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    hits <span class="op">=</span> util.semantic_search(query_emb, embeddings, top_k<span class="op">=</span><span class="dv">3</span>)[<span class="dv">0</span>]</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cat.ProductVibes().Products(hits[<span class="dv">0</span>][<span class="st">'corpus_id'</span>]).Description()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> tokenizer([query], padding<span class="op">=</span><span class="va">True</span>, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>query_emb <span class="op">=</span> model.get_text_features(<span class="op">**</span>inputs)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>hits <span class="op">=</span> util.semantic_search(query_emb, embeddings, top_k<span class="op">=</span><span class="dv">3</span>)[<span class="dv">0</span>]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> cat.ProductVibes().Products(hits[<span class="dv">0</span>][<span class="st">'corpus_id'</span>]).Description()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="latest-schema" class="level2">
