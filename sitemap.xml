@@ -2,42 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.html</loc>
-    <lastmod>2024-03-22T22:54:25.296Z</lastmod>
+    <lastmod>2024-03-25T18:51:08.461Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/catalog.Catalog.html</loc>
-    <lastmod>2024-03-22T22:54:25.293Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/index.html</loc>
+    <lastmod>2024-03-25T19:19:50.003Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/catalog.Product.html</loc>
-    <lastmod>2024-03-22T22:54:25.292Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/notebooks/KNN Search.html</loc>
-    <lastmod>2024-03-21T22:11:09.119Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/index.html</loc>
-    <lastmod>2024-03-22T22:50:17.129Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/changelog.html</loc>
-    <lastmod>2024-03-22T22:54:53.803Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Catalog.html</loc>
+    <lastmod>2024-03-25T18:56:54.064Z</lastmod>
   </url>
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/notebooks/Create Catalog.html</loc>
     <lastmod>2024-03-21T22:11:09.119Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/catalog.html</loc>
-    <lastmod>2024-03-22T22:54:25.287Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/changelog.html</loc>
+    <lastmod>2024-03-25T19:19:54.704Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/catalog.Brand.html</loc>
-    <lastmod>2024-03-22T22:54:25.296Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/index.html</loc>
+    <lastmod>2024-03-22T22:50:17.129Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/index.html</loc>
-    <lastmod>2024-03-22T22:54:48.994Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/notebooks/KNN Search.html</loc>
+    <lastmod>2024-03-21T22:11:09.119Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Product.html</loc>
+    <lastmod>2024-03-25T18:51:08.461Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Brand.html</loc>
+    <lastmod>2024-03-25T18:51:08.457Z</lastmod>
   </url>
 </urlset>
