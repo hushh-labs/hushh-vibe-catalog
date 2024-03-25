@@ -35,10 +35,11 @@ dev = [
   "bumpversion",
   "hushh-vibe-catalog[ci]"
 ]
+
 ci = [
   "pytest-cov",
   "requests-mock",
-  "hushh-vibe-catalog[doc]"
+  "hushh-vibe-catalog[docs]"
 ]
 
 docs = [

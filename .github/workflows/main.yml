@@ -34,10 +34,11 @@ jobs:
       - name: Run Tests
         run: make test
 
-      - name: Build Docs
+      - name: Build Docs [Main Branch Only]
+        if: github.ref == 'refs/heads/main'
         run: make docs
 
-      - name: Publish to GitHub Pages (and render)
+      - name: Publish to GitHub Pages [Main Branch Only]
         uses: quarto-dev/quarto-actions/publish@v2
         if: github.ref == 'refs/heads/main'
         with:
@@ -74,23 +75,3 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: ./dist/*.whl
-
-  docs:
-    name: Create and Publish Documentation
-    needs:
-      - release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build quartodocs
-        run: |
-          pip install quartodoc
-          quartodoc build
-
-      # NOTE: If Publishing to GitHub Pages, set the permissions correctly (see top of this yaml)
-      - name: Publish to GitHub Pages (and render)
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
-
