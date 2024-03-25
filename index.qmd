@@ -28,17 +28,13 @@ python -m pip install git+https://github.com/hushh-labs/hushh-labs-catalog
 
 ### Creating an HCF file
 ```python
+from pathlib import Path
 cat = Catalog("demo_catalog")
 dummy_brand = Brand("dummy", "description", "dummy_url")
-for filename in tqdm(glob.glob("images/*")):
-    id, ext = os.path.splitext(os.path.basename(filename))
-    id = int(id)
-    style = styles.loc[id]
-    if pd.isna(style.productDisplayName):
-        pass
-        # print(f"Skipping: {id}, product had no description")
+for filename in ["assets/bird.jpg", "assets/dog.jpg", "assets/cat.jpg"]
+    name = Path(filenam).stem
     else:
-        prod = Product(description=style.productDisplayName, url="dummy_url", image_path=filename, brand = dummy_brand)
+        prod = Product(description=name, url="dummy_url", image_path=filename, brand = dummy_brand)
         cat.addProduct(prod)
 
 print("Writing Catalog")
@@ -49,26 +45,26 @@ cat.to_hcf("catalog.hcf")
 
 ```python
 cat = catalog.read_hcf("catalog.hcf")
-    pv = cat.ProductVibes()
-    all_embeddings = []
+pv = cat.ProductVibes()
+all_embeddings = []
 
-    embeddings = []
+embeddings = []
 
-    for idx in range(0,pv.ProductTextBatchesLength()):
-        batch = pv.ProductTextBatches(idx)
-        embs = batch.FlatTensorAsNumpy()
-        embs = embs.reshape(batch.ShapeAsNumpy())
-        embeddings.append(embs)
+for idx in range(0,pv.ProductTextBatchesLength()):
+    batch = pv.ProductTextBatches(idx)
+    embs = batch.FlatTensorAsNumpy()
+    embs = embs.reshape(batch.ShapeAsNumpy())
+    embeddings.append(embs)
 
-    embeddings = np.concatenate(embeddings)
+embeddings = np.concatenate(embeddings)
 
 
-    query = "shoes"
+query = "dog"
 
-    inputs = tokenizer([query], padding=True, return_tensors="pt")
-    query_emb = model.get_text_features(**inputs)
-    hits = util.semantic_search(query_emb, embeddings, top_k=3)[0]
-    return cat.ProductVibes().Products(hits[0]['corpus_id']).Description()
+inputs = tokenizer([query], padding=True, return_tensors="pt")
+query_emb = model.get_text_features(**inputs)
+hits = util.semantic_search(query_emb, embeddings, top_k=3)[0]
+return cat.ProductVibes().Products(hits[0]['corpus_id']).Description()
 ```
 
 
