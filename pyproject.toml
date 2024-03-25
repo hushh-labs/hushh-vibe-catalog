@@ -29,18 +29,23 @@ dev = [
   "matplotlib",
   "torch",
   "numpy",
-  "quartodoc",
   "black",
   "pip-tools",
   "flake8",
-  "git-changelog",
   "bumpversion",
   "hushh-vibe-catalog[ci]"
 ]
 ci = [
   "pytest-cov",
-  "requests-mock"
+  "requests-mock",
+  "hushh-vibe-catalog[doc]"
 ]
+
+docs = [
+  "quartodoc",
+  "git-changelog",
+]
+
 [tool.pytest.ini_options]
 filterwarnings = [
     "ignore::UserWarning",

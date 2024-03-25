@@ -26,11 +26,24 @@ jobs:
           python-version: '3.11'
 
 
-      - name : Run Tests
+      - name : Install Requirements
         run : |
           pip install -r requirements.txt
           pip install ".[ci]"
-          make test
+
+      - name: Run Tests
+        run: make test
+
+      - name: Build Docs
+        run: make docs
+
+      - name: Publish to GitHub Pages (and render)
+        uses: quarto-dev/quarto-actions/publish@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
 
   release:
     name: Create Github/Pypi Release
