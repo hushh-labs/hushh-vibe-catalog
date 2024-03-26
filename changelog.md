@@ -39,23 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [v0.2.0](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.2.0) - 2024-03-20
 
-<small>[Compare with v0.1.14](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.14...v0.2.0)</small>
-
-## [v0.1.14](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.14) - 2024-03-08
-
-<small>[Compare with v0.1.13](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.13...v0.1.14)</small>
-
-## [v0.1.13](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.13) - 2024-03-08
-
-<small>[Compare with v0.1.12](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.12...v0.1.13)</small>
-
-## [v0.1.12](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.12) - 2024-03-07
-
-<small>[Compare with v0.1.11](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.11...v0.1.12)</small>
-
-## [v0.1.11](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.11) - 2024-03-07
-
-<small>[Compare with v0.1.6](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.6...v0.1.11)</small>
+<small>[Compare with v0.1.6](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.6...v0.2.0)</small>
 
 ## [v0.1.6](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.6) - 2024-03-06
 
@@ -86,11 +70,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [v0.1.2](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.2) - 2024-02-29
 
-<small>[Compare with v0.1.1](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.1.1...v0.1.2)</small>
-
-## [v0.1.1](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.1.1) - 2024-02-29
-
-<small>[Compare with v0.0.2](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.0.2...v0.1.1)</small>
+<small>[Compare with v0.0.2](https://github.com/hushh-labs/hushh-vibe-catalog/compare/v0.0.2...v0.1.2)</small>
 
 ### Added
 
