@@ -8,18 +8,18 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-filelock==3.13.1
+filelock==3.13.3
     # via
     #   huggingface-hub
     #   torch
     #   transformers
-flatbuffers==24.3.7
+flatbuffers==24.3.25
     # via hushh-vibe-catalog (pyproject.toml)
 fsspec==2024.3.1
     # via
     #   huggingface-hub
     #   torch
-huggingface-hub==0.22.0
+huggingface-hub==0.22.1
     # via
     #   tokenizers
     #   transformers
