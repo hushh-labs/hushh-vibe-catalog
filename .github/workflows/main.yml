@@ -43,11 +43,6 @@ jobs:
       - name: Set up Quarto [Main Branch Only]
         uses: quarto-dev/quarto-actions/setup@v2
         if: github.ref == 'refs/heads/main'
-        # with:
-          # To install LaTeX to build PDF book
-          # tinytex: true
-          # uncomment below and fill to pin a version
-          # version: SPECIFIC-QUARTO-VERSION-HERE
 
       - name: Publish to GitHub Pages [Main Branch Only]
         uses: quarto-dev/quarto-actions/publish@v2
@@ -55,7 +50,7 @@ jobs:
         with:
           target: gh-pages
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     name: Create Github/Pypi Release
