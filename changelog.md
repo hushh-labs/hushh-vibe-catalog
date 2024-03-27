@@ -12,10 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- add docstrings to generated hcf api ([8a46430](https://github.com/hushh-labs/hushh-vibe-catalog/commit/8a4643080f3eb234f9346d6b6203e3db02e74b6d) by Justin Donaldson).
 - add link to docs back ([d4b4021](https://github.com/hushh-labs/hushh-vibe-catalog/commit/d4b4021b9d41a307b61caba991572d020d0f035a) by Justin Donaldson).
 
 ### Fixed
 
+- fix index link ([8f4ce26](https://github.com/hushh-labs/hushh-vibe-catalog/commit/8f4ce268b65726bcaa0112843fd40db64634849b) by Justin Donaldson).
 - fix quarto build ([11de23c](https://github.com/hushh-labs/hushh-vibe-catalog/commit/11de23ce38637b3558b6eda664e403e532b8b7c6) by Justin Donaldson).
 - fix pyproject typo ([1c16c39](https://github.com/hushh-labs/hushh-vibe-catalog/commit/1c16c39a233afcf8eec2df9b35a97466e2bf770a) by Justin Donaldson).
 

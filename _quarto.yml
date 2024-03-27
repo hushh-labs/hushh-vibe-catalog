@@ -37,7 +37,7 @@ website:
 
 quartodoc:
   style: pkgdown
-  package: hushh 
+  package: hushh
   renderer:
     style: markdown
     display_name: relative

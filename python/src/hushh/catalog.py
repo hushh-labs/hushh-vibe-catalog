@@ -198,7 +198,6 @@ class Category(CategoryT, VibeBase):
     """Represents a category of products.
 
     Attributes:
-        _id_base (str): The base identifier for the category.
         description (str): A description of the category.
         url (str): The URL associated with the category.
         productIx (list): A list of indices representing products associated with this category.
@@ -239,7 +238,6 @@ class Vibe(VibeT, VibeBase):
     This class combines features from `VibeT` and `VibeBase`.
 
     Attributes:
-        _id_base (str): The base identifier for the vibe.
         description (str): A description of the vibe.
         image_path (str): The path to the image associated with the vibe.
         productIdx (list): A list of indices representing products associated with this vibe.
@@ -252,7 +250,6 @@ class Vibe(VibeT, VibeBase):
     """
 
     _id_base = "IVB"
-
     def __init__(self, image_path: str, description: str):
         """
         Initializes a Vibe instance.
@@ -280,8 +277,6 @@ class FlatEmbeddingBatch(FlatEmbeddingBatchT, IdBase):
 
     Attributes
     ----------
-    _id_base : str
-        The base identifier for the flat embedding batch.
     shape : List[int]
         The shape of the flat embedding tensor.
     vibeMode : int
@@ -365,8 +360,6 @@ class Catalog(CatalogT, IdBase):
         Processor for handling inputs.
     tokenizer : PreTrainedTokenizer
         Tokenizer for processing text inputs.
-    _id_base : str
-        Base identifier for generating unique IDs.
     """
 
     def __init__(
