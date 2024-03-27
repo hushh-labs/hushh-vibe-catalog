@@ -11,14 +11,14 @@
     "href": "changelog.html",
     "title": "Changelog",
     "section": "",
-    "text": "All notable changes to this project will be documented in this file.\nThe format is based on Keep a Changelog and this project adheres to Semantic Versioning.\n\n\n\nCompare with latest\n\n\n\nadd link to docs back (d4b4021 by Justin Donaldson).\n\n\n\n\n\nfix quarto build (11de23c by Justin Donaldson).\nfix pyproject typo (1c16c39 by Justin Donaldson).\n\n\n\n\n\n\nCompare with v0.3.0\n\n\n\nadd new doc publish workflow, add more class docs (7cd9400 by Justin Donaldson).\nadd catalog docs (5f01f3b by Justin Donaldson).\n\n\n\n\n\nCompare with v0.2.1\n\n\n\nCompare with v0.2.0\n\n\n\nCompare with v0.1.6\n\n\n\nCompare with v0.1.5\n\n\n\nCompare with v0.1.4\n\n\n\nfix release phase (662b7a0 by Justin Donaldson).\nfix missing project name (a6b886c by Justin Donaldson).\nfix cicd string issue (366c07d by Justin Donaldson).\nfix cicd labels (70e7cd3 by Justin Donaldson).\n\n\n\n\n\nCompare with v0.1.3\n\n\n\nadd python build lib to deps (f178f8b by Justin Donaldson).\n\n\n\n\n\nCompare with v0.1.2\n\n\n\nCompare with v0.0.2\n\n\n\nadd timing (e55a6d5 by Justin Donaldson).\nadd pandas (965bb50 by Justin Donaldson).\nadd pydoc (f6c65c6 by Justin Donaldson).\nadd product constructors (5466330 by Justin Donaldson).\nadd version helper (bce1031 by Justin Donaldson).\nadd symlink for now (9269706 by Justin Donaldson).\n\n\n\n\n\nfix version (0410ffd by Justin Donaldson).\nfix create catalog notebook (c04d5bd by Justin Donaldson).\nfix cicd (49ca799 by Justin Donaldson).\nfix test (22db1cd by Justin Donaldson).\nfix tests (c9ca80e by Justin Donaldson).\nfix readme (2b9a57c by Justin Donaldson).\n\n\n\n\n\nCompare with first commit\n\n\n\nfix makefile (4d5ed1e by Justin Donaldson).\nfix deps (bd4e3fc by Justin Donaldson)."
+    "text": "All notable changes to this project will be documented in this file.\nThe format is based on Keep a Changelog and this project adheres to Semantic Versioning.\n\n\n\nCompare with latest\n\n\n\nadd docstrings to generated hcf api (8a46430 by Justin Donaldson).\nadd link to docs back (d4b4021 by Justin Donaldson).\n\n\n\n\n\nfix index link (8f4ce26 by Justin Donaldson).\nfix quarto build (11de23c by Justin Donaldson).\nfix pyproject typo (1c16c39 by Justin Donaldson).\n\n\n\n\n\n\nCompare with v0.3.0\n\n\n\nadd new doc publish workflow, add more class docs (7cd9400 by Justin Donaldson).\nadd catalog docs (5f01f3b by Justin Donaldson).\n\n\n\n\n\nCompare with v0.2.1\n\n\n\nCompare with v0.2.0\n\n\n\nCompare with v0.1.6\n\n\n\nCompare with v0.1.5\n\n\n\nCompare with v0.1.4\n\n\n\nfix release phase (662b7a0 by Justin Donaldson).\nfix missing project name (a6b886c by Justin Donaldson).\nfix cicd string issue (366c07d by Justin Donaldson).\nfix cicd labels (70e7cd3 by Justin Donaldson).\n\n\n\n\n\nCompare with v0.1.3\n\n\n\nadd python build lib to deps (f178f8b by Justin Donaldson).\n\n\n\n\n\nCompare with v0.1.2\n\n\n\nCompare with v0.0.2\n\n\n\nadd timing (e55a6d5 by Justin Donaldson).\nadd pandas (965bb50 by Justin Donaldson).\nadd pydoc (f6c65c6 by Justin Donaldson).\nadd product constructors (5466330 by Justin Donaldson).\nadd version helper (bce1031 by Justin Donaldson).\nadd symlink for now (9269706 by Justin Donaldson).\n\n\n\n\n\nfix version (0410ffd by Justin Donaldson).\nfix create catalog notebook (c04d5bd by Justin Donaldson).\nfix cicd (49ca799 by Justin Donaldson).\nfix test (22db1cd by Justin Donaldson).\nfix tests (c9ca80e by Justin Donaldson).\nfix readme (2b9a57c by Justin Donaldson).\n\n\n\n\n\nCompare with first commit\n\n\n\nfix makefile (4d5ed1e by Justin Donaldson).\nfix deps (bd4e3fc by Justin Donaldson)."
   },
   {
     "objectID": "changelog.html#unreleased",
     "href": "changelog.html#unreleased",
     "title": "Changelog",
     "section": "",
-    "text": "Compare with latest\n\n\n\nadd link to docs back (d4b4021 by Justin Donaldson).\n\n\n\n\n\nfix quarto build (11de23c by Justin Donaldson).\nfix pyproject typo (1c16c39 by Justin Donaldson)."
+    "text": "Compare with latest\n\n\n\nadd docstrings to generated hcf api (8a46430 by Justin Donaldson).\nadd link to docs back (d4b4021 by Justin Donaldson).\n\n\n\n\n\nfix index link (8f4ce26 by Justin Donaldson).\nfix quarto build (11de23c by Justin Donaldson).\nfix pyproject typo (1c16c39 by Justin Donaldson)."
   },
   {
     "objectID": "changelog.html#v0.4.0---2024-03-25",
@@ -215,7 +215,7 @@
     "href": "reference/Vibe.html",
     "title": "Vibe",
     "section": "",
-    "text": "Vibe\nVibe(self, image_path, description)\nRepresents a vibe associated with products.\nThis class combines features from VibeT and VibeBase.\nAttributes: _id_base (str): The base identifier for the vibe. description (str): A description of the vibe. image_path (str): The path to the image associated with the vibe. productIdx (list): A list of indices representing products associated with this vibe.\nMethods: init(self, image_path: str, description: str): Initializes a Vibe instance.\nExample: vibe = Vibe(“path/to/image.jpg”, “Pants”)",
+    "text": "Vibe\nVibe(self, image_path, description)\nRepresents a vibe associated with products.\nThis class combines features from VibeT and VibeBase.\nAttributes: description (str): A description of the vibe. image_path (str): The path to the image associated with the vibe. productIdx (list): A list of indices representing products associated with this vibe.\nMethods: init(self, image_path: str, description: str): Initializes a Vibe instance.\nExample: vibe = Vibe(“path/to/image.jpg”, “Pants”)",
     "crumbs": [
       "Reference",
       "Catalog Creation Helpers",
@@ -263,7 +263,7 @@
     "href": "reference/Category.html",
     "title": "Category",
     "section": "",
-    "text": "Category\nCategory(self, description, url)\nRepresents a category of products.\nAttributes: _id_base (str): The base identifier for the category. description (str): A description of the category. url (str): The URL associated with the category. productIx (list): A list of indices representing products associated with this category.\nMethods: init(self, description: str, url: str): Initializes a Category instance.\nExample: category = Category(“Electronics”, “https://example.com/electronics”)",
+    "text": "Category\nCategory(self, description, url)\nRepresents a category of products.\nAttributes: description (str): A description of the category. url (str): The URL associated with the category. productIx (list): A list of indices representing products associated with this category.\nMethods: init(self, description: str, url: str): Initializes a Category instance.\nExample: category = Category(“Electronics”, “https://example.com/electronics”)",
     "crumbs": [
       "Reference",
       "Catalog Creation Helpers",
@@ -380,7 +380,7 @@
     "href": "reference/FlatEmbeddingBatch.html",
     "title": "FlatEmbeddingBatch",
     "section": "",
-    "text": "FlatEmbeddingBatch(self, shape, vibeMode, flatTensor, productIdx)\nRepresents a batch of flat embeddings associated with products.\nThis class combines features from FlatEmbeddingBatchT and IdBase.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n_id_base\nstr\nThe base identifier for the flat embedding batch.\n\n\nshape\ntyping.List[int]\nThe shape of the flat embedding tensor.\n\n\nvibeMode\nint\nThe vibe mode associated with the flat embeddings.\n\n\nflatTensor\ntyping.List[float]\nThe flat embedding tensor.\n\n\nproductIdx\ntyping.List[int]\nA list of indices representing products associated with this batch of flat embeddings.",
+    "text": "FlatEmbeddingBatch(self, shape, vibeMode, flatTensor, productIdx)\nRepresents a batch of flat embeddings associated with products.\nThis class combines features from FlatEmbeddingBatchT and IdBase.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nshape\ntyping.List[int]\nThe shape of the flat embedding tensor.\n\n\nvibeMode\nint\nThe vibe mode associated with the flat embeddings.\n\n\nflatTensor\ntyping.List[float]\nThe flat embedding tensor.\n\n\nproductIdx\ntyping.List[int]\nA list of indices representing products associated with this batch of flat embeddings.",
     "crumbs": [
       "Reference",
       "Catalog Creation Helpers",
@@ -392,7 +392,7 @@
     "href": "reference/FlatEmbeddingBatch.html#attributes",
     "title": "FlatEmbeddingBatch",
     "section": "",
-    "text": "Name\nType\nDescription\n\n\n\n\n_id_base\nstr\nThe base identifier for the flat embedding batch.\n\n\nshape\ntyping.List[int]\nThe shape of the flat embedding tensor.\n\n\nvibeMode\nint\nThe vibe mode associated with the flat embeddings.\n\n\nflatTensor\ntyping.List[float]\nThe flat embedding tensor.\n\n\nproductIdx\ntyping.List[int]\nA list of indices representing products associated with this batch of flat embeddings.",
+    "text": "Name\nType\nDescription\n\n\n\n\nshape\ntyping.List[int]\nThe shape of the flat embedding tensor.\n\n\nvibeMode\nint\nThe vibe mode associated with the flat embeddings.\n\n\nflatTensor\ntyping.List[float]\nThe flat embedding tensor.\n\n\nproductIdx\ntyping.List[int]\nA list of indices representing products associated with this batch of flat embeddings.",
     "crumbs": [
       "Reference",
       "Catalog Creation Helpers",
@@ -440,7 +440,7 @@
     "href": "reference/Catalog.html",
     "title": "Catalog",
     "section": "",
-    "text": "Catalog(self, description, batchSize=10000, model=None, processor=None, tokenizer=None)\nRepresents a collection of products by one or more brands.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nproductVibes\nhushh.catalog.ProductVibes\nObject containing product vibes.\n\n\nmodel\ntransformers.PreTrainedModel\nPre-trained model for embeddings.\n\n\nprocessor\ntransformers.ProcessorMixin\nProcessor for handling inputs.\n\n\ntokenizer\ntransformers.PreTrainedTokenizer\nTokenizer for processing text inputs.\n\n\n_id_base\nstr\nBase identifier for generating unique IDs.",
+    "text": "Catalog(self, description, batchSize=10000, model=None, processor=None, tokenizer=None)\nRepresents a collection of products by one or more brands.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nproductVibes\nhushh.catalog.ProductVibes\nObject containing product vibes.\n\n\nmodel\ntransformers.PreTrainedModel\nPre-trained model for embeddings.\n\n\nprocessor\ntransformers.ProcessorMixin\nProcessor for handling inputs.\n\n\ntokenizer\ntransformers.PreTrainedTokenizer\nTokenizer for processing text inputs.",
     "crumbs": [
       "Reference",
       "Catalog Creation Helpers",
@@ -452,7 +452,7 @@
     "href": "reference/Catalog.html#attributes",
     "title": "Catalog",
     "section": "",
-    "text": "Name\nType\nDescription\n\n\n\n\nproductVibes\nhushh.catalog.ProductVibes\nObject containing product vibes.\n\n\nmodel\ntransformers.PreTrainedModel\nPre-trained model for embeddings.\n\n\nprocessor\ntransformers.ProcessorMixin\nProcessor for handling inputs.\n\n\ntokenizer\ntransformers.PreTrainedTokenizer\nTokenizer for processing text inputs.\n\n\n_id_base\nstr\nBase identifier for generating unique IDs.",
+    "text": "Name\nType\nDescription\n\n\n\n\nproductVibes\nhushh.catalog.ProductVibes\nObject containing product vibes.\n\n\nmodel\ntransformers.PreTrainedModel\nPre-trained model for embeddings.\n\n\nprocessor\ntransformers.ProcessorMixin\nProcessor for handling inputs.\n\n\ntokenizer\ntransformers.PreTrainedTokenizer\nTokenizer for processing text inputs.",
     "crumbs": [
       "Reference",
       "Catalog Creation Helpers",
