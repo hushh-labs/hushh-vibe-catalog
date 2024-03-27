@@ -76,6 +76,7 @@ lint:
 flatbuffers:
 	flatc --python -o python/src schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit --python-typing
 	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
+	flatc --dart -o dart/lib schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
 	# check this file out since flatbuffers will overwrite it.
 	git checkout python/src/hushh/__init__.py
 
