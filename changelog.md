@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - fix quarto build ([11de23c](https://github.com/hushh-labs/hushh-vibe-catalog/commit/11de23ce38637b3558b6eda664e403e532b8b7c6) by Justin Donaldson).
 - fix pyproject typo ([1c16c39](https://github.com/hushh-labs/hushh-vibe-catalog/commit/1c16c39a233afcf8eec2df9b35a97466e2bf770a) by Justin Donaldson).
 
+### Removed
+
+- remove private attributes from docs ([cb25163](https://github.com/hushh-labs/hushh-vibe-catalog/commit/cb251638d9441bb2923d801d7a7299096eb53ad8) by Justin Donaldson).
+
 <!-- insertion marker -->
 ## [v0.4.0](https://github.com/hushh-labs/hushh-vibe-catalog/releases/tag/v0.4.0) - 2024-03-25
 
