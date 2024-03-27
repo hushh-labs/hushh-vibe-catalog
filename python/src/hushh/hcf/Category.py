@@ -9,10 +9,22 @@ from typing import Optional
 np = import_numpy()
 
 class Category(object):
+    """Category.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = Category()
         x.Init(buf, n + offset)
@@ -24,10 +36,29 @@ class Category(object):
         return cls.GetRootAs(buf, offset)
     # Category
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Category
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -35,6 +66,16 @@ class Category(object):
 
     # Category
     def Description(self) -> Optional[str]:
+        """Description.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -42,6 +83,16 @@ class Category(object):
 
     # Category
     def Url(self) -> Optional[str]:
+        """Url.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -49,6 +100,13 @@ class Category(object):
 
     # Category
     def ProductIdx(self, j: int):
+        """ProductIdx.
+
+        Parameters
+        ----------
+        j : int
+            j
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             a = self._tab.Vector(o)
@@ -57,6 +115,8 @@ class Category(object):
 
     # Category
     def ProductIdxAsNumpy(self):
+        """ProductIdxAsNumpy.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
@@ -64,6 +124,16 @@ class Category(object):
 
     # Category
     def ProductIdxLength(self) -> int:
+        """ProductIdxLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -71,49 +141,197 @@ class Category(object):
 
     # Category
     def ProductIdxIsNone(self) -> bool:
+        """ProductIdxIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
 def CategoryStart(builder: flatbuffers.Builder):
+    """CategoryStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     CategoryStart(builder)
 
 def CategoryAddId(builder: flatbuffers.Builder, id: int):
+    """CategoryAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     CategoryAddId(builder, id)
 
 def CategoryAddDescription(builder: flatbuffers.Builder, description: int):
+    """CategoryAddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
+    """AddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     CategoryAddDescription(builder, description)
 
 def CategoryAddUrl(builder: flatbuffers.Builder, url: int):
+    """CategoryAddUrl.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    url : int
+        url
+    """
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
+    """AddUrl.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    url : int
+        url
+    """
     CategoryAddUrl(builder, url)
 
 def CategoryAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    """CategoryAddProductIdx.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productIdx : int
+        productIdx
+    """
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
 def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    """AddProductIdx.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productIdx : int
+        productIdx
+    """
     CategoryAddProductIdx(builder, productIdx)
 
 def CategoryStartProductIdxVector(builder, numElems: int) -> int:
+    """CategoryStartProductIdxVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdxVector(builder, numElems: int) -> int:
+    """StartProductIdxVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return CategoryStartProductIdxVector(builder, numElems)
 
 def CategoryEnd(builder: flatbuffers.Builder) -> int:
+    """CategoryEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return CategoryEnd(builder)
 
 try:
@@ -122,9 +340,14 @@ except:
     pass
 
 class CategoryT(object):
+    """CategoryT.
+    """
+
 
     # CategoryT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
@@ -132,23 +355,55 @@ class CategoryT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         category = Category()
         category.Init(buf, pos)
         return cls.InitFromObj(category)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, category):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        category :
+            category
+        """
         x = CategoryT()
         x._UnPack(category)
         return x
 
     # CategoryT
     def _UnPack(self, category):
+        """_UnPack.
+
+        Parameters
+        ----------
+        category :
+            category
+        """
         if category is None:
             return
         self.id = category.Id()
@@ -164,6 +419,13 @@ class CategoryT(object):
 
     # CategoryT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.description is not None:

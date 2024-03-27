@@ -3,6 +3,9 @@
 # namespace: hcf
 
 class VibeMode(object):
+    """VibeMode.
+    """
+
     ProductText = 0
     ProductImage = 1
     Text = 2

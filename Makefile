@@ -40,17 +40,17 @@ dev :
 
 ## Delete all compiled Python files
 clean:
-	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 	find . -path "*hushh/hcf" -type d -exec rm -rf {} +
 
 docs: readme
 	quartodoc build
+	git-changelog --provider github > changelog.md
+	doq -r -d src/hushh/hcf/ -w --formatter numpy
 	quarto render
-	quarto render README.qmd
 
 readme:
-	git-changelog --provider github > changelog.md
+	quarto render README.qmd
 
 build:
 	python -m build
@@ -74,9 +74,10 @@ lint:
 
 ## Generate flatbuffer stubs
 flatbuffers:
-	rm -rf python/src/hushh/hcf
 	flatc --python -o python/src schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit --python-typing
 	flatc --swift -o swift/Sources schemas/hushh-catalog.fbs --gen-object-api --gen-json-emit
+	# check this file out since flatbuffers will overwrite it.
+	git checkout python/src/hushh/__init__.py
 
 
 #################################################################################

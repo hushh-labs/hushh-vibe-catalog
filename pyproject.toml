@@ -45,6 +45,7 @@ ci = [
 docs = [
   "quartodoc",
   "git-changelog",
+  "doq",
 ]
 
 [tool.pytest.ini_options]

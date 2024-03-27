@@ -9,10 +9,22 @@ from typing import Optional
 np = import_numpy()
 
 class Brand(object):
+    """Brand.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = Brand()
         x.Init(buf, n + offset)
@@ -24,10 +36,29 @@ class Brand(object):
         return cls.GetRootAs(buf, offset)
     # Brand
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Brand
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -35,6 +66,16 @@ class Brand(object):
 
     # Brand
     def Description(self) -> Optional[str]:
+        """Description.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -42,6 +83,16 @@ class Brand(object):
 
     # Brand
     def Name(self) -> Optional[str]:
+        """Name.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -49,52 +100,177 @@ class Brand(object):
 
     # Brand
     def Url(self) -> Optional[str]:
+        """Url.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
 def BrandStart(builder: flatbuffers.Builder):
+    """BrandStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     BrandStart(builder)
 
 def BrandAddId(builder: flatbuffers.Builder, id: int):
+    """BrandAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     BrandAddId(builder, id)
 
 def BrandAddDescription(builder: flatbuffers.Builder, description: int):
+    """BrandAddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
+    """AddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     BrandAddDescription(builder, description)
 
 def BrandAddName(builder: flatbuffers.Builder, name: int):
+    """BrandAddName.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    name : int
+        name
+    """
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(name), 0)
 
 def AddName(builder: flatbuffers.Builder, name: int):
+    """AddName.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    name : int
+        name
+    """
     BrandAddName(builder, name)
 
 def BrandAddUrl(builder: flatbuffers.Builder, url: int):
+    """BrandAddUrl.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    url : int
+        url
+    """
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
+    """AddUrl.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    url : int
+        url
+    """
     BrandAddUrl(builder, url)
 
 def BrandEnd(builder: flatbuffers.Builder) -> int:
+    """BrandEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return BrandEnd(builder)
 
 
 class BrandT(object):
+    """BrandT.
+    """
+
 
     # BrandT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.description = None  # type: str
         self.name = None  # type: str
@@ -102,23 +278,55 @@ class BrandT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         brand = Brand()
         brand.Init(buf, pos)
         return cls.InitFromObj(brand)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, brand):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        brand :
+            brand
+        """
         x = BrandT()
         x._UnPack(brand)
         return x
 
     # BrandT
     def _UnPack(self, brand):
+        """_UnPack.
+
+        Parameters
+        ----------
+        brand :
+            brand
+        """
         if brand is None:
             return
         self.id = brand.Id()
@@ -128,6 +336,13 @@ class BrandT(object):
 
     # BrandT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.description is not None:

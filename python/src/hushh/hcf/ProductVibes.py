@@ -14,10 +14,22 @@ from typing import Optional
 np = import_numpy()
 
 class ProductVibes(object):
+    """ProductVibes.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = ProductVibes()
         x.Init(buf, n + offset)
@@ -29,10 +41,29 @@ class ProductVibes(object):
         return cls.GetRootAs(buf, offset)
     # ProductVibes
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # ProductVibes
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -40,6 +71,18 @@ class ProductVibes(object):
 
     # ProductVibes
     def Products(self, j: int) -> Optional[Product]:
+        """Products.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[Product]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             x = self._tab.Vector(o)
@@ -52,6 +95,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductsLength(self) -> int:
+        """ProductsLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -59,11 +112,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductsIsNone(self) -> bool:
+        """ProductsIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         return o == 0
 
     # ProductVibes
     def Brands(self, j: int) -> Optional[Brand]:
+        """Brands.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[Brand]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             x = self._tab.Vector(o)
@@ -76,6 +151,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def BrandsLength(self) -> int:
+        """BrandsLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -83,11 +168,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def BrandsIsNone(self) -> bool:
+        """BrandsIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         return o == 0
 
     # ProductVibes
     def Categories(self, j: int) -> Optional[Category]:
+        """Categories.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[Category]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             x = self._tab.Vector(o)
@@ -100,6 +207,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def CategoriesLength(self) -> int:
+        """CategoriesLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -107,11 +224,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def CategoriesIsNone(self) -> bool:
+        """CategoriesIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
     # ProductVibes
     def Vibes(self, j: int) -> Optional[Vibe]:
+        """Vibes.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[Vibe]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             x = self._tab.Vector(o)
@@ -124,6 +263,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def VibesLength(self) -> int:
+        """VibesLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -131,11 +280,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def VibesIsNone(self) -> bool:
+        """VibesIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         return o == 0
 
     # ProductVibes
     def ProductTextBatches(self, j: int) -> Optional[FlatEmbeddingBatch]:
+        """ProductTextBatches.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[FlatEmbeddingBatch]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             x = self._tab.Vector(o)
@@ -148,6 +319,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductTextBatchesLength(self) -> int:
+        """ProductTextBatchesLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -155,11 +336,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductTextBatchesIsNone(self) -> bool:
+        """ProductTextBatchesIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         return o == 0
 
     # ProductVibes
     def ProductImageBatches(self, j: int) -> Optional[FlatEmbeddingBatch]:
+        """ProductImageBatches.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[FlatEmbeddingBatch]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
         if o != 0:
             x = self._tab.Vector(o)
@@ -172,6 +375,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductImageBatchesLength(self) -> int:
+        """ProductImageBatchesLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -179,11 +392,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def ProductImageBatchesIsNone(self) -> bool:
+        """ProductImageBatchesIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
         return o == 0
 
     # ProductVibes
     def TextBatches(self, j: int) -> Optional[FlatEmbeddingBatch]:
+        """TextBatches.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[FlatEmbeddingBatch]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
         if o != 0:
             x = self._tab.Vector(o)
@@ -196,6 +431,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def TextBatchesLength(self) -> int:
+        """TextBatchesLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -203,11 +448,33 @@ class ProductVibes(object):
 
     # ProductVibes
     def TextBatchesIsNone(self) -> bool:
+        """TextBatchesIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(18))
         return o == 0
 
     # ProductVibes
     def ImageBatches(self, j: int) -> Optional[FlatEmbeddingBatch]:
+        """ImageBatches.
+
+        Parameters
+        ----------
+        j : int
+            j
+
+        Returns
+        -------
+        Optional[FlatEmbeddingBatch]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(20))
         if o != 0:
             x = self._tab.Vector(o)
@@ -220,6 +487,16 @@ class ProductVibes(object):
 
     # ProductVibes
     def ImageBatchesLength(self) -> int:
+        """ImageBatchesLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(20))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -227,121 +504,555 @@ class ProductVibes(object):
 
     # ProductVibes
     def ImageBatchesIsNone(self) -> bool:
+        """ImageBatchesIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(20))
         return o == 0
 
 def ProductVibesStart(builder: flatbuffers.Builder):
+    """ProductVibesStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(9)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     ProductVibesStart(builder)
 
 def ProductVibesAddId(builder: flatbuffers.Builder, id: int):
+    """ProductVibesAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     ProductVibesAddId(builder, id)
 
 def ProductVibesAddProducts(builder: flatbuffers.Builder, products: int):
+    """ProductVibesAddProducts.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    products : int
+        products
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(products), 0)
 
 def AddProducts(builder: flatbuffers.Builder, products: int):
+    """AddProducts.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    products : int
+        products
+    """
     ProductVibesAddProducts(builder, products)
 
 def ProductVibesStartProductsVector(builder, numElems: int) -> int:
+    """ProductVibesStartProductsVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartProductsVector(builder, numElems: int) -> int:
+    """StartProductsVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartProductsVector(builder, numElems)
 
 def ProductVibesAddBrands(builder: flatbuffers.Builder, brands: int):
+    """ProductVibesAddBrands.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    brands : int
+        brands
+    """
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(brands), 0)
 
 def AddBrands(builder: flatbuffers.Builder, brands: int):
+    """AddBrands.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    brands : int
+        brands
+    """
     ProductVibesAddBrands(builder, brands)
 
 def ProductVibesStartBrandsVector(builder, numElems: int) -> int:
+    """ProductVibesStartBrandsVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartBrandsVector(builder, numElems: int) -> int:
+    """StartBrandsVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartBrandsVector(builder, numElems)
 
 def ProductVibesAddCategories(builder: flatbuffers.Builder, categories: int):
+    """ProductVibesAddCategories.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    categories : int
+        categories
+    """
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(categories), 0)
 
 def AddCategories(builder: flatbuffers.Builder, categories: int):
+    """AddCategories.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    categories : int
+        categories
+    """
     ProductVibesAddCategories(builder, categories)
 
 def ProductVibesStartCategoriesVector(builder, numElems: int) -> int:
+    """ProductVibesStartCategoriesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartCategoriesVector(builder, numElems: int) -> int:
+    """StartCategoriesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartCategoriesVector(builder, numElems)
 
 def ProductVibesAddVibes(builder: flatbuffers.Builder, vibes: int):
+    """ProductVibesAddVibes.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    vibes : int
+        vibes
+    """
     builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(vibes), 0)
 
 def AddVibes(builder: flatbuffers.Builder, vibes: int):
+    """AddVibes.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    vibes : int
+        vibes
+    """
     ProductVibesAddVibes(builder, vibes)
 
 def ProductVibesStartVibesVector(builder, numElems: int) -> int:
+    """ProductVibesStartVibesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartVibesVector(builder, numElems: int) -> int:
+    """StartVibesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartVibesVector(builder, numElems)
 
 def ProductVibesAddProductTextBatches(builder: flatbuffers.Builder, productTextBatches: int):
+    """ProductVibesAddProductTextBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productTextBatches : int
+        productTextBatches
+    """
     builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(productTextBatches), 0)
 
 def AddProductTextBatches(builder: flatbuffers.Builder, productTextBatches: int):
+    """AddProductTextBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productTextBatches : int
+        productTextBatches
+    """
     ProductVibesAddProductTextBatches(builder, productTextBatches)
 
 def ProductVibesStartProductTextBatchesVector(builder, numElems: int) -> int:
+    """ProductVibesStartProductTextBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartProductTextBatchesVector(builder, numElems: int) -> int:
+    """StartProductTextBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartProductTextBatchesVector(builder, numElems)
 
 def ProductVibesAddProductImageBatches(builder: flatbuffers.Builder, productImageBatches: int):
+    """ProductVibesAddProductImageBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productImageBatches : int
+        productImageBatches
+    """
     builder.PrependUOffsetTRelativeSlot(6, flatbuffers.number_types.UOffsetTFlags.py_type(productImageBatches), 0)
 
 def AddProductImageBatches(builder: flatbuffers.Builder, productImageBatches: int):
+    """AddProductImageBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productImageBatches : int
+        productImageBatches
+    """
     ProductVibesAddProductImageBatches(builder, productImageBatches)
 
 def ProductVibesStartProductImageBatchesVector(builder, numElems: int) -> int:
+    """ProductVibesStartProductImageBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartProductImageBatchesVector(builder, numElems: int) -> int:
+    """StartProductImageBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartProductImageBatchesVector(builder, numElems)
 
 def ProductVibesAddTextBatches(builder: flatbuffers.Builder, textBatches: int):
+    """ProductVibesAddTextBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    textBatches : int
+        textBatches
+    """
     builder.PrependUOffsetTRelativeSlot(7, flatbuffers.number_types.UOffsetTFlags.py_type(textBatches), 0)
 
 def AddTextBatches(builder: flatbuffers.Builder, textBatches: int):
+    """AddTextBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    textBatches : int
+        textBatches
+    """
     ProductVibesAddTextBatches(builder, textBatches)
 
 def ProductVibesStartTextBatchesVector(builder, numElems: int) -> int:
+    """ProductVibesStartTextBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartTextBatchesVector(builder, numElems: int) -> int:
+    """StartTextBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartTextBatchesVector(builder, numElems)
 
 def ProductVibesAddImageBatches(builder: flatbuffers.Builder, imageBatches: int):
+    """ProductVibesAddImageBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    imageBatches : int
+        imageBatches
+    """
     builder.PrependUOffsetTRelativeSlot(8, flatbuffers.number_types.UOffsetTFlags.py_type(imageBatches), 0)
 
 def AddImageBatches(builder: flatbuffers.Builder, imageBatches: int):
+    """AddImageBatches.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    imageBatches : int
+        imageBatches
+    """
     ProductVibesAddImageBatches(builder, imageBatches)
 
 def ProductVibesStartImageBatchesVector(builder, numElems: int) -> int:
+    """ProductVibesStartImageBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartImageBatchesVector(builder, numElems: int) -> int:
+    """StartImageBatchesVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesStartImageBatchesVector(builder, numElems)
 
 def ProductVibesEnd(builder: flatbuffers.Builder) -> int:
+    """ProductVibesEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return ProductVibesEnd(builder)
 
 import hushh.hcf.Brand
@@ -355,9 +1066,14 @@ except:
     pass
 
 class ProductVibesT(object):
+    """ProductVibesT.
+    """
+
 
     # ProductVibesT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.products = None  # type: List[hushh.hcf.Product.ProductT]
         self.brands = None  # type: List[hushh.hcf.Brand.BrandT]
@@ -370,23 +1086,55 @@ class ProductVibesT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         productVibes = ProductVibes()
         productVibes.Init(buf, pos)
         return cls.InitFromObj(productVibes)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, productVibes):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        productVibes :
+            productVibes
+        """
         x = ProductVibesT()
         x._UnPack(productVibes)
         return x
 
     # ProductVibesT
     def _UnPack(self, productVibes):
+        """_UnPack.
+
+        Parameters
+        ----------
+        productVibes :
+            productVibes
+        """
         if productVibes is None:
             return
         self.id = productVibes.Id()
@@ -457,6 +1205,13 @@ class ProductVibesT(object):
 
     # ProductVibesT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.products is not None:

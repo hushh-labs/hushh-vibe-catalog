@@ -10,10 +10,22 @@ from typing import Optional
 np = import_numpy()
 
 class Catalog(object):
+    """Catalog.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = Catalog()
         x.Init(buf, n + offset)
@@ -25,10 +37,29 @@ class Catalog(object):
         return cls.GetRootAs(buf, offset)
     # Catalog
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Catalog
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -36,6 +67,16 @@ class Catalog(object):
 
     # Catalog
     def Version(self) -> Optional[str]:
+        """Version.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -43,6 +84,16 @@ class Catalog(object):
 
     # Catalog
     def Description(self) -> Optional[str]:
+        """Description.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -50,6 +101,16 @@ class Catalog(object):
 
     # Catalog
     def ProductVibes(self) -> Optional[ProductVibes]:
+        """ProductVibes.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[ProductVibes]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             x = self._tab.Indirect(o + self._tab.Pos)
@@ -60,6 +121,8 @@ class Catalog(object):
 
     # Catalog
     def BatchSize(self):
+        """BatchSize.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.Get(flatbuffers.number_types.Int32Flags, o + self._tab.Pos)
@@ -67,6 +130,16 @@ class Catalog(object):
 
     # Catalog
     def TokenizerNameOrPath(self) -> Optional[str]:
+        """TokenizerNameOrPath.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -74,63 +147,237 @@ class Catalog(object):
 
     # Catalog
     def ModelNameOrPath(self) -> Optional[str]:
+        """ModelNameOrPath.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(16))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
         return None
 
 def CatalogStart(builder: flatbuffers.Builder):
+    """CatalogStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(7)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     CatalogStart(builder)
 
 def CatalogAddId(builder: flatbuffers.Builder, id: int):
+    """CatalogAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     CatalogAddId(builder, id)
 
 def CatalogAddVersion(builder: flatbuffers.Builder, version: int):
+    """CatalogAddVersion.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    version : int
+        version
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(version), 0)
 
 def AddVersion(builder: flatbuffers.Builder, version: int):
+    """AddVersion.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    version : int
+        version
+    """
     CatalogAddVersion(builder, version)
 
 def CatalogAddDescription(builder: flatbuffers.Builder, description: int):
+    """CatalogAddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
+    """AddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     CatalogAddDescription(builder, description)
 
 def CatalogAddProductVibes(builder: flatbuffers.Builder, productVibes: int):
+    """CatalogAddProductVibes.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productVibes : int
+        productVibes
+    """
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(productVibes), 0)
 
 def AddProductVibes(builder: flatbuffers.Builder, productVibes: int):
+    """AddProductVibes.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productVibes : int
+        productVibes
+    """
     CatalogAddProductVibes(builder, productVibes)
 
 def CatalogAddBatchSize(builder: flatbuffers.Builder, batchSize: int):
+    """CatalogAddBatchSize.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    batchSize : int
+        batchSize
+    """
     builder.PrependInt32Slot(4, batchSize, 0)
 
 def AddBatchSize(builder: flatbuffers.Builder, batchSize: int):
+    """AddBatchSize.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    batchSize : int
+        batchSize
+    """
     CatalogAddBatchSize(builder, batchSize)
 
 def CatalogAddTokenizerNameOrPath(builder: flatbuffers.Builder, tokenizerNameOrPath: int):
+    """CatalogAddTokenizerNameOrPath.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    tokenizerNameOrPath : int
+        tokenizerNameOrPath
+    """
     builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(tokenizerNameOrPath), 0)
 
 def AddTokenizerNameOrPath(builder: flatbuffers.Builder, tokenizerNameOrPath: int):
+    """AddTokenizerNameOrPath.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    tokenizerNameOrPath : int
+        tokenizerNameOrPath
+    """
     CatalogAddTokenizerNameOrPath(builder, tokenizerNameOrPath)
 
 def CatalogAddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
+    """CatalogAddModelNameOrPath.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    modelNameOrPath : int
+        modelNameOrPath
+    """
     builder.PrependUOffsetTRelativeSlot(6, flatbuffers.number_types.UOffsetTFlags.py_type(modelNameOrPath), 0)
 
 def AddModelNameOrPath(builder: flatbuffers.Builder, modelNameOrPath: int):
+    """AddModelNameOrPath.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    modelNameOrPath : int
+        modelNameOrPath
+    """
     CatalogAddModelNameOrPath(builder, modelNameOrPath)
 
 def CatalogEnd(builder: flatbuffers.Builder) -> int:
+    """CatalogEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return CatalogEnd(builder)
 
 import hushh.hcf.ProductVibes
@@ -140,9 +387,14 @@ except:
     pass
 
 class CatalogT(object):
+    """CatalogT.
+    """
+
 
     # CatalogT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.version = None  # type: str
         self.description = None  # type: str
@@ -153,23 +405,55 @@ class CatalogT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         catalog = Catalog()
         catalog.Init(buf, pos)
         return cls.InitFromObj(catalog)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, catalog):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        catalog :
+            catalog
+        """
         x = CatalogT()
         x._UnPack(catalog)
         return x
 
     # CatalogT
     def _UnPack(self, catalog):
+        """_UnPack.
+
+        Parameters
+        ----------
+        catalog :
+            catalog
+        """
         if catalog is None:
             return
         self.id = catalog.Id()
@@ -183,6 +467,13 @@ class CatalogT(object):
 
     # CatalogT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.version is not None:

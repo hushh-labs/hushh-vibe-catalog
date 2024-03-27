@@ -10,10 +10,22 @@ from typing import Optional
 np = import_numpy()
 
 class Product(object):
+    """Product.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = Product()
         x.Init(buf, n + offset)
@@ -25,10 +37,29 @@ class Product(object):
         return cls.GetRootAs(buf, offset)
     # Product
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Product
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -36,6 +67,16 @@ class Product(object):
 
     # Product
     def Description(self) -> Optional[str]:
+        """Description.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -43,6 +84,16 @@ class Product(object):
 
     # Product
     def Url(self) -> Optional[str]:
+        """Url.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -50,6 +101,16 @@ class Product(object):
 
     # Product
     def Brand(self) -> Optional[Brand]:
+        """Brand.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[Brand]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             x = self._tab.Indirect(o + self._tab.Pos)
@@ -59,39 +120,149 @@ class Product(object):
         return None
 
 def ProductStart(builder: flatbuffers.Builder):
+    """ProductStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(4)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     ProductStart(builder)
 
 def ProductAddId(builder: flatbuffers.Builder, id: int):
+    """ProductAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     ProductAddId(builder, id)
 
 def ProductAddDescription(builder: flatbuffers.Builder, description: int):
+    """ProductAddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
+    """AddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     ProductAddDescription(builder, description)
 
 def ProductAddUrl(builder: flatbuffers.Builder, url: int):
+    """ProductAddUrl.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    url : int
+        url
+    """
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(url), 0)
 
 def AddUrl(builder: flatbuffers.Builder, url: int):
+    """AddUrl.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    url : int
+        url
+    """
     ProductAddUrl(builder, url)
 
 def ProductAddBrand(builder: flatbuffers.Builder, brand: int):
+    """ProductAddBrand.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    brand : int
+        brand
+    """
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(brand), 0)
 
 def AddBrand(builder: flatbuffers.Builder, brand: int):
+    """AddBrand.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    brand : int
+        brand
+    """
     ProductAddBrand(builder, brand)
 
 def ProductEnd(builder: flatbuffers.Builder) -> int:
+    """ProductEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return ProductEnd(builder)
 
 import hushh.hcf.Brand
@@ -101,9 +272,14 @@ except:
     pass
 
 class ProductT(object):
+    """ProductT.
+    """
+
 
     # ProductT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.description = None  # type: str
         self.url = None  # type: str
@@ -111,23 +287,55 @@ class ProductT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         product = Product()
         product.Init(buf, pos)
         return cls.InitFromObj(product)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, product):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        product :
+            product
+        """
         x = ProductT()
         x._UnPack(product)
         return x
 
     # ProductT
     def _UnPack(self, product):
+        """_UnPack.
+
+        Parameters
+        ----------
+        product :
+            product
+        """
         if product is None:
             return
         self.id = product.Id()
@@ -138,6 +346,13 @@ class ProductT(object):
 
     # ProductT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.description is not None:

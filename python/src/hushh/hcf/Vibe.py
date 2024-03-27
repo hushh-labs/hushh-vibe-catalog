@@ -9,10 +9,22 @@ from typing import Optional
 np = import_numpy()
 
 class Vibe(object):
+    """Vibe.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = Vibe()
         x.Init(buf, n + offset)
@@ -24,10 +36,29 @@ class Vibe(object):
         return cls.GetRootAs(buf, offset)
     # Vibe
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Vibe
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -35,6 +66,16 @@ class Vibe(object):
 
     # Vibe
     def Description(self) -> Optional[str]:
+        """Description.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -42,6 +83,13 @@ class Vibe(object):
 
     # Vibe
     def ProductIdx(self, j: int):
+        """ProductIdx.
+
+        Parameters
+        ----------
+        j : int
+            j
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             a = self._tab.Vector(o)
@@ -50,6 +98,8 @@ class Vibe(object):
 
     # Vibe
     def ProductIdxAsNumpy(self):
+        """ProductIdxAsNumpy.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
@@ -57,6 +107,16 @@ class Vibe(object):
 
     # Vibe
     def ProductIdxLength(self) -> int:
+        """ProductIdxLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -64,43 +124,173 @@ class Vibe(object):
 
     # Vibe
     def ProductIdxIsNone(self) -> bool:
+        """ProductIdxIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         return o == 0
 
 def VibeStart(builder: flatbuffers.Builder):
+    """VibeStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(3)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     VibeStart(builder)
 
 def VibeAddId(builder: flatbuffers.Builder, id: int):
+    """VibeAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     VibeAddId(builder, id)
 
 def VibeAddDescription(builder: flatbuffers.Builder, description: int):
+    """VibeAddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(description), 0)
 
 def AddDescription(builder: flatbuffers.Builder, description: int):
+    """AddDescription.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    description : int
+        description
+    """
     VibeAddDescription(builder, description)
 
 def VibeAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    """VibeAddProductIdx.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productIdx : int
+        productIdx
+    """
     builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
 def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    """AddProductIdx.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productIdx : int
+        productIdx
+    """
     VibeAddProductIdx(builder, productIdx)
 
 def VibeStartProductIdxVector(builder, numElems: int) -> int:
+    """VibeStartProductIdxVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdxVector(builder, numElems: int) -> int:
+    """StartProductIdxVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return VibeStartProductIdxVector(builder, numElems)
 
 def VibeEnd(builder: flatbuffers.Builder) -> int:
+    """VibeEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return VibeEnd(builder)
 
 try:
@@ -109,32 +299,69 @@ except:
     pass
 
 class VibeT(object):
+    """VibeT.
+    """
+
 
     # VibeT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.description = None  # type: str
         self.productIdx = None  # type: List[int]
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         vibe = Vibe()
         vibe.Init(buf, pos)
         return cls.InitFromObj(vibe)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, vibe):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        vibe :
+            vibe
+        """
         x = VibeT()
         x._UnPack(vibe)
         return x
 
     # VibeT
     def _UnPack(self, vibe):
+        """_UnPack.
+
+        Parameters
+        ----------
+        vibe :
+            vibe
+        """
         if vibe is None:
             return
         self.id = vibe.Id()
@@ -149,6 +376,13 @@ class VibeT(object):
 
     # VibeT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.description is not None:

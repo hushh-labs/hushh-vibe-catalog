@@ -9,10 +9,22 @@ from typing import Optional
 np = import_numpy()
 
 class FlatEmbeddingBatch(object):
+    """FlatEmbeddingBatch.
+    """
+
     __slots__ = ['_tab']
 
     @classmethod
     def GetRootAs(cls, buf, offset: int = 0):
+        """GetRootAs.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        offset : int
+            offset
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = FlatEmbeddingBatch()
         x.Init(buf, n + offset)
@@ -24,10 +36,29 @@ class FlatEmbeddingBatch(object):
         return cls.GetRootAs(buf, offset)
     # FlatEmbeddingBatch
     def Init(self, buf: bytes, pos: int):
+        """Init.
+
+        Parameters
+        ----------
+        buf : bytes
+            buf
+        pos : int
+            pos
+        """
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # FlatEmbeddingBatch
     def Id(self) -> Optional[str]:
+        """Id.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        Optional[str]
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.String(o + self._tab.Pos)
@@ -35,6 +66,13 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def Shape(self, j: int):
+        """Shape.
+
+        Parameters
+        ----------
+        j : int
+            j
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             a = self._tab.Vector(o)
@@ -43,6 +81,8 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ShapeAsNumpy(self):
+        """ShapeAsNumpy.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
@@ -50,6 +90,16 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ShapeLength(self) -> int:
+        """ShapeLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -57,11 +107,23 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ShapeIsNone(self) -> bool:
+        """ShapeIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         return o == 0
 
     # FlatEmbeddingBatch
     def VibeMode(self):
+        """VibeMode.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(8))
         if o != 0:
             return self._tab.Get(flatbuffers.number_types.Int8Flags, o + self._tab.Pos)
@@ -69,6 +131,13 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def FlatTensor(self, j: int):
+        """FlatTensor.
+
+        Parameters
+        ----------
+        j : int
+            j
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             a = self._tab.Vector(o)
@@ -77,6 +146,8 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def FlatTensorAsNumpy(self):
+        """FlatTensorAsNumpy.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Float32Flags, o)
@@ -84,6 +155,16 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def FlatTensorLength(self) -> int:
+        """FlatTensorLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -91,11 +172,28 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def FlatTensorIsNone(self) -> bool:
+        """FlatTensorIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(10))
         return o == 0
 
     # FlatEmbeddingBatch
     def ProductIdx(self, j: int):
+        """ProductIdx.
+
+        Parameters
+        ----------
+        j : int
+            j
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             a = self._tab.Vector(o)
@@ -104,6 +202,8 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ProductIdxAsNumpy(self):
+        """ProductIdxAsNumpy.
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Int32Flags, o)
@@ -111,6 +211,16 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ProductIdxLength(self) -> int:
+        """ProductIdxLength.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        int
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         if o != 0:
             return self._tab.VectorLen(o)
@@ -118,67 +228,289 @@ class FlatEmbeddingBatch(object):
 
     # FlatEmbeddingBatch
     def ProductIdxIsNone(self) -> bool:
+        """ProductIdxIsNone.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+
+        """
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
         return o == 0
 
 def FlatEmbeddingBatchStart(builder: flatbuffers.Builder):
+    """FlatEmbeddingBatchStart.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     builder.StartObject(5)
 
 def Start(builder: flatbuffers.Builder):
+    """Start.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    """
     FlatEmbeddingBatchStart(builder)
 
 def FlatEmbeddingBatchAddId(builder: flatbuffers.Builder, id: int):
+    """FlatEmbeddingBatchAddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(id), 0)
 
 def AddId(builder: flatbuffers.Builder, id: int):
+    """AddId.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    id : int
+        id
+    """
     FlatEmbeddingBatchAddId(builder, id)
 
 def FlatEmbeddingBatchAddShape(builder: flatbuffers.Builder, shape: int):
+    """FlatEmbeddingBatchAddShape.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    shape : int
+        shape
+    """
     builder.PrependUOffsetTRelativeSlot(1, flatbuffers.number_types.UOffsetTFlags.py_type(shape), 0)
 
 def AddShape(builder: flatbuffers.Builder, shape: int):
+    """AddShape.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    shape : int
+        shape
+    """
     FlatEmbeddingBatchAddShape(builder, shape)
 
 def FlatEmbeddingBatchStartShapeVector(builder, numElems: int) -> int:
+    """FlatEmbeddingBatchStartShapeVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartShapeVector(builder, numElems: int) -> int:
+    """StartShapeVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return FlatEmbeddingBatchStartShapeVector(builder, numElems)
 
 def FlatEmbeddingBatchAddVibeMode(builder: flatbuffers.Builder, vibeMode: int):
+    """FlatEmbeddingBatchAddVibeMode.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    vibeMode : int
+        vibeMode
+    """
     builder.PrependInt8Slot(2, vibeMode, 0)
 
 def AddVibeMode(builder: flatbuffers.Builder, vibeMode: int):
+    """AddVibeMode.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    vibeMode : int
+        vibeMode
+    """
     FlatEmbeddingBatchAddVibeMode(builder, vibeMode)
 
 def FlatEmbeddingBatchAddFlatTensor(builder: flatbuffers.Builder, flatTensor: int):
+    """FlatEmbeddingBatchAddFlatTensor.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    flatTensor : int
+        flatTensor
+    """
     builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(flatTensor), 0)
 
 def AddFlatTensor(builder: flatbuffers.Builder, flatTensor: int):
+    """AddFlatTensor.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    flatTensor : int
+        flatTensor
+    """
     FlatEmbeddingBatchAddFlatTensor(builder, flatTensor)
 
 def FlatEmbeddingBatchStartFlatTensorVector(builder, numElems: int) -> int:
+    """FlatEmbeddingBatchStartFlatTensorVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartFlatTensorVector(builder, numElems: int) -> int:
+    """StartFlatTensorVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return FlatEmbeddingBatchStartFlatTensorVector(builder, numElems)
 
 def FlatEmbeddingBatchAddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    """FlatEmbeddingBatchAddProductIdx.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productIdx : int
+        productIdx
+    """
     builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(productIdx), 0)
 
 def AddProductIdx(builder: flatbuffers.Builder, productIdx: int):
+    """AddProductIdx.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+    productIdx : int
+        productIdx
+    """
     FlatEmbeddingBatchAddProductIdx(builder, productIdx)
 
 def FlatEmbeddingBatchStartProductIdxVector(builder, numElems: int) -> int:
+    """FlatEmbeddingBatchStartProductIdxVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return builder.StartVector(4, numElems, 4)
 
 def StartProductIdxVector(builder, numElems: int) -> int:
+    """StartProductIdxVector.
+
+    Parameters
+    ----------
+    builder :
+        builder
+    numElems : int
+        numElems
+
+    Returns
+    -------
+    int
+
+    """
     return FlatEmbeddingBatchStartProductIdxVector(builder, numElems)
 
 def FlatEmbeddingBatchEnd(builder: flatbuffers.Builder) -> int:
+    """FlatEmbeddingBatchEnd.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return builder.EndObject()
 
 def End(builder: flatbuffers.Builder) -> int:
+    """End.
+
+    Parameters
+    ----------
+    builder : flatbuffers.Builder
+        builder
+
+    Returns
+    -------
+    int
+
+    """
     return FlatEmbeddingBatchEnd(builder)
 
 try:
@@ -187,9 +519,14 @@ except:
     pass
 
 class FlatEmbeddingBatchT(object):
+    """FlatEmbeddingBatchT.
+    """
+
 
     # FlatEmbeddingBatchT
     def __init__(self):
+        """__init__.
+        """
         self.id = None  # type: str
         self.shape = None  # type: List[int]
         self.vibeMode = 0  # type: int
@@ -198,23 +535,55 @@ class FlatEmbeddingBatchT(object):
 
     @classmethod
     def InitFromBuf(cls, buf, pos):
+        """InitFromBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         flatEmbeddingBatch = FlatEmbeddingBatch()
         flatEmbeddingBatch.Init(buf, pos)
         return cls.InitFromObj(flatEmbeddingBatch)
 
     @classmethod
     def InitFromPackedBuf(cls, buf, pos=0):
+        """InitFromPackedBuf.
+
+        Parameters
+        ----------
+        buf :
+            buf
+        pos :
+            pos
+        """
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, pos)
         return cls.InitFromBuf(buf, pos+n)
 
     @classmethod
     def InitFromObj(cls, flatEmbeddingBatch):
+        """InitFromObj.
+
+        Parameters
+        ----------
+        flatEmbeddingBatch :
+            flatEmbeddingBatch
+        """
         x = FlatEmbeddingBatchT()
         x._UnPack(flatEmbeddingBatch)
         return x
 
     # FlatEmbeddingBatchT
     def _UnPack(self, flatEmbeddingBatch):
+        """_UnPack.
+
+        Parameters
+        ----------
+        flatEmbeddingBatch :
+            flatEmbeddingBatch
+        """
         if flatEmbeddingBatch is None:
             return
         self.id = flatEmbeddingBatch.Id()
@@ -243,6 +612,13 @@ class FlatEmbeddingBatchT(object):
 
     # FlatEmbeddingBatchT
     def Pack(self, builder):
+        """Pack.
+
+        Parameters
+        ----------
+        builder :
+            builder
+        """
         if self.id is not None:
             id = builder.CreateString(self.id)
         if self.shape is not None:
