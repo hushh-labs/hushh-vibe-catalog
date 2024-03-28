@@ -67,7 +67,7 @@ sympy==1.12
     # via torch
 tokenizers==0.15.2
     # via transformers
-torch==2.2.1
+torch==2.2.2
     # via hushh-vibe-catalog (pyproject.toml)
 tqdm==4.66.2
     # via
