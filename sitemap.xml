@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/notebooks/KNN Search.html</loc>
-    <lastmod>2024-04-08T15:30:58.924Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/changelog.html</loc>
-    <lastmod>2024-04-08T15:30:58.916Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Vibe.html</loc>
-    <lastmod>2024-04-08T15:32:46.767Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Product.html</loc>
-    <lastmod>2024-04-08T15:32:46.471Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Product.html</loc>
-    <lastmod>2024-04-08T15:32:46.651Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/index.html</loc>
+    <lastmod>2024-04-17T15:38:39.730Z</lastmod>
   </url>
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Vibe.html</loc>
-    <lastmod>2024-04-08T15:32:46.475Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.FlatEmbeddingBatch.html</loc>
-    <lastmod>2024-04-08T15:32:46.855Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Category.html</loc>
-    <lastmod>2024-04-08T15:32:46.475Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Catalog.html</loc>
-    <lastmod>2024-04-08T15:32:46.547Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Brand.html</loc>
-    <lastmod>2024-04-08T15:32:46.599Z</lastmod>
+    <lastmod>2024-04-17T15:40:33.309Z</lastmod>
   </url>
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/index.html</loc>
-    <lastmod>2024-04-08T15:32:46.451Z</lastmod>
+    <lastmod>2024-04-17T15:40:33.281Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/FlatEmbeddingBatch.html</loc>
-    <lastmod>2024-04-08T15:32:46.479Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Product.html</loc>
+    <lastmod>2024-04-17T15:40:33.489Z</lastmod>
   </url>
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Brand.html</loc>
-    <lastmod>2024-04-08T15:32:46.467Z</lastmod>
+    <lastmod>2024-04-17T15:40:33.301Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Brand.html</loc>
+    <lastmod>2024-04-17T15:40:33.437Z</lastmod>
   </url>
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Catalog.html</loc>
-    <lastmod>2024-04-08T15:32:46.463Z</lastmod>
+    <lastmod>2024-04-17T15:40:33.293Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Category.html</loc>
-    <lastmod>2024-04-08T15:32:46.711Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/changelog.html</loc>
+    <lastmod>2024-04-17T15:38:39.730Z</lastmod>
   </url>
   <url>
-    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/index.html</loc>
-    <lastmod>2024-04-08T15:30:58.920Z</lastmod>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/notebooks/KNN Search.html</loc>
+    <lastmod>2024-04-17T15:38:39.734Z</lastmod>
   </url>
   <url>
     <loc>https://hushh-labs.github.io/hushh-vibe-catalog/notebooks/Create Catalog.html</loc>
-    <lastmod>2024-04-08T15:30:58.920Z</lastmod>
+    <lastmod>2024-04-17T15:38:39.730Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Category.html</loc>
+    <lastmod>2024-04-17T15:40:33.553Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Category.html</loc>
+    <lastmod>2024-04-17T15:40:33.305Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.FlatEmbeddingBatch.html</loc>
+    <lastmod>2024-04-17T15:40:33.701Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/Product.html</loc>
+    <lastmod>2024-04-17T15:40:33.305Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Catalog.html</loc>
+    <lastmod>2024-04-17T15:40:33.385Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/hcf.Vibe.html</loc>
+    <lastmod>2024-04-17T15:40:33.609Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hushh-labs.github.io/hushh-vibe-catalog/reference/FlatEmbeddingBatch.html</loc>
+    <lastmod>2024-04-17T15:40:33.309Z</lastmod>
   </url>
 </urlset>
