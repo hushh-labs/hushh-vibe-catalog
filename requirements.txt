@@ -69,7 +69,7 @@ tokenizers==0.19.1
     # via transformers
 torch==2.2.2
     # via hushh-vibe-catalog (pyproject.toml)
-tqdm==4.66.2
+tqdm==4.66.3
     # via
     #   huggingface-hub
     #   transformers
